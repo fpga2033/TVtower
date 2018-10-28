@@ -34,10 +34,10 @@
 
         .my-modal-content {
             position: fixed;
-            width: 350px;        /* 调整这个宽度，和JTB界面拼接在一起*/
-            height: 670px;
+            width: 285px;        /* 调整这个宽度，和JTB界面拼接在一起*/
+            height: 600px;
             text-align: left;
-            padding: 2em;
+            padding: 1em;
             background-color: white;
             border-radius: 3px;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.29), 0 26px 52px rgba(0, 0, 0, 0.26);
@@ -83,11 +83,12 @@
 
                     <label class="control-label" id=txt_ref></label>
                     <label class="control-label" id=txt_type style='float:right'></label><br/>
-                    <p>总额:　JPY <label class="control-label" id=txt_price style="font-size:20px;font-family:verdana;color:red"></label><br/><br/> </p>
+                    总额:　JPY <label class="control-label" id=txt_price style="font-size:22px;font-family:verdana;color:red"></label><br/><br/>
                     <label class="control-label" id=txt_hotel_roomtype></label><br/><br/>
                     <label class="control-label" id=txt_eachroom_meal></label><br/><br/>
                     <label class="control-label" id=txt_rooms style="color:rgb(86, 0, 121)"></label><br/><br/>
-                    <label class="control-label" id=txt_checkin style="color:rgb(86, 0, 121)"></label><br/><br/><br/>
+                    <label class="control-label" id=txt_checkin style="color:rgb(86, 0, 121)"></label><br/>
+                    <label class="control-label" id=txt_nights style="color:rgb(86, 0, 121)"></label><br/><br/><br/>
                     <label class="control-label" id=txt_guest1></label><br/><br/>
                     <label class="control-label" id=txt_request></label><br/><br/>
                     
@@ -103,11 +104,23 @@
     <script type="text/javascript">
 
         var $body = $('body');
+        var report_summary;
 
         $('#btn_res_confirmed').on('click', function () {
             //alert(" 饿丝了啊 ")
             $('.my-modal').fadeOut();
             $body.removeClass('no-scroll');
+
+            
+            //log('PPPPPPpied.');
+            navigator.clipboard.writeText(report_summary)    // out 是自定义的文本框id
+            .then(() => {
+                //log('Text copied.');
+            })
+            .catch(() => {
+                //log('Failed to write clipboard');
+            });
+
         });
 
         $('#btn_start_process').on('click', function () {
@@ -162,7 +175,7 @@
                     var d1 = new Date(ctripOrderDate1);
                     var d2 = new Date(ctripOrderDate2);
                     var ctripOrderNights = parseInt((d2 - d1) / (1000 * 3600 * 24)); 
-                    var getDayOfWeek = ['周一','周二','周三','周四','周五','周六','周日'];
+                    var getDayOfWeek = ['周日','周一','周二','周三','周四','周五','周六'];
                     var Date1_dayName = getDayOfWeek[d1.getDay()];
                     
                     var regExp_ctripOrderRooms=/预订间数\s+(\d+)/;
@@ -199,6 +212,7 @@
 
                     /* 显示内容的前处理 */    
                     var HHHH=ctripOrderHotel.replace("度假村","");
+                    HHHH=HHHH.replace("酒店","");
                     gName1=GuestnameList[0].toUpperCase().replace('/','_');
                     gName1=gName1.replace(/\W/g,"").replace('_',' ');
 
@@ -209,7 +223,8 @@
                     modal.find('.modal-body label#txt_hotel_roomtype').text('' + HHHH + '　　' + ctripOrderRoomtype)
                     modal.find('.modal-body label#txt_eachroom_meal').text('' + ctripOrderEachRoom + '　　' + ctripOrderMeals)
                     modal.find('.modal-body label#txt_rooms').text('' + ctripOrderRooms + '　◄ 间数')
-                    modal.find('.modal-body label#txt_checkin').text('' + ctripOrderDate1 + '　' + Date1_dayName + '　◄ 入住日期　　连住 ' + ctripOrderNights + ' 晚')
+                    modal.find('.modal-body label#txt_checkin').text('' + ctripOrderDate1 + '　' + Date1_dayName + '　◄ 入住日期')
+                    modal.find('.modal-body label#txt_nights').text('连住 ' + ctripOrderNights + ' 晚')
                     modal.find('.modal-body label#txt_guest1').text('氏名1:　' + gName1)
                     modal.find('.modal-body label#txt_request').text('　' + ctripOrderSpecialrequest)
                     //modal.find('.modal-body label#提醒有备注').text('' + recipText)
@@ -218,6 +233,18 @@
                     $body.addClass('no-scroll');
 
                 }
+                
+                var repo4 = 1 + d1.getMonth();
+                var repo5 = d1.getDate();
+                var repo6 = 1 + d2.getMonth();
+                var repo7 = d2.getDate();
+                var numEachRoom;
+                if (ctripOrderEachRoom.match(/[单一]人/)) { numEachRoom = "1"; }
+                else if (ctripOrderEachRoom.match(/[双两二]人/)) { numEachRoom = "2"; }
+                else if (ctripOrderEachRoom.match(/三人/)) { numEachRoom = "3"; }
+                else if (ctripOrderEachRoom.match(/四人/)) { numEachRoom = "4"; }
+                else { numEachRoom = "X"; }
+                report_summary = ctripOrderRef +'\t'+ HHHH +'\t'+ gName1 +'\t'+ repo4 +'\t'+ repo5 +'\t'+ repo6 +'\t'+ repo7 +'\t'+ ctripOrderNights +'\t'+ numEachRoom +'\t'+ ctripOrderRooms;
             })
             .catch(() => {
                 log('Failed to read clipboard');
@@ -225,7 +252,7 @@
             
             
             //setTimeout(alert("Hereee"), 3000);
-            $('#btn_start_process').delay(100).queue(function(){
+            $('#btn_start_process').delay(200).queue(function(){
 
                 //log('PPPPPPpied.');
                 navigator.clipboard.writeText(gName1)    // out 是自定义的文本框id
