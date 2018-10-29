@@ -35,7 +35,7 @@
         .my-modal-content {
             position: fixed;
             width: 285px;        /* 调整这个宽度，和JTB界面拼接在一起*/
-            height: 600px;
+            height: 620px;
             text-align: left;
             padding: 1em;
             background-color: white;
@@ -113,7 +113,7 @@
 
             
             //log('PPPPPPpied.');
-            navigator.clipboard.writeText(report_summary)    // out 是自定义的文本框id
+            navigator.clipboard.writeText(report_summary)    
             .then(() => {
                 //log('Text copied.');
             })
@@ -122,8 +122,9 @@
             });
 
         });
-
-        $('#btn_start_process').on('click', function () {
+        
+        // 新开页面，不再使用“开始接单”按钮
+        // $('#btn_start_process').on('click', function () {
             var gName1;
 
             /** Read from clipboard when clicking the Paste button */
@@ -208,7 +209,7 @@
 
                 }
                 
-                modal_content_editing_block: {
+                modal_content_display_block: {
 
                     /* 显示内容的前处理 */    
                     var HHHH=ctripOrderHotel.replace("度假村","");
@@ -234,28 +235,33 @@
 
                 }
                 
-                var repo4 = 1 + d1.getMonth();
-                var repo5 = d1.getDate();
-                var repo6 = 1 + d2.getMonth();
-                var repo7 = d2.getDate();
-                var numEachRoom;
-                if (ctripOrderEachRoom.match(/[单一]人/)) { numEachRoom = "1"; }
-                else if (ctripOrderEachRoom.match(/[双两二]人/)) { numEachRoom = "2"; }
-                else if (ctripOrderEachRoom.match(/三人/)) { numEachRoom = "3"; }
-                else if (ctripOrderEachRoom.match(/四人/)) { numEachRoom = "4"; }
-                else { numEachRoom = "X"; }
-                report_summary = ctripOrderRef +'\t'+ HHHH +'\t'+ gName1 +'\t'+ repo4 +'\t'+ repo5 +'\t'+ repo6 +'\t'+ repo7 +'\t'+ ctripOrderNights +'\t'+ numEachRoom +'\t'+ ctripOrderRooms;
+                report_summary_editing_block: {
+
+                    var repo4 = 1 + d1.getMonth();
+                    var repo5 = d1.getDate();
+                    var repo6 = 1 + d2.getMonth();
+                    var repo7 = d2.getDate();
+                    var numEachRoom;
+                    if (ctripOrderEachRoom.match(/[单一]人/)) { numEachRoom = "1"; }
+                    else if (ctripOrderEachRoom.match(/[双两二]人/)) { numEachRoom = "2"; }
+                    else if (ctripOrderEachRoom.match(/三人/)) { numEachRoom = "3"; }
+                    else if (ctripOrderEachRoom.match(/四人/)) { numEachRoom = "4"; }
+                    else { numEachRoom = "X"; }
+                    report_summary = ctripOrderRef +'\t'+ HHHH +'\t'+ gName1 +'\t'+ repo4 +'\t'+ repo5 +'\t'+ repo6 +'\t'+ repo7 +'\t'+ ctripOrderNights +'\t'+ numEachRoom +'\t'+ ctripOrderRooms +'\t'+ ctripOrderPrice;
+
+                }    
+
             })
             .catch(() => {
                 log('Failed to read clipboard');
             });
             
             
-            //setTimeout(alert("Hereee"), 3000);
-            $('#btn_start_process').delay(200).queue(function(){
+            /* 此处设置100ms延迟，防止readText和writeText同时相应造成异常 */
+            $('#btn_start_process').delay(100).queue(function(){
 
                 //log('PPPPPPpied.');
-                navigator.clipboard.writeText(gName1)    // out 是自定义的文本框id
+                navigator.clipboard.writeText(gName1)    
                 .then(() => {
                     //log('Text copied.');
                 })
@@ -274,7 +280,7 @@
                 .catch(log);
             };*/
 
-        });    
+        //});    
 
         /* Watch for pastes */
         navigator.clipboard.addEventListener('clipboardchange', e => {
