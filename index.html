@@ -2,13 +2,18 @@
 
 <head>
     <style rel="stylesheet" type="text/css">
+
+        a:hover {color: rgb(0, 0, 216)}
+        a:active {color: rgb(57, 78, 160)}
+ 
+
         body.no-scroll {
             overflow: hidden;
         }
 
         .site {
-            max-width: 1230px;
-            margin: 3em auto;
+            max-width: 1200px;
+            margin: 0.2em;
         }
 
         .bg {
@@ -63,40 +68,46 @@
 <body>
     <div class="site">
         <section>
-            <h1>Sapporo TV Hotel</h1>
-
-            <p>初収録の日に行われた会見。モコモコのクマの部屋着風衣装で登場し、細水長流れ</p>
-            <p>実際にはニュージーランドに語学留学した後、オーストラリアにワーキングホリデーで滞在、平淡真実り</p>
+            <title>☆♪ Sapporo TV Hotel ♪☆</title>
             
-            <button id="btn_start_process" class="btn btn-primary"><strong>开始接单</strong><br><em>(read from clipboard)</em></button>
+            <a>单号:　</a><label class="control-label" id=txt_ref style="font-size:18px;font-family:verdana;color:rgb(23, 94, 248)"></label>
+            <label class="control-label" id=txt_type style='float:right'></label><br/>
+            
+            <img hight="15%" width="100%" class="img-rounded" src="https://raw.githubusercontent.com/fpga2033/TVtower/0609769e290f5f11ccf79624a39f594c03a2a4eb/mildseven-hill-winter.jpg" alt="" /><br/>
+
+            <br/>
+            <a>总额:　JPY </a><label class="control-label" id=txt_price style="font-size:22px;font-family:verdana;color:red"></label><br/><br/>
+            <label class="control-label" id=txt_checkin style="font-weight:bold;font-size:18px;color:rgb(86, 0, 121)"></label>
+            <a style="font-size:12px"> より </a><label class="control-label" id=txt_days style="font-weight:bold;font-size:18px;color:rgb(86, 0, 121)"></label><a style="font-size:12px"> 日間　　　</a>
+            <label class="control-label" id=txt_rooms style="font-weight:bold;font-size:18px;color:rgb(86, 0, 121)"></label><a style="font-size:12px"> 室</a><br/><br/>
+            <br/>
+            
+            <label class="control-label" id=txt_hotel_roomtype></label><br/><br/>
+            <label class="control-label" id=txt_eachroom_meal></label><br/><br/>
+            <br/>
+            
+            <label class="control-label" id=txt_guest1></label><br/><br/>
+            <label class="control-label" id=txt_request></label><br/><br/>
+
+
+            <form>
+                <div class="form-group">
+                </div>
+            </form>
+            
+            <button id="btn_JTB_confirmed" class="btn btn-primary" style="font-size:14px;font-family:Meiryo"><strong>ＪＴＢ完成</strong><br><em>(去填集計表草稿)</em></button>
         </section>
-        <div class="bg"></div>  <!-- 这是BackGround图片 -->
+        <!--<div class="bg"></div>  <!-- 这是BackGround图片 -->
     </div>
 
     <div class="my-modal">
         <div class="my-modal-content">
-            <img hight="10%" width="100%" class="img-rounded" src="https://raw.githubusercontent.com/fpga2033/TVtower/0609769e290f5f11ccf79624a39f594c03a2a4eb/mildseven-hill-winter.jpg" alt="" />
+            <img hight="10%" width="100%" class="img-rounded" src="https://www.jph.co.jp/wp-content/uploads/2018/10/Artboard-2-2.png" alt="" />
             
             <div class="modal-body">
-                <form>
-                    <div class="form-group">
-
-                    <label class="control-label" id=txt_ref></label>
-                    <label class="control-label" id=txt_type style='float:right'></label><br/>
-                    总额:　JPY <label class="control-label" id=txt_price style="font-size:22px;font-family:verdana;color:red"></label><br/><br/>
-                    <label class="control-label" id=txt_hotel_roomtype></label><br/><br/>
-                    <label class="control-label" id=txt_eachroom_meal></label><br/><br/>
-                    <label class="control-label" id=txt_rooms style="color:rgb(86, 0, 121)"></label><br/><br/>
-                    <label class="control-label" id=txt_checkin style="color:rgb(86, 0, 121)"></label><br/>
-                    <label class="control-label" id=txt_nights style="color:rgb(86, 0, 121)"></label><br/><br/><br/>
-                    <label class="control-label" id=txt_guest1></label><br/><br/>
-                    <label class="control-label" id=txt_request></label><br/><br/>
-                    
-                    </div>
-                </form>
             </div>
                         
-            <button id="btn_res_confirmed" class="btn btn-primary">Close</button>
+            <button id="btn_modal_confirmed" class="btn btn-primary">Close</button>
         </div>
     </div>
 
@@ -106,14 +117,13 @@
         var $body = $('body');
         var report_summary;
 
-        $('#btn_res_confirmed').on('click', function () {
+        $('#btn_JTB_confirmed').on('click', function () {
             //alert(" 饿丝了啊 ")
             $('.my-modal').fadeOut();
             $body.removeClass('no-scroll');
 
-            
             //log('PPPPPPpied.');
-            navigator.clipboard.writeText(report_summary)    
+            navigator.clipboard.writeText(report_summary)   // debug:   ctripOrderThing[9]
             .then(() => {
                 //log('Text copied.');
             })
@@ -121,11 +131,17 @@
                 //log('Failed to write clipboard');
             });
 
+            $('#btn_JTB_confirmed').delay(20).queue(function(){
+                window.close();
+            });
+
         });
         
         // 新开页面，不再使用“开始接单”按钮
         // $('#btn_start_process').on('click', function () {
-            var gName1;
+            var gName1;                 // 用于JTB氏名報告
+            var gName = new Array();    // 用于存放所有客人姓名，从入住人1开始
+            gName[0] = "";
 
             /** Read from clipboard when clicking the Paste button */
             navigator.clipboard.readText()
@@ -136,7 +152,7 @@
             
                 ctripOrderInfo_extracting_block: {
 
-                    var ctripOrderThing=new Array();    
+                    var ctripOrderThing=new Array();
 
                     var regExp_ctripOrderRef=/订单号\s+(\d{10})/;
                     ctripOrderThing[0]=pasteStr.match(regExp_ctripOrderRef);
@@ -176,7 +192,7 @@
                     var d1 = new Date(ctripOrderDate1);
                     var d2 = new Date(ctripOrderDate2);
                     var ctripOrderNights = parseInt((d2 - d1) / (1000 * 3600 * 24)); 
-                    var getDayOfWeek = ['周日','周一','周二','周三','周四','周五','周六'];
+                    var getDayOfWeek = ['日','月','火','水','木','金','土'];
                     var Date1_dayName = getDayOfWeek[d1.getDay()];
                     
                     var regExp_ctripOrderRooms=/预订间数\s+(\d+)/;
@@ -209,23 +225,70 @@
 
                 }
                 
-                modal_content_display_block: {
+                Key_Info_treatment: {
 
-                    /* 显示内容的前处理 */    
-                    var HHHH=ctripOrderHotel.replace("度假村","");
-                    HHHH=HHHH.replace("酒店","");
-                    gName1=GuestnameList[0].toUpperCase().replace('/','_');
-                    gName1=gName1.replace(/\W/g,"").replace('_',' ');
+                    // 显示内容的前处理     
+                    var HHHHname = ctripOrderHotel;     // HHHHname是酒店的四字簡称
+                    HHHHname = HHHHname.replace("北海道","");
+                    HHHHname = HHHHname.replace("度假村","");
+                    HHHHname = HHHHname.replace("度假","");
+                    HHHHname = HHHHname.replace("大酒店","");
+                    HHHHname = HHHHname.replace("酒店","");
+                    HHHHname = HHHHname.replace("大饭店","");
+                    HHHHname = HHHHname.replace("饭店","");
+                    HHHHname = HHHHname.replace("TOMAMU","");
+                    
+                    var DATEshow = ctripOrderDate1;
+                    //DATEshow = DATEshow.replace("2018","18");
+                    //DATEshow = DATEshow.replace("2019","19");
+                    var periodDays = ctripOrderNights + 1;
+
+                    gName1 = GuestnameList[0].toUpperCase().replace('/','_');
+                    gName1 = gName1.replace(/\W/g,"").replace('_',' ');
+                    
+                    /*
+                    if ( GuestnameList.length != ctripOrderPeoples ){
+                        alert("姓名列表未能完整获取 : " + GuestnameList.length + " 不等于 " + ctripOrderPeoples);
+                    }
+                    else {
+                        for ( var i = 0 ; i < GuestnameList.length ; i++ )
+                            gName[1+i] = GuestnameList[i].toUpperCase().replace(" ","");
+                    }*/
+                                            
+                    
+                    // 编辑MS报告
+
+
+
+                }
+
+                beside_content_display_block: { 
+
+                    document.getElementById("txt_ref").innerHTML = ctripOrderRef;
+                    document.getElementById("txt_type").innerHTML = ctripOrderType;
+                    document.getElementById("txt_price").innerHTML = ctripOrderPrice;
+                    document.getElementById("txt_hotel_roomtype").innerHTML = HHHHname + '　　' + ctripOrderRoomtype;
+                    document.getElementById("txt_eachroom_meal").innerHTML = ctripOrderEachRoom + '　　' + ctripOrderMeals;
+                    document.getElementById("txt_rooms").innerHTML = ctripOrderRooms;
+                    document.getElementById("txt_checkin").innerHTML = DATEshow + '　' + Date1_dayName;
+                    document.getElementById("txt_days").innerHTML = periodDays;
+                    document.getElementById("txt_guest1").innerHTML = gName1;
+                    document.getElementById("txt_request").innerHTML = ctripOrderSpecialrequest;
+                    // label#提醒有备注').text('' + recipText)
+
+                }
+
+                modal_content_display_block: { /*
 
                     var modal = $('.my-modal')
                     modal.find('.modal-body label#txt_ref').text('单号:　' + ctripOrderRef)
                     modal.find('.modal-body label#txt_type').text('' + ctripOrderType)
                     modal.find('.modal-body label#txt_price').text(ctripOrderPrice)
-                    modal.find('.modal-body label#txt_hotel_roomtype').text('' + HHHH + '　　' + ctripOrderRoomtype)
+                    modal.find('.modal-body label#txt_hotel_roomtype').text('' + HHHHname + '　　' + ctripOrderRoomtype)
                     modal.find('.modal-body label#txt_eachroom_meal').text('' + ctripOrderEachRoom + '　　' + ctripOrderMeals)
                     modal.find('.modal-body label#txt_rooms').text('' + ctripOrderRooms + '　◄ 间数')
                     modal.find('.modal-body label#txt_checkin').text('' + ctripOrderDate1 + '　' + Date1_dayName + '　◄ 入住日期')
-                    modal.find('.modal-body label#txt_nights').text('连住 ' + ctripOrderNights + ' 晚')
+                    modal.find('.modal-body label#txt_days').text('连住 ' + ctripOrderNights + ' 晚')
                     modal.find('.modal-body label#txt_guest1').text('氏名1:　' + gName1)
                     modal.find('.modal-body label#txt_request').text('　' + ctripOrderSpecialrequest)
                     //modal.find('.modal-body label#提醒有备注').text('' + recipText)
@@ -233,7 +296,7 @@
                     $('.my-modal').fadeIn();
                     $body.addClass('no-scroll');
 
-                }
+                */ }
                 
                 report_summary_editing_block: {
 
@@ -247,7 +310,7 @@
                     else if (ctripOrderEachRoom.match(/三人/)) { numEachRoom = "3"; }
                     else if (ctripOrderEachRoom.match(/四人/)) { numEachRoom = "4"; }
                     else { numEachRoom = "X"; }
-                    report_summary = ctripOrderRef +'\t'+ HHHH +'\t'+ gName1 +'\t'+ repo4 +'\t'+ repo5 +'\t'+ repo6 +'\t'+ repo7 +'\t'+ ctripOrderNights +'\t'+ numEachRoom +'\t'+ ctripOrderRooms +'\t'+ ctripOrderPrice;
+                    report_summary = ctripOrderRef +'\t'+ HHHHname +'\t'+ gName1 +'\t'+ repo4 +'\t'+ repo5 +'\t'+ repo6 +'\t'+ repo7 +'\t'+ ctripOrderNights +'\t'+ numEachRoom +'\t'+ ctripOrderRooms +'\t'+ ctripOrderPrice;
 
                 }    
 
@@ -271,8 +334,8 @@
 
             });
 
-            /** Write contents of the textarea to the clipboard when clicking "btn_res_confirmed" 
-            btn_res_confirmed.onclick = function() {
+            /** Write contents of the textarea to the clipboard when clicking "confirmed" 
+            confirmed.onclick = function() {
                 navigator.clipboard.writeText(out.value)    // out 是自定义的文本框id
                 .then(() => {
                     log('Text copied.');
