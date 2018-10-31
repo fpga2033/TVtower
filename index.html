@@ -265,7 +265,9 @@
                 SPshow = SPshow.replace("Nonsmoking preferred"," *禁煙室 ");
                 SPshow = SPshow.replace("Quiet room preferred","");
                 SPshow = SPshow.replace("Honeymoon amenity preferred","");
-                
+                SPshow = SPshow.replace("Prefer ","*Prefer ");
+                SPshow = SPshow.replace(";"," ");
+                SPshow = SPshow.replace("。"," ");
 
                 /*
                 if ( GuestnameList.length != ctripOrderPeoples ){
