@@ -119,6 +119,7 @@
 
         var $body = $('body');
         var report_summary;
+        var HnameSummary;
 
         // 按钮"JTB完成"
         $('#btn_JTB_confirmed').on('click', function () {
@@ -269,6 +270,65 @@
                 SPshow = SPshow.replace(";"," ");
                 SPshow = SPshow.replace("。"," ");
 
+                var HnameTable = new Array();
+                for( var hi=0; hi<90; hi++ ){        //一维长度为3
+                    HnameTable[hi] = new Array();
+                    for( var hj=0; hj<6; hj++ ){    //二维长度为5
+                        HnameTable[hi][hj] = "";
+                    }
+                }
+                HnameTable[0]=["塔娃","星野塔娃","星野リゾート　トマム・ザ・タワー","en","",""];
+                HnameTable[1]=["Riso","星野Risonare","星野リゾート　リゾナーレトマム","en","",""];
+                HnameTable[2]=["希尔顿","Hilton二世古","ヒルトンニセコビレッジ","en","",""];
+                HnameTable[3]=["Alpen","二世古Alpen","ホテルニセコアルペン","en","",""];
+                HnameTable[4]=["安努普","二世古R安努","ニセコノーザンリゾート　アンヌプリ","en","",""];
+                HnameTable[5]=["世古塔","二世古塔","ワンニセコリゾートタワーズ","en","",""];
+                HnameTable[6]=["谷臻品","キロロ","キロロ トリビュートポートフォリオホテル","en","",""];
+                HnameTable[7]=["威斯汀","Westinルスツ","ウエスティンルスツリゾート","en","",""];
+                HnameTable[8]=["及会议","ルスツ RC","ルスツリゾートホテル＆コンベンション","en","",""];
+                HnameTable[9]=["日航","JR日航","JR タワーホテル日航","en","",""];
+                HnameTable[10]=["格拉斯丽","格拉斯丽","ホテルグレイスリー札幌","en","",""];
+                HnameTable[11]=["世纪皇家","世纪皇家","センチュリーロイヤルホテル札幌","en","",""];
+                HnameTable[12]=["京王","京王プラザ","京王プラザホテル札幌","en","",""];
+                HnameTable[13]=["北口","Mystay北口","ホテルマイステイズ札幌駅北口（旧ホテルフィーノ札幌）","en","",""];
+                HnameTable[14]=["格兰","札幌格兰","札幌グランドホテル","en","",""];
+                HnameTable[15]=["唐草","札幌唐草","からくさホテル札幌","en","",""];
+                HnameTable[16]=["東急商","東急REI","札幌東急REI　ホテル","en","",""];
+                HnameTable[17]=["克罗斯","克罗斯","クロスホテル札幌","en","",""];
+                HnameTable[18]=["罗伊顿","罗伊顿札幌","ロイトン札幌","en","",""];
+                HnameTable[19]=["三井","三井花园","三井ガーデンホテル札幌","en","",""];
+                HnameTable[20]=["滝本","第一滝本","登別第一滝本館","en","",""];
+                HnameTable[21]=["登別万","登別万世閣","登別万世閣","en","",""];
+                HnameTable[22]=["仙境","まほろば","ホテルまほろば","en","",""];
+                HnameTable[23]=["登别格","登別グランド","登別グランドホテル","en","",""];
+                HnameTable[24]=["石水亭","登別石水亭","登別石水亭","en","",""];
+                HnameTable[25]=["雅亭","登別雅亭","名湯の宿パークホテル雅亭","en","",""];
+                HnameTable[26]=["乃之风","TOYA乃の風","ザ・レイクビューTOYA乃の風リゾート","en","",""];
+                HnameTable[27]=["湖山水","洞爺湖山水","洞爺湖山水ホテル和風","en","",""];
+                HnameTable[28]=["湖畔亭","洞爺湖畔亭","洞爺湖畔亭","en","",""];
+                HnameTable[29]=["爷观光","洞爺観光","洞爺観光ホテル","en","",""];
+                HnameTable[30]=["湖温莎","洞爺温莎","ザ・ウンインザーホテル洞爺リゾート＆スパ","en","",""];
+                HnameTable[31]=["太阳宫","洞爺サン","洞爺サンパレス","en","",""];
+                HnameTable[32]=["章月","章月格兰","章月グランドホテル","en","",""];
+                HnameTable[33]=["拉碧斯","LAVIS函館","ＬＡ　ＶＩＳＴＡ函館ベイ","en","",""];
+                HnameTable[34]=["福朋","福朋函館","フォーポイントバイシェラトン函館","en","",""];
+                HnameTable[35]=["君乐","グランド小樽","グランドパーク小樽","en","",""];
+                HnameTable[36]=["多米","小樽多米","ドーミーインPREMIUM小樽","en","",""];
+                HnameTable[37]=["银鳞","銀鱗荘","銀鱗荘","en","",""];
+                HnameTable[38]=["峡观光","層雲峡観光","層雲峡観光ホテル","en","",""];
+                HnameTable[39]=["朝陽亭","層雲峡朝陽","層雲峡朝陽亭 ","en","",""];
+                HnameTable[40]=["大雪","層雲峡大雪","層雲峡ホテル大雪","en","",""];
+                HnameTable[41]=["御前水","阿寒御前水","ホテル御前水","en","",""];
+                HnameTable[42]=["ART","旭川艺术","アートホテル旭川","en","",""];
+                HnameTable[43]=["那图瓦","富良野森林","ホテルナトゥールヴァルト富良野","en","",""];
+                HnameTable[44]=["新富良","新富良野Ｐ","新富良野プリンスホテル","en","",""];
+
+                for ( var Hcheck=0; Hcheck<90; Hcheck++ ){
+                    var thisHotelInfo = HnameTable[Hcheck];
+                    if ( HHHHname.match(thisHotelInfo[0]) ){ HnameSummary = thisHotelInfo[1]; break; } 
+                }
+                
+                
                 /*
                 if ( GuestnameList.length != ctripOrderPeoples ){
                     alert("姓名列表未能完整获取 : " + GuestnameList.length + " 不等于 " + ctripOrderPeoples);
@@ -280,7 +340,6 @@
                                         
                 
                 // 编辑MS报告
-
 
 
             }
@@ -329,7 +388,7 @@
                 var repo6 = 1 + d2.getMonth();
                 var repo7 = d2.getDate();
 
-                report_summary = ctripOrderRef +'\t'+ HHHHname +'\t'+ gName1 +'\t'+ repo4 +'\t'+ repo5 +'\t'+ repo6 +'\t'+ repo7 +'\t'+ ctripOrderNights +'\t'+ numEachRoom +'\t'+ ctripOrderRooms +'\t'+ ctripOrderPrice;
+                report_summary = ctripOrderRef +'\t'+ HnameSummary +'\t'+ gName1 +'\t'+ repo4 +'\t'+ repo5 +'\t'+ repo6 +'\t'+ repo7 +'\t'+ ctripOrderNights +'\t'+ numEachRoom +'\t'+ ctripOrderRooms +'\t'+ ctripOrderPrice;
 
             }    
 
