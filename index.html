@@ -89,7 +89,7 @@
             <label class="control-label" id=txt_eachroom_meal></label><br/><br/>
             <br/>
             
-            <label class="control-label" id=txt_guest1></label><br/><br/>
+            <label class="control-label" id=txt_guest1></label><button id="btn_All_of_Names" class="btn btn-primary" style="font-size:12px;font-family:Meiryo;float:right"><strong>所有人</strong></button><br/><br/>
             <label class="control-label" id=txt_request style="font-size:14px"></label><br/><br/>
 
 
@@ -105,12 +105,30 @@
 
     <div class="my-modal">
         <div class="my-modal-content">
-            <img hight="10%" width="100%" class="img-rounded" src="https://www.jph.co.jp/wp-content/uploads/2018/10/Artboard-2-2.png" alt="" />
-            
+
             <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                    
+                    <br/><br/>
+
+                    <a style="font-family:Microsoft YaHei;font-size:16px">　预订 </a><label class="control-label" id=txt_modal_1 style="font-family:Meiryo;font-weight:bold;font-size:20px"></label>
+                    <a style="font-family:Microsoft YaHei;font-size:16px"> 间房， 每间房：</a><label class="control-label" id=txt_modal_2 style="font-family:Microsoft YaHei;font-size:16px"></label>
+
+                    <br/><br/>
+                    <a style="font-family:Microsoft YaHei;font-size:16px">　该订单最多可住 </a><label class="control-label" id=txt_modal_3 style="font-family:Meiryo;font-weight:bold;font-size:20px"></label>
+                    <a style="font-family:Microsoft YaHei;font-size:16px"> 人。</a>
+
+                    <br/><br/><br/><br/>
+                    <label class="control-label" id=txt_modal_content style="font-family:Microsoft YaHei;font-size:16px"></label><br/><br/>
+                    
+                    </div>
+                </form>
             </div>
-                        
-            <button id="btn_modal_confirmed" class="btn btn-primary">Close</button>
+            
+            <br/><br/>
+            <button id="btn_modal_confirmed" class="btn btn-primary">Close</button>            
+
         </div>
     </div>
 
@@ -208,6 +226,7 @@
         var gName1;                 // 用于JTB氏名報告
         var gName = new Array();    // 用于存放所有客人姓名，从入住人1开始
         gName[0] = "";
+        var gNameShow = "";         // 把所有名字显示成一行
 
         /** Read from clipboard when clicking the Paste button */
         navigator.clipboard.readText()
@@ -274,9 +293,9 @@
                 ctripOrderThing[8]=pasteStr.match(regExp_ctripOrderMeals);
                 var ctripOrderMeals=RegExp.$1;
 
-                var regExp_ctripOrderGuestname=/入住人\d+\s+([\w ]+\/[\w ]+)/;
-                ctripOrderThing[9]=pasteStr.match(regExp_ctripOrderGuestname);
-                var GuestnameList=RegExp.$1.split(/\n+/);
+                var regExp_ctripOrderGuestname=/入住人\d+\s+([\w ]+\/[\w ]+)/g;
+                ctripOrderThing[9]=pasteStr.match(regExp_ctripOrderGuestname);      // ctripOrderThing[9]已经是数组了!
+                var GuestnameList=ctripOrderThing[9];
                 //if(GuestnameList.length!=ctripOrderPeoples){/* 入住人名字列表没能成功获取完成 */}
                 //转换成jtbGuestName以护照格式为准：去空格，改大写，姓与名中间的/改为半角空格
 
@@ -309,8 +328,11 @@
                 DATEshow = DATEshow.replace("2019","19");
                 var periodDays = ctripOrderNights + 1;
 
-                gName1 = GuestnameList[0].toUpperCase().replace('/','_');
-                gName1 = gName1.replace(/\W/g,"").replace('_',' ');
+                //gName1 = GuestnameList[0].toUpperCase().replace('/','_');
+                //gName1 = gName1.replace(/\W/g,"").replace('_',' ');
+                gName1=GuestnameList[0].slice(5)　　　　　　// 去掉"入住人1_"
+                gName1=gName1.toUpperCase().replace('/','_');
+                gName1=gName1.replace(/\W/g,"").replace('_',' ');                
 
                 var numEachRoom;
                 if (ctripOrderEachRoom.match(/[单一]人/)) { numEachRoom = "1"; }
@@ -337,14 +359,17 @@
                 }
                 
                 
-                /*
+                
                 if ( GuestnameList.length != ctripOrderPeoples ){
                     alert("姓名列表未能完整获取 : " + GuestnameList.length + " 不等于 " + ctripOrderPeoples);
                 }
                 else {
-                    for ( var i = 0 ; i < GuestnameList.length ; i++ )
+                    for ( var i = 0 ; i < GuestnameList.length ; i++ ){
+                        GuestnameList[i] = GuestnameList[i].replace("入住人","*");
                         gName[1+i] = GuestnameList[i].toUpperCase().replace(" ","");
-                }*/
+                        gNameShow = gNameShow + "\n" + "　" + gName[1+i];
+                    }
+                }
                                         
                 
                 // 编辑MS报告
@@ -368,26 +393,6 @@
                 // label#提醒有备注').text('' + recipText)
 
             }
-
-            modal_content_display_block: { /*
-
-                var modal = $('.my-modal')
-                modal.find('.modal-body label#txt_ref').text('单号:　' + ctripOrderRef)
-                modal.find('.modal-body label#txt_type').text('' + ctripOrderType)
-                modal.find('.modal-body label#txt_price').text(ctripOrderPrice)
-                modal.find('.modal-body label#txt_hotel_roomtype').text('' + HHHHname + '　　' + ctripOrderRoomtype)
-                modal.find('.modal-body label#txt_eachroom_meal').text('' + ctripOrderEachRoom + '　　' + ctripOrderMeals)
-                modal.find('.modal-body label#txt_rooms').text('' + ctripOrderRooms + '　◄ 间数')
-                modal.find('.modal-body label#txt_checkin').text('' + ctripOrderDate1 + '　' + Date1_dayName + '　◄ 入住日期')
-                modal.find('.modal-body label#txt_days').text('连住 ' + ctripOrderNights + ' 晚')
-                modal.find('.modal-body label#txt_guest1').text('氏名1:　' + gName1)
-                modal.find('.modal-body label#txt_request').text('　' + ctripOrderSpecialrequest)
-                //modal.find('.modal-body label#提醒有备注').text('' + recipText)
-
-                $('.my-modal').fadeIn();
-                $body.addClass('no-scroll');
-
-            */ }
             
             report_summary_editing_block: {
 
@@ -399,6 +404,27 @@
                 report_summary = ctripOrderRef +'\t'+ HnameSummary +'\t'+ gName1 +'\t'+ repo4 +'\t'+ repo5 +'\t'+ repo6 +'\t'+ repo7 +'\t'+ ctripOrderNights +'\t'+ numEachRoom +'\t'+ ctripOrderRooms +'\t'+ ctripOrderPrice;
 
             }    
+
+            modal_content_display_block: { 
+
+                $('#btn_All_of_Names').on('click', function () {
+
+                    var modal = $('.my-modal')
+
+                    modal.find('.modal-body label#txt_modal_1').text(ctripOrderRooms)    
+                    modal.find('.modal-body label#txt_modal_2').text(ctripOrderEachRoom)    
+                    modal.find('.modal-body label#txt_modal_3').text(totalPeopleNum)    
+                    modal.find('.modal-body label#txt_modal_content').text('　' + '番' + ctripOrderRef + '　' + gNameShow + '　' + SPshow)
+
+                    //modal.find('.modal-body label#提醒有备注').text('' + recipText)
+
+                    $('.my-modal').fadeIn();
+                    $body.addClass('no-scroll');
+                    
+                }); 
+
+            }
+
 
         })
         .catch(() => {
@@ -421,7 +447,13 @@
         }, 120);
 
 
+
+        $('#btn_modal_confirmed').on('click', function () {
+            $('.my-modal').fadeOut();
+            $body.removeClass('no-scroll');
+        });
         
+
 
         /* Watch for pastes */
         navigator.clipboard.addEventListener('clipboardchange', e => {
