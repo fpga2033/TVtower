@@ -92,13 +92,6 @@
             
             <label class="control-label" id=txt_guest1></label><button id="btn_All_of_Names" class="btn btn-primary" style="font-size:12px;font-family:Meiryo;float:right"><strong>所有人</strong></button><br/><br/>
             <label class="control-label" id=txt_request style="font-size:14px"></label><br/><br/>
-
-
-            <form>
-                <div class="form-group">
-                </div>
-            </form>
-            
             
         </section>
         <!--<div class="bg"></div>   这是BackGround图片 -->
@@ -128,6 +121,7 @@
             </div>
             
             <br/><br/>
+            <a style="font-family:Microsoft YaHei;font-size:16px">　</a>
             <button id="btn_modal_confirmed" class="btn btn-primary" style="font-family:Microsoft YaHei;font-size:15px">　Close　</button>            
 
         </div>
@@ -136,6 +130,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script type="text/javascript">
 
+        var debug = 0;
         var $body = $('body');
         var report_summary;
         var HnameSummary = "sapporo1";
@@ -228,7 +223,7 @@
         var gName = new Array();    // 用于存放所有客人姓名，从入住人1开始
         gName[0] = "";
         var gNameShow = "";         // 把所有名字显示成一行
-
+        debug = 1;
         
         /* 此处设置125ms延迟，防止构造HnameTable资料和计算HnameSummary线程竞争造成异常 */
         setTimeout(function(){
@@ -238,7 +233,8 @@
                 
                 var pasteStr = text;        // 此处开始引入ctripOrderInfo的处理
                 //log('Text pasted.');
-            
+                debug = 2;
+
                 ctripOrderInfo_extracting_block: {
 
                     var ctripOrderThing=new Array();
@@ -311,7 +307,8 @@
                     var regExp_ctripOrderComment=/备注\n{1,2}(..)/;
                     ctripOrderThing[11]=pasteStr.match(regExp_ctripOrderComment);
                     //if(RegExp.$1){/* 提醒用户备注栏里有内容 */}
-
+                
+                    debug = 3;
                 }
                 
                 Key_Info_treatment: {
@@ -375,7 +372,7 @@
                     
                     // 编辑MS报告
 
-
+                    debug = 4;
                 }
 
                 beside_content_display_block: { 
@@ -392,6 +389,7 @@
                     document.getElementById("txt_guest1").innerHTML = gName1;
                     document.getElementById("txt_request").innerHTML = SPshow;
                     // label#提醒有备注').text('' + recipText)
+                    debug = 5;
 
                 }
                 
@@ -409,6 +407,7 @@
                     if ( HnameSummary == "" ){ window.close(); }
                     report_summary = ctripOrderRef +'\t'+ HnameSummary +'\t'+ gName1 +'\t'+ repo4 +'\t'+ repo5 +'\t'+ repo6 +'\t'+ repo7 +'\t'+ ctripOrderNights +'\t'+ numEachRoom +'\t'+ ctripOrderRooms +'\t'+ ctripOrderPrice;
 
+                    debug = 6;
                 }    
 
                 modal_content_display_block: { 
@@ -428,19 +427,19 @@
                         $body.addClass('no-scroll');
                         
                     }); 
-
+                    debug = 7;
                 }
 
 
             })
             .catch(() => {
-                log(' MAIN process Failed ! v1103a');
+                log(' MAIN Failed ! v1103a debug = ' + debug);
             });
 
-        }, 125);
+        }, 180);
 
 
-        /* 此处设置125+120ms延迟，防止readText和writeText同时相应造成异常 */
+        /* 此处设置180+120ms延迟，防止readText和writeText同时相应造成异常 */
         //$('#btn_start_process').delay(100).queue(function(){ });
         setTimeout(function(){
 
@@ -454,7 +453,7 @@
                 //log('Failed to write clipboard');
             });
 
-        }, 245);
+        }, 300);
 
 
 
