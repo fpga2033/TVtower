@@ -229,7 +229,7 @@
         var gNameShow = "";         // 把所有名字显示成一行
 
         
-        /* 此处设置100ms延迟，防止构造HnameTable资料和计算HnameSummary线程竞争造成异常 */
+        /* 此处设置125ms延迟，防止构造HnameTable资料和计算HnameSummary线程竞争造成异常 */
         setTimeout(function(){
 
             navigator.clipboard.readText()
@@ -436,10 +436,10 @@
                 log(' MAIN process Failed ! v1103a');
             });
 
-        }, 100);
+        }, 125);
 
 
-        /* 此处设置100+120ms延迟，防止readText和writeText同时相应造成异常 */
+        /* 此处设置125+120ms延迟，防止readText和writeText同时相应造成异常 */
         //$('#btn_start_process').delay(100).queue(function(){ });
         setTimeout(function(){
 
@@ -453,7 +453,7 @@
                 //log('Failed to write clipboard');
             });
 
-        }, 220);
+        }, 245);
 
 
 
