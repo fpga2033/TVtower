@@ -359,7 +359,7 @@
                 }
                 
                 
-                
+                /*
                 if ( GuestnameList.length != ctripOrderPeoples ){
                     alert("姓名列表未能完整获取 : " + GuestnameList.length + " 不等于 " + ctripOrderPeoples);
                 }
@@ -369,8 +369,13 @@
                         gName[1+i] = GuestnameList[i].toUpperCase().replace(" ","");
                         gNameShow = gNameShow + "\n" + "　" + gName[1+i];
                     }
-                }
-                                        
+                } */
+
+                for ( var i = 0 ; i < GuestnameList.length ; i++ ){
+                    GuestnameList[i] = GuestnameList[i].replace("入住人","*");
+                    gName[1+i] = GuestnameList[i].toUpperCase().replace(" ","");
+                    gNameShow = gNameShow + "\n" + "　" + gName[1+i];                
+                }                        
                 
                 // 编辑MS报告
 
