@@ -15,8 +15,9 @@
 
     <style rel="stylesheet" type="text/css">
 
-        a:hover {color: rgb(0, 0, 216)}
-        a:active {color: rgb(57, 78, 160)}
+        span:root {color: rgb(86, 0, 121);font-weight: bold}
+        span:hover {color: rgb(35, 20, 241)}
+        span:active {color: rgb(158, 225, 238);background-color: rgb(167, 115, 226)}
  
 
         body.no-scroll {
@@ -82,25 +83,26 @@
         <section>
             <title>☆♪ Sapporo TV Hotel ♪☆</title>
             
-            <a style="font-size:15px">REF# </a><label class="control-label" id=txt_ref style="font-size:16px;font-family:verdana;color:rgb(23, 94, 248)"></label>
+            <a style="font-size:15px">REF# </a><span><label class="control-label" id=txt_ref style="font-size:16px;font-family:verdana;color:rgb(23, 94, 248)"></label></span>
             <button id="btn_JTB_confirmed" class="btn btn-primary" style="font-size:14px;font-family:Meiryo;float:right"><strong>ＪＴＢ完成</strong><br><em>(去填集計草稿)</em></button><br/>
-            <a style="font-size:16px">★0.381 </a><label class="control-label" id=txt_type style="font-size:15px"></label><br/>
+            <a style="font-size:16px">★0.391 </a><label class="control-label" id=txt_type style="font-size:15px"></label><br/>
             
             <img hight="15%" width="100%" class="img-rounded" src="https://raw.githubusercontent.com/Best-Hotel-Japan/Sapporo_TV_Hotel-Dev/gh-pages/background.jpg" alt="" /><br/>
             <!--https://raw.githubusercontent.com/fpga2033/TVtower/0609769e290f5f11ccf79624a39f594c03a2a4eb/mildseven-hill-winter.jpg-->
 
             <a>总额:　JPY </a><label class="control-label" id=txt_price style="font-size:22px;font-family:verdana;color:red"></label><br/><br/>
-            <a style="font-size:12px"> 男  </a><label class="control-label" id=txt_male_female style="font-weight:bold;font-size:20px;color:rgb(9, 15, 68)"></label><br/><br/>
-            <label class="control-label" id=txt_checkin style="font-weight:bold;font-size:20px;color:rgb(86, 0, 121)"></label>
-            <a style="font-size:12px"> より </a><label class="control-label" id=txt_days style="font-weight:bold;font-size:20px;color:rgb(86, 0, 121)"></label><a style="font-size:12px"> 日間　　　</a>
-            <label class="control-label" id=txt_rooms style="font-weight:bold;font-size:20px;color:rgb(86, 0, 121)"></label><a style="font-size:12px"> 室</a><br/>
+            <a style="font-size:12px">　男 </a><label class="control-label" id=txt_male_female style="font-weight:bold;font-size:22px;color:rgb(65, 0, 90)"></label><br/><br/>
+            
+            <span><label class="control-label" id=txt_checkin style="font-weight:bold;font-size:18px;"></label></span>
+            <a style="font-size:12px">より </a><label class="control-label" id=txt_days style="font-weight:bold;font-size:22px;color:rgb(65, 0, 90)"></label><a style="font-size:12px"> 日間　　　</a>
+            <label class="control-label" id=txt_rooms style="font-weight:bold;font-size:22px;color:rgb(65, 0, 90)"></label><a style="font-size:12px"> 室</a><br/>
             <br/>
             
-            <label class="control-label" id=txt_hotel_roomtype></label><br/><br/>
-            <label class="control-label" id=txt_eachroom_meal></label><br/><br/>
+            <span><label class="control-label" id=txt_hotel style="font-weight:normal;font-size:18px"></label></span><label class="control-label" id=txt_roomtype></label><br/><br/>
+            <label class="control-label" id=txt_eachroom></label><label class="control-label" id=txt_meal></label><br/><br/>
             <br/>
             
-            <label class="control-label" id=txt_guest1></label><button id="btn_All_of_Names" class="btn btn-primary" style="font-size:12px;font-family:Meiryo;float:right"><strong>　所有人　</strong></button><br/><br/>
+            <span><label class="control-label" id=txt_guest1 style="font-weight:normal;font-size:18px"></span></label><button id="btn_All_of_Names" class="btn btn-primary" style="font-size:12px;font-family:Meiryo;float:right"><strong>　所有人　</strong></button><br/><br/>
             <label class="control-label" id=txt_request style="font-weight:bold;font-size:12px"></label><br/><br/>
             
             <label class="control-label" id=txt_show_OK style="font-weight:bold;font-style:oblique;font-size:24px;color:rgb(9, 15, 68)"></label>
@@ -128,14 +130,14 @@
                     <label class="control-label" id=txt_modal_2 style="font-family:Microsoft YaHei;font-weight:bold;font-size:16px"></label>
 
                     <br/><br/>
-                    <a style="font-family:Microsoft YaHei;font-size:16px">　该预订最多可住 </a>
+                    <a style="font-family:Microsoft YaHei;font-size:16px">　该预订最多可住　</a>
                     <label class="control-label" id=txt_modal_3 style="font-family:Meiryo;font-weight:bold;font-size:22px"></label>
                     <a style="font-family:Microsoft YaHei;font-size:16px"> 人。</a>
 
                     <br/><br/><br/>
-                    <b style="font-family:Microsoft YaHei;font-size:16px;color:rgb(221, 121, 90)">　订单通知了"入住人数"是 </b>
+                    <b style="font-family:Microsoft YaHei;font-size:16px;color:rgb(221, 121, 90)">　订单通知了"入住人数"是　</b>
                     <label class="control-label" id=txt_modal_4 style="font-family:Meiryo;font-weight:bold;font-size:22px;color:rgb(221, 121, 90)"></label>
-                    <b style="font-family:Microsoft YaHei;font-size:16px;color:rgb(221, 121, 90)"> 耶!~</b><br/>
+                    <b style="font-family:Microsoft YaHei;font-size:16px;color:rgb(221, 121, 90)"> 耶!</b><br/>
                     <b style="font-family:Microsoft YaHei;font-size:16px;color:rgb(221, 121, 90)">　为您编辑「MS報告」如下：</b>
 
                     <br/><br/><br/>
@@ -176,6 +178,7 @@
                 var gNameShow = "";         // 把所有名字显示成一行
 
                 var HnameSummary = "sapporo1";
+                var HnameJTBcode = "";
                 var JTBTotalPrice = "";
                 var orderProfit = 0;
                 debug = 1;
@@ -195,51 +198,51 @@
                         }
                     }
                     debug = 2.1;
-                    HnameTable[0]=["塔娃","星野塔娃","星野リゾート　トマム・ザ・タワー","en","",""];
-                    HnameTable[1]=["Riso","星野Risonare","星野リゾート　リゾナーレトマム","en","",""];
-                    HnameTable[2]=["希尔顿","Hilton二世古","ヒルトンニセコビレッジ","en","",""];
-                    HnameTable[3]=["Alpen","二世古Alpen","ホテルニセコアルペン","en","",""];
-                    HnameTable[4]=["安努普","二世古R安努","ニセコノーザンリゾート　アンヌプリ","en","",""];
-                    HnameTable[5]=["世古塔","二世古塔","ワンニセコリゾートタワーズ","en","",""];
-                    HnameTable[6]=["谷臻品","キロロ","キロロ トリビュートポートフォリオホテル","en","",""];
-                    HnameTable[7]=["威斯汀","Westinルスツ","ウエスティンルスツリゾート","en","",""];
-                    HnameTable[8]=["及会议","ルスツ RC","ルスツリゾートホテル＆コンベンション","en","",""];
-                    HnameTable[9]=["日航","JR日航","JR タワーホテル日航","en","",""];
-                    HnameTable[10]=["格拉斯丽","格拉斯丽","ホテルグレイスリー札幌","en","",""];
-                    HnameTable[11]=["世纪皇家","世纪皇家","センチュリーロイヤルホテル札幌","en","",""];
-                    HnameTable[12]=["京王","京王プラザ","京王プラザホテル札幌","en","",""];
-                    HnameTable[13]=["北口","Mystay北口","ホテルマイステイズ札幌駅北口（旧ホテルフィーノ札幌）","en","",""];
-                    HnameTable[14]=["格兰","札幌格兰","札幌グランドホテル","en","",""];
-                    HnameTable[15]=["唐草","札幌唐草","からくさホテル札幌","en","",""];
-                    HnameTable[16]=["東急商","東急REI","札幌東急REI　ホテル","en","",""];
-                    HnameTable[17]=["克罗斯","克罗斯","クロスホテル札幌","en","",""];
-                    HnameTable[18]=["罗伊顿","罗伊顿札幌","ロイトン札幌","en","",""];
-                    HnameTable[19]=["三井","三井花园","三井ガーデンホテル札幌","en","",""];
-                    HnameTable[20]=["滝本","第一滝本","登別第一滝本館","en","",""];
-                    HnameTable[21]=["登別万","登別万世閣","登別万世閣","en","",""];
-                    HnameTable[22]=["仙境","まほろば","ホテルまほろば","en","",""];
-                    HnameTable[23]=["登别格","登別グランド","登別グランドホテル","en","",""];
-                    HnameTable[24]=["石水亭","登別石水亭","登別石水亭","en","",""];
-                    HnameTable[25]=["雅亭","登別雅亭","名湯の宿パークホテル雅亭","en","",""];
-                    HnameTable[26]=["乃之风","TOYA乃の風","ザ・レイクビューTOYA乃の風リゾート","en","",""];
-                    HnameTable[27]=["湖山水","洞爺湖山水","洞爺湖山水ホテル和風","en","",""];
-                    HnameTable[28]=["湖畔亭","洞爺湖畔亭","洞爺湖畔亭","en","",""];
-                    HnameTable[29]=["爷观光","洞爺観光","洞爺観光ホテル","en","",""];
-                    HnameTable[30]=["湖温莎","洞爺温莎","ザ・ウンインザーホテル洞爺リゾート＆スパ","en","",""];
-                    HnameTable[31]=["太阳宫","洞爺サン","洞爺サンパレス","en","",""];
-                    HnameTable[32]=["章月","章月格兰","章月グランドホテル","en","",""];
-                    HnameTable[33]=["拉碧斯","LAVIS函館","ＬＡ　ＶＩＳＴＡ函館ベイ","en","",""];
-                    HnameTable[34]=["福朋","福朋函館","フォーポイントバイシェラトン函館","en","",""];
-                    HnameTable[35]=["君乐","グランド小樽","グランドパーク小樽","en","",""];
-                    HnameTable[36]=["多米","小樽多米","ドーミーインPREMIUM小樽","en","",""];
-                    HnameTable[37]=["银鳞","銀鱗荘","銀鱗荘","en","",""];
-                    HnameTable[38]=["峡观光","層雲峡観光","層雲峡観光ホテル","en","",""];
-                    HnameTable[39]=["朝陽亭","層雲峡朝陽","層雲峡朝陽亭 ","en","",""];
-                    HnameTable[40]=["大雪","層雲峡大雪","層雲峡ホテル大雪","en","",""];
-                    HnameTable[41]=["御前水","阿寒御前水","ホテル御前水","en","",""];
-                    HnameTable[42]=["ART","旭川艺术","アートホテル旭川","en","",""];
-                    HnameTable[43]=["那图瓦","富良野森林","ホテルナトゥールヴァルト富良野","en","",""];
-                    HnameTable[44]=["新富良","新富良野Ｐ","新富良野プリンスホテル","en","",""];
+                    HnameTable[0]=["塔娃","星野塔娃","星野リゾート　トマム・ザ・タワー","en","1578006",""];
+                    HnameTable[1]=["Riso","星野Risonare","星野リゾート　リゾナーレトマム","en","1578020",""];
+                    HnameTable[2]=["希尔顿","Hilton二世古","ヒルトンニセコビレッジ","en","1524002",""];
+                    HnameTable[3]=["Alpen","二世古Alpen","ホテルニセコアルペン","en","1527003",""];
+                    HnameTable[4]=["安努普","二世古R安努","ニセコノーザンリゾート　アンヌプリ","en","1525003",""];
+                    HnameTable[5]=["世古塔","二世古塔","ワンニセコリゾートタワーズ","en","1525005",""];
+                    HnameTable[6]=["谷臻品","キロロ","キロロ トリビュートポートフォリオホテル","en","1586002",""];
+                    HnameTable[7]=["威斯汀","Westinルスツ","ウエスティンルスツリゾート","en","1567002",""];
+                    HnameTable[8]=["及会议","ルスツ RC","ルスツリゾートホテル＆コンベンション","en","1567001",""];
+                    HnameTable[9]=["日航","JR日航","JR タワーホテル日航","en","1529113",""];
+                    HnameTable[10]=["格拉斯丽","格拉斯丽","ホテルグレイスリー札幌","en","1529024",""];
+                    HnameTable[11]=["世纪皇家","世纪皇家","センチュリーロイヤルホテル札幌","en","1529023",""];
+                    HnameTable[12]=["京王","京王プラザ","京王プラザホテル札幌","en","1529005",""];
+                    HnameTable[13]=["北口","Mystay北口","ホテルマイステイズ札幌駅北口（旧ホテルフィーノ札幌）","en","1529121",""];
+                    HnameTable[14]=["格兰","札幌格兰","札幌グランドホテル","en","1529001",""];
+                    HnameTable[15]=["唐草","札幌唐草","からくさホテル札幌","en","9999999",""];
+                    HnameTable[16]=["東急商","東急REI","札幌東急REI　ホテル","en","1529039",""];
+                    HnameTable[17]=["克罗斯","克罗斯","クロスホテル札幌","en","1529120",""];
+                    HnameTable[18]=["罗伊顿","罗伊顿札幌","ロイトン札幌","en","1529093",""];
+                    HnameTable[19]=["三井","三井花园","三井ガーデンホテル札幌","en","1529137",""];
+                    HnameTable[20]=["滝本","第一滝本","登別第一滝本館","en","1558001",""];
+                    HnameTable[21]=["登別万","登別万世閣","登別万世閣","en","1558003",""];
+                    HnameTable[22]=["仙境","まほろば","ホテルまほろば","en","1558007",""];
+                    HnameTable[23]=["登别格","登別グランド","登別グランドホテル","en","1558002",""];
+                    HnameTable[24]=["石水亭","登別石水亭","登別石水亭","en","1558005",""];
+                    HnameTable[25]=["雅亭","登別雅亭","名湯の宿パークホテル雅亭","en","1558006",""];
+                    HnameTable[26]=["乃之风","TOYA乃の風","ザ・レイクビューTOYA乃の風リゾート","en","1570025",""];
+                    HnameTable[27]=["湖山水","洞爺湖山水","洞爺湖山水ホテル和風","en","1570019",""];
+                    HnameTable[28]=["湖畔亭","洞爺湖畔亭","洞爺湖畔亭","en","1570022",""];
+                    HnameTable[29]=["爷观光","洞爺観光","洞爺観光ホテル","en","1570002",""];
+                    HnameTable[30]=["湖温莎","洞爺温莎","ザ・ウンインザーホテル洞爺リゾート＆スパ","en","1570024",""];
+                    HnameTable[31]=["太阳宫","洞爺サン","洞爺サンパレス","en","1570010",""];
+                    HnameTable[32]=["章月","章月格兰","章月グランドホテル","en","1533001",""];
+                    HnameTable[33]=["拉碧斯","LAVIS函館","ＬＡ　ＶＩＳＴＡ函館ベイ","en","1611037",""];
+                    HnameTable[34]=["福朋","福朋函館","フォーポイントバイシェラトン函館","en","1611015",""];
+                    HnameTable[35]=["君乐","グランド小樽","グランドパーク小樽","en","1512019",""];
+                    HnameTable[36]=["多米","小樽多米","ドーミーインPREMIUM小樽","en","1512022",""];
+                    HnameTable[37]=["银鳞","銀鱗荘","銀鱗荘","en","1512010",""];
+                    HnameTable[38]=["峡观光","層雲峡観光","層雲峡観光ホテル","en","1111004",""];
+                    HnameTable[39]=["朝陽亭","層雲峡朝陽","層雲峡朝陽亭 ","en","1111005",""];
+                    HnameTable[40]=["大雪","層雲峡大雪","層雲峡ホテル大雪","en","1117006",""];
+                    HnameTable[41]=["御前水","阿寒御前水","ホテル御前水","en","1304005",""];
+                    HnameTable[42]=["ART","旭川艺术","アートホテル旭川","en","1107016",""];
+                    HnameTable[43]=["那图瓦","富良野森林","ホテルナトゥールヴァルト富良野","en","1117007",""];
+                    HnameTable[44]=["新富良","新富良野Ｐ","新富良野プリンスホテル","en","1117006",""];
                     
                     debug = 2.2;
                 }
@@ -296,7 +299,7 @@
                     var regExp_ctripOrderPeoples=/入住人数\s+(\d+)/;
                     ctripOrderThing[7]=pasteStr.match(regExp_ctripOrderPeoples);
                     var ctripOrderPeoples=RegExp.$1;
-                    //ctripOrderPeoples是订单通知人数。订单通知人数 ≤ 实际入住人数 ≤ 预订可住人数
+                    //ctripOrderPeoples是订单通知人数。姓名个数 ≤ 订单通知人数 ≤ 实际入住人数 ≤ 预订可住人数
 
                     var regExp_ctripOrderMeals=/房型\s+.+([\u4e00-\u9fa5]早|早\+晚餐)/;
                     ctripOrderThing[8]=pasteStr.match(regExp_ctripOrderMeals);
@@ -334,6 +337,7 @@
                     HHHHname = HHHHname.replace("TOMAMU","");
                     
                     var DATEshow = ctripOrderDate1;
+                    var JTBinputDate = DATEshow.replace(/-/g,"");
                     DATEshow = DATEshow.replace("2018","18");
                     DATEshow = DATEshow.replace("2019","19");
                     var periodDays = ctripOrderNights + 1;
@@ -357,7 +361,7 @@
                     
                     var SPshow = ctripOrderSpecialrequest;
                     SPshow = SPshow.replace("High floor preferred"," *高階層希望 ");
-                    SPshow = SPshow.replace("Nonsmoking preferred"," *禁煙室 ");
+                    SPshow = SPshow.replace("Nonsmoking preferred"," *禁煙 ");
                     SPshow = SPshow.replace("Quiet room preferred","");
                     SPshow = SPshow.replace("Honeymoon amenity preferred","");
                     SPshow = SPshow.replace("Prefer ","*Prefer ");
@@ -378,9 +382,9 @@
                     } */
                     for ( var i = 0 ; i < GuestnameList.length ; i++ ){
                         GuestnameList[i] = GuestnameList[i].replace("入住人","*");
-                        gName[1+i] = GuestnameList[i].toUpperCase().replace(" ","");
+                        gName[1+i] = GuestnameList[i].toUpperCase().replace(" ","");    // 删掉一个空格而不是全部，提高MS报告的可读性
                         gNameShow = gNameShow + "　" + gName[1+i];
-                        gName[1+i] = gName[1+i].slice(4);       //姓氏的首字母前面有两个换行符
+                        gName[1+i] = gName[1+i].slice(4);       // 姓氏的首字母前面有两个换行符
                     }                        
                     
                     // 编辑MS报告
@@ -393,13 +397,15 @@
                     document.getElementById("txt_ref").innerHTML = ctripOrderRef;
                     document.getElementById("txt_type").innerHTML = ctripOrderType;
                     document.getElementById("txt_price").innerHTML = ctripOrderPrice;
-                    document.getElementById("txt_hotel_roomtype").innerHTML = HHHHname + '　　' + ctripOrderRoomtype;
-                    document.getElementById("txt_eachroom_meal").innerHTML = ctripOrderEachRoom + '　　' + ctripOrderMeals;
+                    document.getElementById("txt_hotel").innerHTML = HHHHname + '　　';
+                    document.getElementById("txt_roomtype").innerHTML = ctripOrderRoomtype;
+                    document.getElementById("txt_eachroom").innerHTML = ctripOrderEachRoom + '　　';
+                    document.getElementById("txt_meal").innerHTML = ctripOrderMeals;
                     document.getElementById("txt_rooms").innerHTML = ctripOrderRooms;
                     document.getElementById("txt_male_female").innerHTML = totalPeopleAllow;
-                    document.getElementById("txt_checkin").innerHTML = DATEshow + '　' + Date1_dayName;
+                    document.getElementById("txt_checkin").innerHTML = DATEshow + '　' + Date1_dayName + '　';
                     document.getElementById("txt_days").innerHTML = periodDays;
-                    document.getElementById("txt_guest1").innerHTML = gName1;
+                    document.getElementById("txt_guest1").innerHTML = gName1 + ' ';
                     document.getElementById("txt_request").innerHTML = SPshow;
                     // label#提醒有备注').text('' + recipText)
                     debug = 5;
@@ -409,28 +415,30 @@
                 modal_content_display_block: { 
 
                     var MS_report = "";
+                    var ctripOrderNames = GuestnameList.length;     // 姓名个数 ≤ 订单通知人数 ≤ 实际入住人数 ≤ 预订可住人数
+                    ctripOrderNames = ctripOrderNames.toString();
 
-                    // 依次判断： 预订间数，每间入住人数，实际报告的名字个数    debug ctrip order: 7557303377 
+                    // 依次判断： 预订间数，每间入住人数，实际报告的姓名个数    debug ctrip order: 7557303377 7725211919
                     switch( ctripOrderRooms ){
                     case "1":
                             switch( numEachRoom ){
                             case "1":
-                                    switch( ctripOrderPeoples ){
+                                    switch( ctripOrderNames ){
                                     case "1": MS_report = "客問い合わせ番" + ctripOrderRef + "　"; break;
                                     } break;
                             case "2":
-                                    switch( ctripOrderPeoples ){
+                                    switch( ctripOrderNames ){
                                     case "1": MS_report = "客問い合わせ番" + ctripOrderRef + "　代表者：" + gName[1]; break;
                                     case "2": MS_report = "客問い合わせ番" + ctripOrderRef + "　同行者：" + gName[2]; break;
                                     } break;
                             case "3":
-                                    switch( ctripOrderPeoples ){
+                                    switch( ctripOrderNames ){
                                     case "1": MS_report = "客問い合わせ番" + ctripOrderRef + "　代表者：" + gName[1]; break;
                                     case "2": MS_report = "客問い合わせ番" + ctripOrderRef + "　代表者：" + gName[1] + "　" + gName[2]; break;
                                     case "3": MS_report = "客問い合わせ番" + ctripOrderRef + "　同行者：" + gName[2] + "　" + gName[3]; break;
                                     } break;                
                             case "4":
-                                    switch( ctripOrderPeoples ){
+                                    switch( ctripOrderNames ){
                                     case "1": MS_report = "客問い合わせ番" + ctripOrderRef + "　代表者："; break;
                                     case "2": MS_report = "客問い合わせ番" + ctripOrderRef + "　代表者：" + gName[1] + "　" + gName[2]; break;
                                     case "3": MS_report = "番" + ctripOrderRef + "　代表者：" + gName[1] + "　" + gName[2] + "　" + gName[3]; break;
@@ -441,19 +449,19 @@
                     case "2":
                             switch( numEachRoom ){                  //　*1 AA/AA　BB/BB　*2 CC/CC　DD/DD  
                             case "1":
-                                    switch( ctripOrderPeoples ){
+                                    switch( ctripOrderNames ){
                                     case "1": MS_report = "客問い合わせ番" + ctripOrderRef + "　代表者：" + gName[1]; break;
                                     case "2": MS_report = "客問い合わせ番" + ctripOrderRef + "　名簿 *1 " + gName[1] + "　*2 " + gName[2]; break;
                                     } break;
                             case "2":
-                                    switch( ctripOrderPeoples ){
+                                    switch( ctripOrderNames ){
                                     case "1": MS_report = "客問い合わせ番" + ctripOrderRef + "　代表者：" + gName[1]; break;
                                     case "2": MS_report = "客問い合わせ番" + ctripOrderRef + "　代表者 *1 " + gName[1] + "　*2 " + gName[2]; break;
                                     case "3": MS_report = "客問い合わせ番" + ctripOrderRef + "　代表者 *1 " + gName[1] + "　*2 " + gName[2] + "　" + gName[3]; break;
                                     case "4": MS_report = "番" + ctripOrderRef + "　名簿 *1 " + gName[1] + "　" + gName[2] + "　*2 " + gName[3] + "　" + gName[4]; break;
                                     } break;
                             case "3":
-                                    switch( ctripOrderPeoples ){
+                                    switch( ctripOrderNames ){
                                     case "1": MS_report = "客問い合わせ番" + ctripOrderRef + "　代表者：" + gName[1]; break;
                                     case "2": MS_report = "客問い合わせ番" + ctripOrderRef + "　代表者 *1 " + gName[1] + "　*2 " + gName[2]; break;
                                     case "3": MS_report = "客問い合わせ番" + ctripOrderRef + "　代表者 *1 " + gName[1] + "　*2 " + gName[2] + "　" + gName[3]; break;
@@ -462,7 +470,7 @@
                                     case "6": MS_report = "番" + ctripOrderRef + "　名簿 *1 " + gName[1] + "　" + gName[2] + "　" + gName[3] + "　*2 " + gName[4] + "　" + gName[5] + "　" + gName[6]; break;
                                     } break;                
                             case "4":
-                                    switch( ctripOrderPeoples ){
+                                    switch( ctripOrderNames ){
                                     case "1": MS_report = "客問い合わせ番" + ctripOrderRef + "　代表者：" + gName[1]; break;
                                     case "2": MS_report = "客問い合わせ番" + ctripOrderRef + "　代表者 *1 " + gName[1] + "　*2 " + gName[2]; break;
                                     case "3": MS_report = "客問い合わせ番" + ctripOrderRef + "　代表者 *1 " + gName[1] + "　*2 " + gName[2] + "　" + gName[3]; break;
@@ -477,13 +485,13 @@
                     case "3":
                             switch( numEachRoom ){                  //　*1 AA/AA　BB/BB　*2 CC/CC　DD/DD　*3 EE/EE　FF/FF  
                             case "1":
-                                    switch( ctripOrderPeoples ){
+                                    switch( ctripOrderNames ){
                                     case "1": MS_report = "客問い合わせ番" + ctripOrderRef + "　代表者：" + gName[1]; break;
                                     case "2": MS_report = "客問い合わせ番" + ctripOrderRef + "　代表者：" + gName[1] + gName[2]; break;
                                     case "3": MS_report = "客問い合わせ番" + ctripOrderRef + "　名簿 *1 " + gName[1] + "　*2 " + gName[2] + "　*3 " + gName[3]; break;
                                     } break;
                             case "2":
-                                    switch( ctripOrderPeoples ){
+                                    switch( ctripOrderNames ){
                                     case "1": MS_report = "客問い合わせ番" + ctripOrderRef + "　代表者：" + gName[1]; break;
                                     case "2": MS_report = "客問い合わせ番" + ctripOrderRef + "　代表者 *1 " + gName[1] + "　*2 " + gName[2]; break;
                                     case "3": MS_report = "客問い合わせ番" + ctripOrderRef + "　代表者 *1 " + gName[1] + "　*2 " + gName[2] + "　*3 " + gName[3]; break;
@@ -492,7 +500,7 @@
                                     case "6": MS_report = "番" + ctripOrderRef + "　名簿 *1 " + gName[1] + "　" + gName[2] + "　*2 " + gName[3] + "　" + gName[4] + "　*3 " + gName[5] + "　" + gName[6]; break;
                                     } break;
                             case "3":
-                                    switch( ctripOrderPeoples ){
+                                    switch( ctripOrderNames ){
                                     case "1": MS_report = "客問い合わせ番" + ctripOrderRef + "　代表者：" + gName[1]; break;
                                     case "2": MS_report = "客問い合わせ番" + ctripOrderRef + "　代表者 *1 " + gName[1] + "　*2 " + gName[2]; break;
                                     case "3": MS_report = "客問い合わせ番" + ctripOrderRef + "　代表者 *1 " + gName[1] + "　*2 " + gName[2] + "　*3 " + gName[3]; break;
@@ -504,7 +512,7 @@
                                     case "9": MS_report = "番" + ctripOrderRef + "　名簿 *1 " + gName[1] + "　" + gName[2] + "　" + gName[3] + "　*2 " + gName[4] + "　" + gName[5] + "　" + gName[6] + "　*3 " + gName[7] + "　" + gName[8] + "　" + gName[9]; break;
                                     } break;                
                             case "4":
-                                    switch( ctripOrderPeoples ){
+                                    switch( ctripOrderNames ){
                                     case "3": MS_report = "客問い合わせ番" + ctripOrderRef + "　代表者 *1 " + gName[1] + "　*2 " + gName[2] + "　*3 " + gName[3]; break;
                                     case "4": MS_report = "番" + ctripOrderRef + "　代表者 *1 " + gName[1] + "　*2 " + gName[2] + "　*3 " + gName[3] + "　" + gName[4]; break;
                                     case "5": MS_report = "番" + ctripOrderRef + "　代表者 *1 " + gName[1] + "　*2 " + gName[2] + "　" + gName[3] + "　*3 " + gName[4] + "　" + gName[5]; break;
@@ -521,7 +529,7 @@
                     case "4":
                             switch( numEachRoom ){                  //　*1 AA/AA　BB/BB　*2 CC/CC　DD/DD　*3 EE/EE　FF/FF　*4 GG/GG　HH/HH  
                             case "2":
-                                    switch( ctripOrderPeoples ){
+                                    switch( ctripOrderNames ){
                                     case "4": MS_report = "番" + ctripOrderRef + "　代表者 *1 " + gName[1] + "　*2 " + gName[2] + "　*3 " + gName[3] + "　*4 " + gName[4]; break;
                                     case "5": MS_report = "番" + ctripOrderRef + "　代表者 *1 " + gName[1] + "　*2 " + gName[2] + "　*3 " + gName[3] + "　*4 " + gName[4] + "　" + gName[5]; break;
                                     case "6": MS_report = "番" + ctripOrderRef + "　代表者 *1 " + gName[1] + "　*2 " + gName[2] + "　*3 " + gName[3] + "　" + gName[4] + "　*4 " + gName[5] + "　" + gName[6]; break;
@@ -529,7 +537,7 @@
                                     case "8": MS_report = "番" + ctripOrderRef + "　名簿 *1 " + gName[1] + "　" + gName[2] + "　*2 " + gName[3] + "　" + gName[4] + "　*3 " + gName[5] + "　" + gName[6] + "　*4 " + gName[7] + "　" + gName[8]; break;
                                     } break;
                             case "3":
-                                    switch( ctripOrderPeoples ){
+                                    switch( ctripOrderNames ){
                                     case "4": MS_report = "番" + ctripOrderRef + "　代表者 *1 " + gName[1] + "　*2 " + gName[2] + "　*3 " + gName[3] + "　*4 " + gName[4]; break;
                                     case "5": MS_report = "番" + ctripOrderRef + "　代表者 *1 " + gName[1] + "　*2 " + gName[2] + "　*3 " + gName[3] + "　*4 " + gName[4] + "　" + gName[5]; break;
                                     case "6": MS_report = "番" + ctripOrderRef + "　代表者 *1 " + gName[1] + "　*2 " + gName[2] + "　*3 " + gName[3] + "　" + gName[4] + "　*4 " + gName[5] + "　" + gName[6]; break;
@@ -541,9 +549,10 @@
                                     case "12": MS_report = "*1 " + gName[1] + "　" + gName[2] + "　" + gName[3] + "　*2 " + gName[4] + "　" + gName[5] + "　" + gName[6] + "　*3 " + gName[7] + "　" + gName[8] + "　" + gName[9] + "　*4 " + gName[10] + "　" + gName[11] + "　" + gName[12]; break;
                                     } break;                
                             } break;
+                    default: MS_report = '番' + ctripOrderRef + '　' + gNameShow; break;      
                     }
-                    // case 嵌套，用default会变很奇怪的效果
-                    if ( MS_report == "" ){ MS_report = '番' + ctripOrderRef + '　' + gNameShow; }
+                    // case 嵌套，用default会变很奇怪的效果。。结果证明只是内层的break漏掉了而已。
+                    // if ( MS_report == "" ){ MS_report = '番' + ctripOrderRef + '　' + gNameShow; }
                     if ( SPshow != "null" ){ MS_report = MS_report + '　' + SPshow; }
                     MS_report = MS_report.replace("undefined","あります。");
 
@@ -554,7 +563,7 @@
                         modal.find('.modal-body label#txt_modal_1').text(ctripOrderRooms)    
                         modal.find('.modal-body label#txt_modal_2').text(ctripOrderEachRoom)    
                         modal.find('.modal-body label#txt_modal_3').text(totalPeopleAllow)    
-                        modal.find('.modal-body label#txt_modal_4').text(ctripOrderPeoples)    
+                        modal.find('.modal-body label#txt_modal_4').text(ctripOrderPeoples)
                         modal.find('.modal-body label#txt_modal_content').text('　' + MS_report)
 
                         //modal.find('.modal-body label#提醒有备注').text('' + recipText)
@@ -683,7 +692,11 @@
 
                     for ( var Hcheck=0; Hcheck<90; Hcheck++ ){
                         var thisHotelInfo = HnameTable[Hcheck];
-                        if ( HHHHname.match(thisHotelInfo[0]) ){ HnameSummary = thisHotelInfo[1]; break; } 
+                        if ( HHHHname.match(thisHotelInfo[0]) ){ 
+                            HnameSummary = thisHotelInfo[1]; 
+                            HnameJTBcode = thisHotelInfo[4];
+                            break; 
+                        } 
                     }
                     if ( HnameSummary == "" ){ window.close(); }
                     
@@ -695,13 +708,70 @@
                 }    
 
 
+                $('#txt_checkin').on('click', function () {
+                    
+                    debug = 8.01
+                    //alert('Testttttied.');
+                    navigator.clipboard.writeText(JTBinputDate)    
+                    .then(() => {
+                        //log('Text copied.');
+                    })
+                    .catch(() => {
+                        alert("debug = " + debug);
+                    });
+
+                });
+
+                $('#txt_hotel').on('click', function () {
+                    
+                    debug = 8.02
+                    //alert('Testttttied.');
+                    navigator.clipboard.writeText(HnameJTBcode)    
+                    .then(() => {
+                        //log('Text copied.');
+                    })
+                    .catch(() => {
+                        alert("debug = " + debug);
+                    });
+
+                });
+
+                $('#txt_guest1').on('click', function () {
+                    
+                    debug = 8.03
+                    //alert('Testttttied.');
+                    navigator.clipboard.writeText(gName1)    
+                    .then(() => {
+                        //log('Text copied.');
+                    })
+                    .catch(() => {
+                        alert("debug = " + debug);
+                    });
+
+                });
+
+                $('#txt_ref').on('click', function () {
+                    
+                    debug = 8.04
+                    //alert('Testttttied.');
+                    navigator.clipboard.writeText(ctripOrderRef)    
+                    .then(() => {
+                        //log('Text copied.');
+                    })
+                    .catch(() => {
+                        alert("debug = " + debug);
+                    });
+
+                });
+
+
                 /* 此处设置320ms延迟，防止readText和writeText同时相应造成异常 */
                 setTimeout(function(){
 
                     debug = 8.2;
                     //alert(" setTimeout HERE! " + gName1 );    // 此处如果让alert有效，writeText就不起作用了!
                     //log('PPPPPPpied.');
-                    navigator.clipboard.writeText(gName1)    
+                    navigator.clipboard.writeText(JTBinputDate)    
                     .then(() => {
                         //log('Text copied.');
                     })
@@ -710,7 +780,6 @@
                     });
 
                 }, 320);
-
 
                 //
 
@@ -729,8 +798,8 @@
         });
 
 
-        //$('#btn_start_process').on('click', function () { }); 
-        //$('#btn_start_process').delay(100).queue(function(){ });
+        //$('#btn_some_process').on('click', function () { }); 
+        //$('#btn_some_process').delay(100).queue(function(){ });
 
 
         // 按钮 "JTB完成"
