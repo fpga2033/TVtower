@@ -607,12 +607,16 @@
                     if ( HnameSummary == "" ){ window.close(); }
                     
                     var now = new Date();
-                    var hh = now.getHours();
-                    var mm = now.getMinutes();
-                    var timestamp = hh + ":" + mm;
+                    var now_month = 1 + now.getMonth();
+                    var now_date = now.getDate();
+                    if ( now_date < 10 ){ now_date = "0" + now_date; }
+                    var dateStamp = now_month + "-" + now_date;
+                    var now_hh = now.getHours();
+                    var now_mm = now.getMinutes();
+                    var timeStamp = now_hh + ":" + now_mm;
 
                     report_summary = ctripOrderRef +'\t'+ HnameSummary +'\t'+ gName1 +'\t'+ repo4 +'\t'+ repo5 +'\t'+ repo6 +'\t'+ repo7 
-                    +'\t'+ ctripOrderNights +'\t'+ numEachRoom +'\t'+ ctripOrderRooms +'\t'+ ctripOrderPrice +'\t'+ timestamp;
+                    +'\t'+ ctripOrderNights +'\t'+ numEachRoom +'\t'+ ctripOrderRooms +'\t'+ ctripOrderPrice +'\t'+ dateStamp +'\t'+ timeStamp;
                     
                     debug = 6;
                 }    
