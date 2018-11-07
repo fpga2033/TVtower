@@ -186,8 +186,8 @@
                 //pasteStr = text;        // 此处开始引入ctripOrderInfo的处理
                 //log('Text pasted.');
                 debug = 2;
-
                 
+
                 Hotel_information: {    // HnameTable酒店资料数组初始化
 
                     var HnameTable = new Array();
@@ -589,100 +589,6 @@
                     debug = 7;
                 }
 
-                JTB_Booked_Info_block: { 
-
-                    $('#btn_make_bookingID').on('click', function () {
-                        debug = 7.1;
-                        var RoomConfirm = new Array();    // 用于存放所有房间确认号，从第一晚开始
-                        RoomConfirm[0] = "";
-                        var RoomConfirmShow = "";         // 把所有房间确认号显示成一行
-
-                        navigator.clipboard.readText()
-                        .then(text => {
-
-                            debug = 7.2;
-                            pasteStrJTB = text;        // 此处开始引入 JTB Booked 済画面的处理
-                            //log('Text pasted.');
-                            debug = 7.3;
-
-                            JTBbookedInfo_extracting_block: {
-
-                                var JTBbookedThing = new Array();
-
-                                var regExp_JTBKannriRef = /\(管理\)NO\s+(\w+)/;
-                                JTBbookedThing[0] = pasteStrJTB.match(regExp_JTBKannriRef);
-                                var JTBKannriRef = RegExp.$1;
-
-                                var regExp_JTBKanaName = /\(カナ\)\s+(\w[ \w]+\w)/;
-                                JTBbookedThing[1] = pasteStrJTB.match(regExp_JTBKanaName);
-                                var JTBKanaName = RegExp.$1;
-
-                                var regExp_JTBSougaku = /概算総額\s+￥([,\d]+)/;
-                                JTBbookedThing[2] = pasteStrJTB.match(regExp_JTBSougaku);
-                                var JTBSougaku = RegExp.$1;
-                                JTBSougaku = JTBSougaku.replace(",","");
-
-                                var regExp_JTBNitteiInfo = /(20\d\d\/\d\d\/\d\d.+済.+H-01)/g;
-                                JTBbookedThing[3] = pasteStrJTB.match(regExp_JTBNitteiInfo);      
-                                var JTBNitteiInfo = JTBbookedThing[3];      // 日程数组，每个元素是一行日程
-
-                                if ( JTBNitteiInfo != null ){
-                                    var regExp_RoomConfirm = /(\w{5}H-01)/;     // 不用正则也行
-                                    for ( var j = 0 ; j < JTBNitteiInfo.length ; j++ ){
-                                        RoomConfirm[1+j] = JTBNitteiInfo[j].slice(-9);
-                                        RoomConfirmShow = RoomConfirmShow + "，" + RoomConfirm[1+j];                
-                                    }                        
-                                    RoomConfirmShow = RoomConfirmShow.slice(1); 
-                                }
-
-                                JTBTotalPrice = JTBSougaku;
-                                
-                                orderProfit = 1 - ( parseFloat(JTBTotalPrice) * 0.9 / parseFloat(ctripOrderPrice) );
-                                var orderProfitShow = orderProfit.toFixed(3) * 100;
-                                orderProfitShow = orderProfitShow.toFixed(1);
-                                report_summary = ctripOrderRef +'\t'+ HnameSummary +'\t'+ gName1 +'\t'+ repo4 +'\t'+ repo5 +'\t'+ repo6 +'\t'+ repo7 
-                                    +'\t'+ ctripOrderNights +'\t'+ numEachRoom +'\t'+ ctripOrderRooms +'\t'+ ctripOrderPrice 
-                                    +'\t'+ RoomConfirmShow +'\t'+ JTBTotalPrice;
-                                
-                            }
-                            
-                            debug = 7.4;
-                            setTimeout(function(){
-
-                                //log('PPPPPPpied.');
-                                navigator.clipboard.writeText(RoomConfirmShow)    // JTBKannriRef
-                                .then(() => {
-                                    //log('Text copied.');
-                                })
-                                .catch(() => {
-                                    //log('Failed to write clipboard');
-                                });
-
-                                if ( JTBNitteiInfo != null ){
-                                    document.getElementById("txt_show_OK").innerHTML = "　　　　 OK!";
-                                }
-                                else {
-                                    document.getElementById("txt_show_OK").innerHTML = "　　 未手配?";
-                                }
-                                
-                                document.getElementById("txt_show_profit").innerHTML = "　利益大約 " + orderProfitShow + " %";
-                                setTimeout(function(){
-                                    document.getElementById("txt_show_OK").innerHTML = "";
-                                    document.getElementById("txt_show_profit").innerHTML = "";
-                                }, 7500);
-
-                            }, 160);
-
-                        })
-                        .catch(() => {
-                            log(' JTB_Info Failed ! debug = ' + debug);
-                        });
-                        debug = 8;
-                        //alert(JTBTotalPrice);   bad!!
-                    }); 
-                    
-                }
-
                 report_summary_editing_block: {
 
                     var repo4 = 1 + d1.getMonth();
@@ -700,14 +606,126 @@
                     }
                     if ( HnameSummary == "" ){ window.close(); }
                     
-                    if ( pasteStrJTB == "" ){   // 如果没有使用提取确认号按钮，就在这里生成 report_summary
-                        report_summary = ctripOrderRef +'\t'+ HnameSummary +'\t'+ gName1 +'\t'+ repo4 +'\t'+ repo5 +'\t'+ repo6 +'\t'+ repo7 
-                            +'\t'+ ctripOrderNights +'\t'+ numEachRoom +'\t'+ ctripOrderRooms +'\t'+ ctripOrderPrice;
-                    }
+                    var now = new Date();
+                    var hh = now.getHours();
+                    var mm = now.getMinutes();
+                    var timestamp = hh + ":" + mm;
+
+                    report_summary = ctripOrderRef +'\t'+ HnameSummary +'\t'+ gName1 +'\t'+ repo4 +'\t'+ repo5 +'\t'+ repo6 +'\t'+ repo7 
+                    +'\t'+ ctripOrderNights +'\t'+ numEachRoom +'\t'+ ctripOrderRooms +'\t'+ ctripOrderPrice +'\t'+ timestamp;
+                    
                     debug = 6;
                 }    
 
+                // "JTB済画面提取"按钮
+                $('#btn_make_bookingID').on('click', function () {
+                    debug = 7.1;
+                    var RoomConfirm = new Array();    // 用于存放所有房间确认号，从第一晚开始
+                    RoomConfirm[0] = "";
+                    var RoomConfirmShow = "";         // 把所有房间确认号显示成一行
 
+                    navigator.clipboard.readText()
+                    .then(text => {
+
+                        debug = 7.2;
+                        pasteStrJTB = text;        // 此处开始引入 JTB Booked 済画面的处理
+                        //log('Text pasted.');
+                        debug = 7.3;
+
+                        JTBbookedInfo_extracting_block: {
+
+                            var JTBbookedThing = new Array();
+
+                            var regExp_JTBKannriRef = /\(管理\)NO\s+(\w+)/;
+                            JTBbookedThing[0] = pasteStrJTB.match(regExp_JTBKannriRef);
+                            var JTBKannriRef = RegExp.$1;
+
+                            var regExp_JTBKanaName = /\(カナ\)\s+(\w[ \w]+\w)/;
+                            JTBbookedThing[1] = pasteStrJTB.match(regExp_JTBKanaName);
+                            var JTBKanaName = RegExp.$1;
+
+                            var regExp_JTBSougaku = /概算総額\s+￥([,\d]+)/;
+                            JTBbookedThing[2] = pasteStrJTB.match(regExp_JTBSougaku);
+                            var JTBSougaku = RegExp.$1;
+                            JTBSougaku = JTBSougaku.replace(",","");
+
+                            var regExp_JTBNitteiInfo = /(20\d\d\/\d\d\/\d\d.+済.+H-01)/g;
+                            JTBbookedThing[3] = pasteStrJTB.match(regExp_JTBNitteiInfo);      
+                            var JTBNitteiInfo = JTBbookedThing[3];      // 日程数组，每个元素是一行日程
+
+                            if ( JTBNitteiInfo != null ){
+                                var regExp_RoomConfirm = /(\w{5}H-01)/;     // 不用正则也行
+                                for ( var j = 0 ; j < JTBNitteiInfo.length ; j++ ){
+                                    RoomConfirm[1+j] = JTBNitteiInfo[j].slice(-9);
+                                    RoomConfirmShow = RoomConfirmShow + "，" + RoomConfirm[1+j];                
+                                }                        
+                                RoomConfirmShow = RoomConfirmShow.slice(1); 
+                            }
+
+                            JTBTotalPrice = JTBSougaku;
+                            
+                            orderProfit = 1 - ( parseFloat(JTBTotalPrice) * 0.9 / parseFloat(ctripOrderPrice) );
+                            var orderProfitShow = orderProfit.toFixed(3) * 100;
+                            orderProfitShow = orderProfitShow.toFixed(1);
+
+                            report_summary = report_summary +'\t'+ RoomConfirmShow +'\t'+ JTBTotalPrice;
+                            
+                        }
+                        
+                        debug = 7.4;
+                        setTimeout(function(){
+
+                            //log('PPPPPPpied.');
+                            navigator.clipboard.writeText(RoomConfirmShow)    // JTBKannriRef
+                            .then(() => {
+                                //log('Text copied.');
+                            })
+                            .catch(() => {
+                                //log('Failed to write clipboard');
+                            });
+
+                            if ( JTBNitteiInfo != null ){
+                                document.getElementById("txt_show_OK").innerHTML = "　　　　 OK!";
+                            }
+                            else {
+                                document.getElementById("txt_show_OK").innerHTML = "　　 未手配?";
+                            }
+                            
+                            document.getElementById("txt_show_profit").innerHTML = "　利益大約 " + orderProfitShow + " %";
+                            setTimeout(function(){
+                                document.getElementById("txt_show_OK").innerHTML = "";
+                                document.getElementById("txt_show_profit").innerHTML = "";
+                            }, 7500);
+
+                        }, 160);
+
+                    })
+                    .catch(() => {
+                        log(' JTB_Info Failed ! debug = ' + debug);
+                    });
+                    debug = 8;
+                    //alert(JTBTotalPrice);   bad!!
+                }); 
+
+                // "JTB完成去填集計"按钮
+                $('#btn_JTB_confirmed').on('click', function () {
+                    
+                    //log(' btn_JTB_confirmed writing ');
+                    navigator.clipboard.writeText(report_summary)   // debug: report_summary
+                    .then(() => {
+                        //log('Text copied.');
+                    })
+                    .catch(() => {
+                        //log('Failed to write clipboard');
+                    });
+
+                    $('#btn_JTB_confirmed').delay(60).queue(function(){
+                        window.close();
+                    });
+
+                });
+
+                // 订单信息标签的点击响应
                 $('#txt_checkin').on('click', function () {
                     
                     debug = 8.01
@@ -781,11 +799,9 @@
 
                 }, 320);
 
-                //
-
             })
             .catch(() => {
-                log(' MAIN Failed ! v1104b debug = ' + debug);
+                log(' MAIN Failed ! v1106c debug = ' + debug);
             });
 
         }, 150);
@@ -800,32 +816,6 @@
 
         //$('#btn_some_process').on('click', function () { }); 
         //$('#btn_some_process').delay(100).queue(function(){ });
-
-
-        // 按钮 "JTB完成"
-        $('#btn_JTB_confirmed').on('click', function () {
-
-            /*if ( pasteStrJTB == "" ){   // 如果没有使用提取确认号按钮，就提示
-                //log(" 辛苦了！ 现在 JTB済画面提取 还没完成！");
-                debug = 9.5;
-            }
-            else {*/
-            
-                //log(' btn_JTB_confirmed writing ');
-                navigator.clipboard.writeText(report_summary)   // debug: report_summary
-                .then(() => {
-                    //log('Text copied.');
-                })
-                .catch(() => {
-                    //log('Failed to write clipboard');
-                });
-
-                $('#btn_JTB_confirmed').delay(60).queue(function(){
-                    window.close();
-                });
-            //}
-
-        });
 
 
         /* Watch for pastes *
