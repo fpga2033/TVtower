@@ -1,6 +1,6 @@
 <html>
   <head>
-      <h3> 1402 </h3>
+      <h3> 1407 </h3>
   </head>
 
   <body>
@@ -40,7 +40,7 @@
         // TODO: Change code below to process the `response` object:
         
         console.log(response.result);
-        
+        showme(response.result);
 
         //alert("response.result");
         //document.writeln("<p> このページは、「" + document.title + "」だよ！</p>");
@@ -88,7 +88,11 @@
     }
 
     //
-    document.getElementById("id_1").value = result.values[1][1];
+    function showme(result){
+      document.getElementById("id_1").value = result.values[1][1];
+
+    }
+    
     function populateSheet(result){
         for( var row=0; row<10; row++ ){
             for( var col=0; col<3; col++ ){
