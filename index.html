@@ -85,7 +85,7 @@
             
             <a style="font-size:15px">REF# </a><span><label class="control-label" id=txt_ref style="font-size:16px;font-family:verdana;color:rgb(23, 94, 248)"></label></span>
             <button id="btn_JTB_confirmed" class="btn btn-primary" style="font-size:14px;font-family:Meiryo;float:right"><strong>ＪＴＢ完成</strong><br><em>(去填集計草稿)</em></button><br/>
-            <a style="font-size:16px">★0.41 </a><label class="control-label" id=txt_type style="font-size:15px"></label><br/>
+            <a style="font-size:16px">★s11 </a><label class="control-label" id=txt_type style="font-size:15px"></label><br/>
             
             <img hight="15%" width="100%" class="img-rounded" src="https://raw.githubusercontent.com/Best-Hotel-Japan/Sapporo_TV_Hotel-Dev/gh-pages/background.jpg" alt="" /><br/>
             <!--https://raw.githubusercontent.com/fpga2033/TVtower/0609769e290f5f11ccf79624a39f594c03a2a4eb/mildseven-hill-winter.jpg-->
@@ -184,7 +184,7 @@
                 debug = 1;
 
                 
-                Hotel_information: {    // HnameTable酒店资料数组初始化
+                Hotel_information: {        // HnameTable酒店资料数组初始化
 
                     var HnameTable = new Array();
                     for( var hi=0; hi<90; hi++ ){        //一维长度为3
@@ -370,21 +370,11 @@
                     if ( childA_info != "" ){ SPshow = SPshow + " *子供同行なし:可能"; }
                     if ( SPshow == "" ) { SPshow = "null"; }
                     
-                    /* if ( GuestnameList.length != ctripOrderPeoples ){
-                    //    alert("姓名列表未能完整获取 : " + GuestnameList.length + " 不等于 " + ctripOrderPeoples);
-                    }
-                    else {
-                        for ( var i = 0 ; i < GuestnameList.length ; i++ ){
-                            GuestnameList[i] = GuestnameList[i].replace("入住人","*");
-                            gName[1+i] = GuestnameList[i].toUpperCase().replace(" ","");
-                            gNameShow = gNameShow + "\n" + "　" + gName[1+i];
-                        }
-                    } */
                     for ( var i = 0 ; i < GuestnameList.length ; i++ ){
                         GuestnameList[i] = GuestnameList[i].replace("入住人","*");
                         gName[1+i] = GuestnameList[i].toUpperCase().replace(" ","");    // 删掉一个空格而不是全部，提高MS报告的可读性
                         gNameShow = gNameShow + "　" + gName[1+i];
-                        gName[1+i] = gName[1+i].slice(4);       // 姓氏的首字母前面有两个换行符
+                        gName[1+i] = i<9? gName[1+i].slice(4) : gName[1+i].slice(5);       // 姓氏的首字母前面有两个换行符。入住人1x要多删掉一个1
                     }                        
                     
                     // 编辑MS报告
@@ -410,6 +400,13 @@
                     // label#提醒有备注').text('' + recipText)
                     debug = 5;
                     
+                    if ( ctripOrderType.match(/修改/) ){
+                    
+                        myWindow=window.open('', '', 'width=320, height=200, top=185, left=500, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');
+                        myWindow.document.write("<h3>　您辛苦啦！~</h3><h3>　这是一个修改单！一定要先查清楚此单之前所有的关联单号，是否已经在JTB上有过房间预订。</h3><h3>　关联单号可能不止一个！</h3>");
+                        myWindow.focus();
+
+                    }
                 }
 
                 modal_content_display_block: { 
@@ -439,7 +436,7 @@
                                     } break;                
                             case "4":
                                     switch( ctripOrderNames ){
-                                    case "1": MS_report = "客問い合わせ番" + ctripOrderRef + "　代表者："; break;
+                                    case "1": MS_report = "客問い合わせ番" + ctripOrderRef + "　代表者：" + gName[1]; break;
                                     case "2": MS_report = "客問い合わせ番" + ctripOrderRef + "　代表者：" + gName[1] + "　" + gName[2]; break;
                                     case "3": MS_report = "番" + ctripOrderRef + "　代表者：" + gName[1] + "　" + gName[2] + "　" + gName[3]; break;
                                     case "4": MS_report = "番" + ctripOrderRef + "　同行者：" + gName[2] + "　" + gName[3] + "　" + gName[4]; break;
@@ -548,11 +545,41 @@
                                     case "11": MS_report = "*1 " + gName[1] + "　" + gName[2] + "　*2 " + gName[3] + "　" + gName[4] + "　" + gName[5] + "　*3 " + gName[6] + "　" + gName[7] + "　" + gName[8] + "　*4 " + gName[9] + "　" + gName[10] + "　" + gName[11]; break;
                                     case "12": MS_report = "*1 " + gName[1] + "　" + gName[2] + "　" + gName[3] + "　*2 " + gName[4] + "　" + gName[5] + "　" + gName[6] + "　*3 " + gName[7] + "　" + gName[8] + "　" + gName[9] + "　*4 " + gName[10] + "　" + gName[11] + "　" + gName[12]; break;
                                     } break;                
+                            case "4":
+                                    switch( ctripOrderNames ){
+                                    case "4": MS_report = "代表者 *1 " + gName[1] + "　*2 " + gName[2] + "　*3 " + gName[3] + "　*4 " + gName[4]; break;
+                                    case "16": MS_report = "代表者 *1 " + gName[1] + "　*2 " + gName[5] + "　*3 " + gName[9] + "　*4 " + gName[13] + "　*後日FAXで名簿を送ります."; break;
+                                    } break;  
                             } break;
+                            
+                    case "5":
+                            switch( numEachRoom ){                  //　*1 AA/AA　BB/BB　*2 CC/CC　DD/DD　*3 EE/EE　FF/FF　*4 GG/GG　HH/HH　*5 JJ/JJ　KK/KK  
+                            case "2":
+                                    switch( ctripOrderNames ){
+                                    case "5": MS_report = "代表者 *1 " + gName[1] + "　*2 " + gName[2] + "　*3 " + gName[3] + "　*4 " + gName[4] + "　*5 " + gName[5]; break;
+                                    case "6": MS_report = "代表者 *1 " + gName[1] + "　*2 " + gName[2] + "　*3 " + gName[3] + "　*4 " + gName[4] + "　*5 " + gName[5] + "　" + gName[6]; break;
+                                    case "7": MS_report = "代表者 *1 " + gName[1] + "　*2 " + gName[2] + "　*3 " + gName[3] + "　*4 " + gName[4] + "　" + gName[5] + "　*5 " + gName[6] + "　" + gName[7]; break;
+                                    case "8": MS_report = "代表者 *1 " + gName[1] + "　*2 " + gName[2] + "　*3 " + gName[3] + "　" + gName[4] + "　*4 " + gName[5] + "　" + gName[6] + "　*5 " + gName[7] + "　" + gName[8]; break;
+                                    case "9": MS_report = "代表者 *1 " + gName[1] + "　*2 " + gName[2] + "　" + gName[3] + "　*3 " + gName[4] + "　" + gName[5] + "　*4 " + gName[6] + "　" + gName[7] + "　*5 " + gName[8] + "　" + gName[9]; break;
+                                    case "10": MS_report = "*1 " + gName[1] + "　" + gName[2] + "　*2 " + gName[3] + "　" + gName[4] + "　*3 " + gName[5] + "　" + gName[6] + "　*4 " + gName[7] + "　" + gName[8] + "　*5 " + gName[9] + "　" + gName[10]; break;
+                                    } break;
+                            case "3":
+                                    switch( ctripOrderNames ){
+                                    case "5": MS_report = "代表者 *1 " + gName[1] + "　*2 " + gName[2] + "　*3 " + gName[3] + "　*4 " + gName[4] + "　*5 " + gName[5]; break;
+                                    case "15": MS_report = "代表者 *1 " + gName[1] + "　*2 " + gName[4] + "　*3 " + gName[7] + "　*4 " + gName[10] + "　*5 " + gName[13] + "　*後日FAXで名簿を送ります."; break;
+                                    } break; 
+                            case "4":
+                                    switch( ctripOrderNames ){
+                                    case "5": MS_report = "代表者 *1 " + gName[1] + "　*2 " + gName[2] + "　*3 " + gName[3] + "　*4 " + gName[4] + "　*5 " + gName[5]; break;
+                                    case "20": MS_report = "代表者 *1 " + gName[1] + "　*2 " + gName[5] + "　*3 " + gName[9] + "　*4 " + gName[13] + "　*5 " + gName[17] + "　*後日FAXで名簿を送ります."; break;
+                                    } break;                                     
+                            } break;
+
                     default: MS_report = '番' + ctripOrderRef + '　' + gNameShow; break;      
                     }
+                    
                     // case 嵌套，用default会变很奇怪的效果。。结果证明只是内层的break漏掉了而已。
-                    // if ( MS_report == "" ){ MS_report = '番' + ctripOrderRef + '　' + gNameShow; }
+                                        
                     if ( SPshow != "null" ){ MS_report = MS_report + '　' + SPshow; }
                     MS_report = MS_report.replace("undefined","あります。");
 
@@ -615,8 +642,11 @@
                     var now_mm = now.getMinutes();
                     var timeStamp = now_hh + ":" + now_mm;
 
-                    report_summary = ctripOrderRef +'\t'+ HnameSummary +'\t'+ gName1 +'\t'+ repo4 +'\t'+ repo5 +'\t'+ repo6 +'\t'+ repo7 
-                    +'\t'+ ctripOrderNights +'\t'+ numEachRoom +'\t'+ ctripOrderRooms +'\t'+ ctripOrderPrice +'\t'+ dateStamp +'\t'+ timeStamp;
+                    //report_summary = ctripOrderRef +'\t'+ HnameSummary +'\t'+ gName1 +'\t'+ repo4 +'\t'+ repo5 +'\t'+ repo6 +'\t'+ repo7 
+                    //+'\t'+ ctripOrderNights +'\t'+ numEachRoom +'\t'+ ctripOrderRooms +'\t'+ ctripOrderPrice +'\t'+ dateStamp +'\t'+ timeStamp;
+                    
+                    report_summary = ctripOrderRef +'\t'+ dateStamp +'\t'+ timeStamp +'\t'+ HnameSummary +'\t'+ gName1 +'\t'+'\t'+ 
+                    repo4 +'\t'+ repo5 +'\t'+ repo6 +'\t'+ repo7 +'\t'+ ctripOrderNights +'\t'+ numEachRoom +'\t'+ ctripOrderRooms +'\t'+ ctripOrderPrice; 
                     
                     debug = 6;
                 }    
@@ -636,6 +666,7 @@
                         //log('Text pasted.');
                         debug = 7.3;
 
+                        // 对JTB画面的正则提取部分
                         JTBbookedInfo_extracting_block: {
 
                             var JTBbookedThing = new Array();
@@ -674,16 +705,20 @@
                             orderProfitShow = orderProfitShow.toFixed(1);
 
                             //report_summary = report_summary +'\t'+ RoomConfirmShow +'\t'+ JTBTotalPrice;    // 不可以这样写！考虑到用户可能多次点击提取按钮！
+                            /* 旧版格式:
                             report_summary = ctripOrderRef +'\t'+ HnameSummary +'\t'+ gName1 +'\t'+ repo4 +'\t'+ repo5 +'\t'+ repo6 +'\t'+ repo7 
                             +'\t'+ ctripOrderNights +'\t'+ numEachRoom +'\t'+ ctripOrderRooms +'\t'+ ctripOrderPrice +'\t'+ dateStamp +'\t'+ timeStamp
-                            +'\t'+ RoomConfirmShow +'\t'+ JTBTotalPrice;
+                            +'\t'+ RoomConfirmShow +'\t'+ JTBTotalPrice; */
+
+                            report_summary = ctripOrderRef +'\t'+ dateStamp +'\t'+ timeStamp +'\t'+ HnameSummary +'\t'+ gName1 +'\t'+ JTBTotalPrice +'\t'+ 
+                            repo4 +'\t'+ repo5 +'\t'+ repo6 +'\t'+ repo7 +'\t'+ ctripOrderNights +'\t'+ numEachRoom +'\t'+ ctripOrderRooms +'\t'+ ctripOrderPrice
+                            +'\t'+ RoomConfirmShow +'\t'+ JTBTotalPrice; 
                     
                         }
                         
                         debug = 7.4;
                         setTimeout(function(){
 
-                            //log('PPPPPPpied.');
                             navigator.clipboard.writeText(RoomConfirmShow)    // JTBKannriRef
                             .then(() => {
                                 //log('Text copied.');
@@ -703,7 +738,7 @@
                             setTimeout(function(){
                                 document.getElementById("txt_show_OK").innerHTML = "";
                                 document.getElementById("txt_show_profit").innerHTML = "";
-                            }, 7500);
+                            }, 8500);
 
                         }, 160);
 
@@ -718,7 +753,6 @@
                 // "JTB完成去填集計"按钮
                 $('#btn_JTB_confirmed').on('click', function () {
                     
-                    //log(' btn_JTB_confirmed writing ');
                     navigator.clipboard.writeText(report_summary)   // debug: report_summary
                     .then(() => {
                         //log('Text copied.');
@@ -737,7 +771,6 @@
                 $('#txt_checkin').on('click', function () {
                     
                     debug = 8.01
-                    //alert('Testttttied.');
                     navigator.clipboard.writeText(JTBinputDate)    
                     .then(() => {
                         //log('Text copied.');
@@ -751,7 +784,6 @@
                 $('#txt_hotel').on('click', function () {
                     
                     debug = 8.02
-                    //alert('Testttttied.');
                     navigator.clipboard.writeText(HnameJTBcode)    
                     .then(() => {
                         //log('Text copied.');
@@ -765,7 +797,6 @@
                 $('#txt_guest1').on('click', function () {
                     
                     debug = 8.03
-                    //alert('Testttttied.');
                     navigator.clipboard.writeText(gName1)    
                     .then(() => {
                         //log('Text copied.');
@@ -779,7 +810,6 @@
                 $('#txt_ref').on('click', function () {
                     
                     debug = 8.04
-                    //alert('Testttttied.');
                     navigator.clipboard.writeText(ctripOrderRef)    
                     .then(() => {
                         //log('Text copied.');
