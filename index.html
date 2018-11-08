@@ -1,9 +1,11 @@
 <html>
   <head>
-      <h3> 1355 </h3>
+      <h3> 1402 </h3>
   </head>
 
   <body>
+
+      <p id="id_1">1. JS側</p>
     <!--
     BEFORE RUNNING:
     ---------------
@@ -86,10 +88,11 @@
     }
 
     //
+    document.getElementById("id_1").value = result.values[1][1];
     function populateSheet(result){
         for( var row=0; row<10; row++ ){
             for( var col=0; col<3; col++ ){
-                document.getElementById(row+":"+col).value = result.values[row][col];
+                //document.getElementById("id_1").value = result.values[row][col];  //row+":"+col
             }
 
         }
