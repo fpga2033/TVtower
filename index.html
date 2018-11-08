@@ -1,6 +1,6 @@
 <html>
   <head>
-      <h3> 1322 </h3>
+      <h3> 1355 </h3>
   </head>
 
   <body>
@@ -40,9 +40,6 @@
         console.log(response.result);
         
 
-        let btn = document.querySelector('#json');
-        let data = {name:'tim', age: 23, grade: 3};
-        btn.textContent = JSON.stringify(data, null, '  ');
         //alert("response.result");
         //document.writeln("<p> このページは、「" + document.title + "」だよ！</p>");
 
@@ -111,18 +108,6 @@
     <button id="signin-button" onclick="handleSignInClick()">Sign in</button>
     <button id="signout-button" onclick="handleSignOutClick()">Sign out</button>
 
-    <?php
-
-      for($row=0; $row<10; $row++ ){
-        echo "<div style='clear:both'>";
-        for($col=0; $col<3; $col++ ){
-          echo "<input type='text' style='float:left;' name='$row:$col' id='$row:$col'>";
-
-        }
-        echo "</div>";
-      }
-
-    ?>
 
 
 
