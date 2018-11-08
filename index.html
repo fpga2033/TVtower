@@ -1,11 +1,12 @@
 <html>
   <head>
-      <h3> 1407 </h3>
+      <h3> 1413 </h3>
   </head>
 
   <body>
 
       <p id="id_1">1. JS側</p>
+      <label class="control-label" id=txt_in style="font-weight:bold;font-size:18px;"></label>
     <!--
     BEFORE RUNNING:
     ---------------
@@ -90,6 +91,7 @@
     //
     function showme(result){
       document.getElementById("id_1").value = result.values[1][1];
+      document.getElementById("txt_in").innerHTML = result.values[1][1];
 
     }
     
