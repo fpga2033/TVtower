@@ -1,6 +1,6 @@
 <html>
   <head>
-      <h3> 0649 </h3>
+      <h3> 0715 </h3>
   </head>
 
   <body>
@@ -49,7 +49,11 @@
       };
 
       var valueRangeBody = {
-        "Values": running_water_record
+        "range": "A1",
+        "majorDimension": "ROWS",
+        "Values": [
+          running_water_record
+        ]
       };
 
       //var request = gapi.client.sheets.spreadsheets.values.get(params);
