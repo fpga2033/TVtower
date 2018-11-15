@@ -161,8 +161,7 @@
         var gName1;                 // JTB氏名報告
         var report_summary;         // 集計草稿
         
-        
-        /* 此处设置 若干延迟，防止线程竞争造成异常? */
+        /* 此处必须设置 若干延迟，防止小窗口读不到clipboard */
         setTimeout(function(){
 
             debug = 0.81;               // 问题就出在这里，剪贴板里是undefined
@@ -384,7 +383,7 @@
 
                 beside_content_display_block: { 
 
-                    document.getElementById("txt_ref").innerHTML = ctripOrderRef;
+                    document.getElementById("txt_ref").innerHTML = ctripOrderRef + '　　';
                     document.getElementById("txt_type").innerHTML = ctripOrderType;
                     document.getElementById("txt_price").innerHTML = ctripOrderPrice;
                     document.getElementById("txt_hotel").innerHTML = HHHHname + '　　';
@@ -778,7 +777,9 @@
                         //log('Failed to write clipboard');
                     });
 
-                    $('#btn_JTB_confirmed').delay(100).queue(function(){
+                    //在此加入向云端sheet存数据的处理：JTB running water records
+
+                    $('#btn_JTB_confirmed').delay(150).queue(function(){
                         window.close();
                     });
 
@@ -864,7 +865,7 @@
                 log(' MAIN Failed ! v1116 debug = ' + debug);
             });
 
-        }, 400);
+        }, 500);
 
 
         //$('#btn_some_process').on('click', function () { }); 
