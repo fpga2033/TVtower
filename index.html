@@ -1,6 +1,6 @@
 <html>
   <head>
-      <h3> 0731+ </h3>
+      <h3> 0743+ </h3>
   </head>
 
   <body>
@@ -39,10 +39,11 @@
           running_water_record[row][col] = "555555555";
         }
       }
+      running_water_record[5][5] = report_summary;
       
       var params = {
         spreadsheetId: '1oMxmdfvyTdLbt6qE4A6oefZbTkfsgwQmK-noAHtsqUw',  
-        range: 'A1',  //莫非这里i？
+        range: 'A1',  //莫非这里？
         //valueRenderOption: 'FORMATTED_VALUE',  
         //dateTimeRenderOption: 'FORMATTED_STRING',  
         valueInputOption: 'RAW',
@@ -52,17 +53,8 @@
         "range": "A1",
         "majorDimension": "ROWS",
         "values": [
-          //running_water_record
-          [
-          "我日我日昍晶88",
-          "66666666",
-          "66660000066666"
-          ],
-          [
-          "6666",
-          "66666666",
-          "6大爷呀766"
-          ]
+          running_water_record
+
         ]
       };
 
