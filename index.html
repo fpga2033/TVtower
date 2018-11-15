@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
-<div id="toast" hidden></div>
 <html>
 
 <head>
@@ -85,7 +84,7 @@
             
             <a style="font-size:15px">REF# </a><span><label class="control-label" id=txt_ref style="font-size:16px;font-family:verdana;color:rgb(23, 94, 248)"></label></span>
             <button id="btn_JTB_confirmed" class="btn btn-primary" style="font-size:14px;font-family:Meiryo;float:right"><strong>ＪＴＢ完成</strong><br><em>(去填集計草稿)</em></button><br/>
-            <a style="font-size:16px">★s11 </a><label class="control-label" id=txt_type style="font-size:15px"></label><br/>
+            <a style="font-size:16px">★s12 </a><label class="control-label" id=txt_type style="font-size:15px"></label><br/>
             
             <img hight="15%" width="100%" class="img-rounded" src="https://raw.githubusercontent.com/Best-Hotel-Japan/Sapporo_TV_Hotel-Dev/gh-pages/background.jpg" alt="" /><br/>
             <!--https://raw.githubusercontent.com/fpga2033/TVtower/0609769e290f5f11ccf79624a39f594c03a2a4eb/mildseven-hill-winter.jpg-->
@@ -163,8 +162,8 @@
         var report_summary;         // 集計草稿
         
         
-        /* 此处设置 300 ms延迟，防止线程竞争造成异常? */
-        setTimeout(function(){
+        /* 此处设置 若干延迟，防止线程竞争造成异常? */
+        //setTimeout(function(){
 
             debug = 0.81;               // 问题就出在这里，剪贴板里是undefined
             navigator.clipboard.readText()
@@ -187,9 +186,9 @@
                 Hotel_information: {        // HnameTable酒店资料数组初始化
 
                     var HnameTable = new Array();
-                    for( var hi=0; hi<90; hi++ ){        //一维长度为3
+                    for( var hi=0; hi<90; hi++ ){           
                         HnameTable[hi] = new Array();
-                        for( var hj=0; hj<6; hj++ ){    //二维长度为5
+                        for( var hj=0; hj<6; hj++ ){        //二维长度为6
                             HnameTable[hi][hj] = "";
                         }
                     }
@@ -367,8 +366,8 @@
                     SPshow = SPshow.replace(";"," ");
                     SPshow = SPshow.replace("。"," ");
                     SPshow = SPshow.replace("please","");      // please
-                    if ( ctripOrderRooms > 2 ){ SPshow = SPshow + " *同じ階層でお願いします!"; }
-                    if ( childA_info != "" ){ SPshow = SPshow + " *子供同行なし:可能"; }
+                    if ( ctripOrderRooms > 2 ){ SPshow = SPshow + " *同じ階層でお願いします!"; SPshow = SPshow.replace("null",""); }
+                    if ( childA_info != "" ){ SPshow = SPshow + " *子供同行なし:可能"; SPshow = SPshow.replace("null",""); }
                     if ( SPshow == "" ) { SPshow = "null"; }
                     
                     for ( var i = 0 ; i < GuestnameList.length ; i++ ){
@@ -402,12 +401,24 @@
                     debug = 5;
                     
                     if ( ctripOrderType.match(/修改/) ){
-                    
-                        myWindow=window.open('', '', 'width=320, height=200, top=185, left=500, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');
+                        myWindow=window.open('', '', 'width=325, height=240, top=185, left=500, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');
                         myWindow.document.write("<h3>　您辛苦啦！~</h3><h3>　这是一个修改单！一定要先查清楚此单之前所有的关联单号，是否已经在JTB上有过房间预订。</h3><h3>　关联单号可能不止一个！</h3>");
                         myWindow.focus();
-
                     }
+
+                    if ( ctripOrderType.match(/取消/) ){
+                        myWindow=window.open('', '', 'width=325, height=240, top=185, left=500, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');
+                        myWindow.document.write("<h3>　您辛苦啦！~</h3><h3>　这是一个取消单！一定要先看清楚此单的原始订单通知时间。</h3><h3>　JTB上的取消操作要做记录！</h3><h3>　最后记得把集計表涂红。</h3>");
+                        myWindow.focus();
+                        setTimeout(function(){ window.close(); }, 700);
+                    }
+
+                    if ( ctripOrderType.match(/无效/) ){
+                        myWindow=window.open('', '', 'width=325, height=240, top=185, left=500, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');
+                        myWindow.document.write("<h3>　您辛苦啦！~</h3><h3>　这是一个无效订单呀！</h3><h3>　为什么要打开接单小窗口呢？</h3><h3>　搜索一下关联订单和相关邮件吧。</h3>");
+                        myWindow.focus();
+                        setTimeout(function(){ window.close(); }, 700);
+                    }                    
                 }
 
                 modal_content_display_block: { 
@@ -576,7 +587,12 @@
                                     } break;                                     
                             } break;
 
-                    default: MS_report = '番' + ctripOrderRef + '　' + gNameShow; break;      
+                    default: {
+                        MS_report = '番' + ctripOrderRef + '　' + gNameShow; 
+                        myWindow=window.open('', '', 'width=325, height=240, top=185, left=500, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');
+                        myWindow.document.write("<h3>　您辛苦啦！~</h3><h3>　这个订单预订房间数太多了！也可能是通知的姓名不规范，无法自动处理。</h3><h3>　请您自己手动编辑MS报告！</h3>");
+                        myWindow.focus();
+                        } break;      
                     }
                     
                     // case 嵌套，用default会变很奇怪的效果。。结果证明只是内层的break漏掉了而已。
@@ -641,7 +657,7 @@
                     var dateStamp = now_month + "-" + now_date;
                     var now_hh = now.getHours();
                     var now_mm = now.getMinutes();
-                    var timeStamp = now_hh + ":" + now_mm;
+                    var timeStamp = now_mm < 10 ? (now_hh + ":0" + now_mm) : (now_hh + ":" + now_mm);
 
                     //report_summary = ctripOrderRef +'\t'+ HnameSummary +'\t'+ gName1 +'\t'+ repo4 +'\t'+ repo5 +'\t'+ repo6 +'\t'+ repo7 
                     //+'\t'+ ctripOrderNights +'\t'+ numEachRoom +'\t'+ ctripOrderRooms +'\t'+ ctripOrderPrice +'\t'+ dateStamp +'\t'+ timeStamp;
@@ -821,8 +837,13 @@
 
                 });
 
+                // modal 的 Close 按钮            
+                $('#btn_modal_confirmed').on('click', function () {
+                    $('.my-modal').fadeOut();
+                    $body.removeClass('no-scroll');
+                });
 
-                /* 此处设置320ms延迟，防止readText和writeText同时相应造成异常 */
+                /* 首发内容写入。此处设置若干延迟，防止readText和writeText同时相应造成异常 */
                 setTimeout(function(){
 
                     debug = 8.2;
@@ -836,26 +857,18 @@
                         //log('Failed to write clipboard');
                     });
 
-                }, 320);
+                }, 550);
 
             })
             .catch(() => {
-                log(' MAIN Failed ! v1106c debug = ' + debug);
+                log(' MAIN Failed ! v1116 debug = ' + debug);
             });
 
-        }, 150);
-
-
-        // modal 的 Close 按钮            
-        $('#btn_modal_confirmed').on('click', function () {
-            $('.my-modal').fadeOut();
-            $body.removeClass('no-scroll');
-        });
+        //}, 160);
 
 
         //$('#btn_some_process').on('click', function () { }); 
         //$('#btn_some_process').delay(100).queue(function(){ });
-
 
         /* Watch for pastes *
         navigator.clipboard.addEventListener('clipboardchange', e => {
