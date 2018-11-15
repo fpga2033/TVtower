@@ -1,6 +1,6 @@
 <html>
   <head>
-      <h3> 0323 </h3>
+      <h3> 0458 </h3>
   </head>
 
   <body>
@@ -22,29 +22,33 @@
     -->
     <script>
 
-      //makeApiCall();
+
+    var ctripOrderRef = "7087130796";
+    var report_summary = ctripOrderRef +'\t'+ "11-16" +'\t'+ "4:55" +'\t'+ "星野塔娃" +'\t'+ "LI WENRUI" +'\t'+'\t'+ 
+                    "10" +'\t'+ "29" +'\t'+ "11" +'\t'+ "1" +'\t'+ "3" +'\t'+ "2" +'\t'+ "1" +'\t'+ "54960"; 
+                    
+
+    //makeApiCall();
+
 
     function makeApiCall() {
       var params = {
-
         spreadsheetId: '1oMxmdfvyTdLbt6qE4A6oefZbTkfsgwQmK-noAHtsqUw',  
         range: 'Sheet1',  
-
-        // How values should be represented in the output.
-        // The default render option is ValueRenderOption.FORMATTED_VALUE.
-        ///valueRenderOption: '',  // TODO: Update placeholder value.
-
-        // How dates, times, and durations should be represented in the output.
-        // This is ignored if value_render_option is: FORMATTED_VALUE.
-        // The default dateTime render option is [DateTimeRenderOption.SERIAL_NUMBER].
-        //dateTimeRenderOption: '',  // TODO: Update placeholder value.
+        //valueRenderOption: 'FORMATTED_VALUE',  
+        //dateTimeRenderOption: 'FORMATTED_STRING',  
+        valueInputOption: 'RAW',
       };
 
-      var request = gapi.client.sheets.spreadsheets.values.get(params);
+      var valueRangeBody = {
+        "Values": report_summary
+      };
+
+      var request = gapi.client.sheets.spreadsheets.values.update(params, valueRangeBody);
       request.then(function(response) {
         
         //console.log(response.result);
-        showme(response.result);
+        //showme(response.result);
 
       }, function(reason) {
         console.error('error: ' + reason.result.error.message);
@@ -76,8 +80,7 @@
         makeApiCall();
       }
     }
-    //makeApiCall();
-
+    
     function handleSignInClick(event) {
       gapi.auth2.getAuthInstance().signIn();
     }
@@ -86,21 +89,12 @@
       gapi.auth2.getAuthInstance().signOut();
     }
 
-    //
+    
     function showme(result){
       document.getElementById("id_1").value = result.values[1][1];
       document.getElementById("txt_11").innerHTML = result.values[1][1];
       document.getElementById("txt_22").innerHTML = result.values[2][2];
       document.getElementById("txt_33").innerHTML = result.values[3][3];
-
-    }
-    function populateSheet(result){
-        for( var row=0; row<10; row++ ){
-            for( var col=0; col<3; col++ ){
-                //document.getElementById("id_1").value = result.values[row][col];  //row+":"+col
-            }
-
-        }
 
     }
 
@@ -113,9 +107,6 @@
     
     <button id="signin-button" onclick="handleSignInClick()">Sign in</button>
     <button id="signout-button" onclick="handleSignOutClick()">Sign out</button>
-
-
-
 
   </body>
 </html>
