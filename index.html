@@ -84,7 +84,7 @@
             
             <a style="font-size:15px">REF# </a><span><label class="control-label" id=txt_ref style="font-size:16px;font-family:verdana;color:rgb(23, 94, 248)"></label></span>
             <button id="btn_JTB_confirmed" class="btn btn-primary" style="font-size:14px;font-family:Meiryo;float:right"><strong>ＪＴＢ完成</strong><br><em>(去填集計草稿)</em></button><br/>
-            <a style="font-size:16px">★s12 </a><label class="control-label" id=txt_type style="font-size:15px"></label><br/>
+            <a style="font-size:16px">★s13-1 </a><label class="control-label" id=txt_type style="font-size:15px"></label><br/>
             
             <img hight="15%" width="100%" class="img-rounded" src="https://raw.githubusercontent.com/Best-Hotel-Japan/Sapporo_TV_Hotel-Dev/gh-pages/background.jpg" alt="" /><br/>
             <!--https://raw.githubusercontent.com/fpga2033/TVtower/0609769e290f5f11ccf79624a39f594c03a2a4eb/mildseven-hill-winter.jpg-->
@@ -163,7 +163,7 @@
         
         
         /* 此处设置 若干延迟，防止线程竞争造成异常? */
-        //setTimeout(function(){
+        setTimeout(function(){
 
             debug = 0.81;               // 问题就出在这里，剪贴板里是undefined
             navigator.clipboard.readText()
@@ -778,7 +778,7 @@
                         //log('Failed to write clipboard');
                     });
 
-                    $('#btn_JTB_confirmed').delay(60).queue(function(){
+                    $('#btn_JTB_confirmed').delay(100).queue(function(){
                         window.close();
                     });
 
@@ -864,7 +864,7 @@
                 log(' MAIN Failed ! v1116 debug = ' + debug);
             });
 
-        //}, 160);
+        }, 400);
 
 
         //$('#btn_some_process').on('click', function () { }); 
