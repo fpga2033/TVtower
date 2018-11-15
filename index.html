@@ -1,6 +1,6 @@
 <html>
   <head>
-      <h3> 0506 </h3>
+      <h3> 0512 </h3>
   </head>
 
   <body>
@@ -32,7 +32,9 @@
 
 
     function makeApiCall() {
-      var running_water_record = report_summary;
+      var running_water_record = new Array();
+      running_water_record[0] = new Array();
+      running_water_record[0][0] = report_summary;
       
       var params = {
         spreadsheetId: '1oMxmdfvyTdLbt6qE4A6oefZbTkfsgwQmK-noAHtsqUw',  
