@@ -1,6 +1,6 @@
 <html>
   <head>
-      <h3> 0458 </h3>
+      <h3> 0506 </h3>
   </head>
 
   <body>
@@ -32,6 +32,8 @@
 
 
     function makeApiCall() {
+      var running_water_record = report_summary;
+      
       var params = {
         spreadsheetId: '1oMxmdfvyTdLbt6qE4A6oefZbTkfsgwQmK-noAHtsqUw',  
         range: 'Sheet1',  
@@ -41,7 +43,7 @@
       };
 
       var valueRangeBody = {
-        "Values": report_summary
+        "Values": running_water_record
       };
 
       var request = gapi.client.sheets.spreadsheets.values.update(params, valueRangeBody);
