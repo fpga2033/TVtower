@@ -43,14 +43,14 @@
       
       var params = {
         spreadsheetId: '1oMxmdfvyTdLbt6qE4A6oefZbTkfsgwQmK-noAHtsqUw',  
-        range: 'A1',  //莫非这里？
+        range: 'A9',  //莫非这里？
         //valueRenderOption: 'FORMATTED_VALUE',  
         //dateTimeRenderOption: 'FORMATTED_STRING',  
         valueInputOption: 'RAW',
       };
 
       var valueRangeBody = {
-        "range": "A1",
+        "range": "A9",
         "majorDimension": "ROWS",
         "values": running_water_record
 
@@ -112,6 +112,7 @@
 
     }
 
+    window.close();
     </script>
 
     <script async defer src="https://apis.google.com/js/api.js"
@@ -121,6 +122,8 @@
     
     <button id="signin-button" onclick="handleSignInClick()">Sign in</button>
     <button id="signout-button" onclick="handleSignOutClick()">Sign out</button>
+
+
 
   </body>
 </html>
