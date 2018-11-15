@@ -1,893 +1,121 @@
-<!DOCTYPE html>
-<meta charset="utf-8">
 <html>
+  <head>
+      <h3> 0323 </h3>
+  </head>
 
-<head>
+  <body>
 
-    <script language="JavaScript">
-    
-        function fxwin(){ window.resizeTo(330,676); window.moveTo(1036,0); }
-        //window.onload = fxwin;
-        window.onresize = fxwin;
-    
-    </script>
+      <p id="id_1">1. JS側</p>
+      <label class="control-label" id=txt_11 style="font-weight:bold;font-size:18px;"></label>
+      <label class="control-label" id=txt_22 style="font-weight:bold;font-size:18px;"></label>
+      <label class="control-label" id=txt_33 style="font-weight:bold;font-size:18px;"></label>
+    <!--
+    BEFORE RUNNING:
+    ---------------
+    1. If not already done, enable the Google Sheets API
+       and check the quota for your project at
+       https://console.developers.google.com/apis/api/sheets
+    2. Get access keys for your application. See
+       https://developers.google.com/api-client-library/javascript/start/start-js#get-access-keys-for-your-application
+    3. For additional information on authentication, see
+       https://developers.google.com/sheets/api/quickstart/js#step_2_set_up_the_sample
+    -->
+    <script>
 
-    <style rel="stylesheet" type="text/css">
+      //makeApiCall();
 
-        span:root {color: rgb(86, 0, 121);font-weight: bold}
-        span:hover {color: rgb(35, 20, 241)}
-        span:active {color: rgb(158, 225, 238);background-color: rgb(167, 115, 226)}
- 
+    function makeApiCall() {
+      var params = {
 
-        body.no-scroll {
-            overflow: hidden;
-        }
+        spreadsheetId: '1oMxmdfvyTdLbt6qE4A6oefZbTkfsgwQmK-noAHtsqUw',  
+        range: 'Sheet1',  
 
-        .site {
-            max-width: 1200px;
-            margin: 0.2em;
-        }
+        // How values should be represented in the output.
+        // The default render option is ValueRenderOption.FORMATTED_VALUE.
+        ///valueRenderOption: '',  // TODO: Update placeholder value.
 
-        .bg {
-            background-size: inherit;
-            background: url("https://raw.githubusercontent.com/fpga2033/TVtower/gh-pages/bg.jpg") center center;
-            height: 505px;
-            width: 100%;
-            margin-left: -0%;
-            margin-top: 3em;
-            margin-bottom: 0em;
-        }
+        // How dates, times, and durations should be represented in the output.
+        // This is ignored if value_render_option is: FORMATTED_VALUE.
+        // The default dateTime render option is [DateTimeRenderOption.SERIAL_NUMBER].
+        //dateTimeRenderOption: '',  // TODO: Update placeholder value.
+      };
 
-        .my-modal {
-            position: fixed;
-            background-color: rgba(255, 255, 255, 0.9);
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            display: none;
-            overflow: auto;
-        }
-
-        .my-modal-content {
-            position: fixed;
-            width: 285px;        /* 调整这个宽度，和JTB界面拼接在一起*/
-            height: 620px;
-            text-align: left;
-            padding: 1em;
-            background-color: white;
-            border-radius: 3px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.29), 0 26px 52px rgba(0, 0, 0, 0.26);
-        }
-
-        @media only screen and (min-width: 300px) {
-            .my-modal-content {
-                right: 0%;
-                margin-right: -0px;
-            }
-        }
-        @media only screen and (min-height: 580px) {
-            .my-modal-content {
-                top: 0%;
-                margin-top: -0px;
-            }
-        }
-
-    </style>
-
-</head>
-
-<body>
-    <div class="site">
-        <section>
-            <title>☆♪ Sapporo TV Hotel ♪☆</title>
-            
-            <a style="font-size:15px">REF# </a><span><label class="control-label" id=txt_ref style="font-size:16px;font-family:verdana;color:rgb(23, 94, 248)"></label></span>
-            <button id="btn_JTB_confirmed" class="btn btn-primary" style="font-size:14px;font-family:Meiryo;float:right"><strong>ＪＴＢ完成</strong><br><em>(去填集計草稿)</em></button><br/>
-            <a style="font-size:16px">★s13-1 </a><label class="control-label" id=txt_type style="font-size:15px"></label><br/>
-            
-            <img hight="15%" width="100%" class="img-rounded" src="https://raw.githubusercontent.com/Best-Hotel-Japan/Sapporo_TV_Hotel-Dev/gh-pages/background.jpg" alt="" /><br/>
-            <!--https://raw.githubusercontent.com/fpga2033/TVtower/0609769e290f5f11ccf79624a39f594c03a2a4eb/mildseven-hill-winter.jpg-->
-
-            <a>总额:　JPY </a><label class="control-label" id=txt_price style="font-size:22px;font-family:verdana;color:red"></label><br/><br/>
-            <a style="font-size:12px">　男 </a><label class="control-label" id=txt_male_female style="font-weight:bold;font-size:22px;color:rgb(65, 0, 90)"></label><br/><br/>
-            
-            <span><label class="control-label" id=txt_checkin style="font-weight:bold;font-size:18px;"></label></span>
-            <a style="font-size:12px">より </a><label class="control-label" id=txt_days style="font-weight:bold;font-size:22px;color:rgb(65, 0, 90)"></label><a style="font-size:12px"> 日間　　　</a>
-            <label class="control-label" id=txt_rooms style="font-weight:bold;font-size:22px;color:rgb(65, 0, 90)"></label><a style="font-size:12px"> 室</a><br/>
-            <br/>
-            
-            <span><label class="control-label" id=txt_hotel style="font-weight:normal;font-size:18px"></label></span><label class="control-label" id=txt_roomtype></label><br/><br/>
-            <label class="control-label" id=txt_eachroom></label><label class="control-label" id=txt_meal></label><br/><br/>
-            <br/>
-            
-            <span><label class="control-label" id=txt_guest1 style="font-weight:normal;font-size:18px"></span></label><button id="btn_All_of_Names" class="btn btn-primary" style="font-size:12px;font-family:Meiryo;float:right"><strong>　所有人　</strong></button><br/><br/>
-            <label class="control-label" id=txt_request style="font-weight:bold;font-size:12px"></label><br/><br/>
-            
-            <label class="control-label" id=txt_show_OK style="font-weight:bold;font-style:oblique;font-size:24px;color:rgb(9, 15, 68)"></label>
-            <button id="btn_make_bookingID" class="btn btn-primary" style="font-size:11px;font-family:Microsoft YaHei;float:right"><strong>済画面提取
-            <img hight="32" width="53" style="float:right" src="https://raw.githubusercontent.com/Best-Hotel-Japan/Sapporo_TV_Hotel-Dev/gh-pages/JTB.jpg" alt="JTB" /><br/>　确认号　</strong></button>
-            <br/>
-            <label class="control-label" id=txt_show_profit style="font-family:Meiryo;font-weight:bold;font-size:18px;color:rgb(9, 15, 68)"></label>
-
-        </section>
-        <!--<div class="bg"></div>   这是BackGround图片 -->
-    </div>
-
-    <div class="my-modal">
-        <div class="my-modal-content">
-
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                    
-                    <br/><br/>
-
-                    <a style="font-family:Microsoft YaHei;font-size:16px">　预订 </a>
-                    <label class="control-label" id=txt_modal_1 style="font-family:Meiryo;font-weight:bold;font-size:22px"></label>
-                    <a style="font-family:Microsoft YaHei;font-size:16px"> 间房， 每间房：</a>
-                    <label class="control-label" id=txt_modal_2 style="font-family:Microsoft YaHei;font-weight:bold;font-size:16px"></label>
-
-                    <br/><br/>
-                    <a style="font-family:Microsoft YaHei;font-size:16px">　该预订最多可住　</a>
-                    <label class="control-label" id=txt_modal_3 style="font-family:Meiryo;font-weight:bold;font-size:22px"></label>
-                    <a style="font-family:Microsoft YaHei;font-size:16px"> 人。</a>
-
-                    <br/><br/><br/>
-                    <b style="font-family:Microsoft YaHei;font-size:16px;color:rgb(221, 121, 90)">　订单通知了"入住人数"是　</b>
-                    <label class="control-label" id=txt_modal_4 style="font-family:Meiryo;font-weight:bold;font-size:22px;color:rgb(221, 121, 90)"></label>
-                    <b style="font-family:Microsoft YaHei;font-size:16px;color:rgb(221, 121, 90)"> 耶!</b><br/>
-                    <b style="font-family:Microsoft YaHei;font-size:16px;color:rgb(221, 121, 90)">　为您编辑「MS報告」如下：</b>
-
-                    <br/><br/><br/>
-                    <label class="control-label" id=txt_modal_content style="font-family:Microsoft YaHei;font-size:16px"></label><br/><br/>
-                    
-                    </div>
-                </form>
-            </div>
-            
-            <br/><br/><br/>
-            <a style="font-family:Microsoft YaHei;font-size:16px">　</a>
-            <button id="btn_modal_confirmed" class="btn btn-primary" style="font-family:Microsoft YaHei;font-size:15px">　Close　</button>            
-
-        </div>
-    </div>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script type="text/javascript">
-
-        var debug = 0;
-        var $body = $('body');
-        var gName1;                 // JTB氏名報告
-        var report_summary;         // 集計草稿
+      var request = gapi.client.sheets.spreadsheets.values.get(params);
+      request.then(function(response) {
         
-        /* 此处必须设置 若干延迟，防止小窗口读不到clipboard */
-        setTimeout(function(){
-
-            debug = 0.81;               // 问题就出在这里，剪贴板里是undefined
-            navigator.clipboard.readText()
-            .then(text => {
-                
-                var pasteStr = text;
-                var pasteStrJTB = "";
-
-                var gName = new Array();    // 用于存放所有客人姓名，从入住人1开始
-                gName[0] = "";
-                var gNameShow = "";         // 把所有名字显示成一行
-
-                var HnameSummary = "sapporo1";
-                var HnameJTBcode = "";
-                var JTBTotalPrice = "";
-                var orderProfit = 0;
-                debug = 1;
-
-                
-                Hotel_information: {        // HnameTable酒店资料数组初始化
-
-                    var HnameTable = new Array();
-                    for( var hi=0; hi<90; hi++ ){           
-                        HnameTable[hi] = new Array();
-                        for( var hj=0; hj<6; hj++ ){        //二维长度为6
-                            HnameTable[hi][hj] = "";
-                        }
-                    }
-                    debug = 2.1;
-                    HnameTable[0]=["塔娃","星野塔娃","星野リゾート　トマム・ザ・タワー","en","1578006",""];
-                    HnameTable[1]=["Riso","星野Risonare","星野リゾート　リゾナーレトマム","en","1578020",""];
-                    HnameTable[2]=["希尔顿","Hilton二世古","ヒルトンニセコビレッジ","en","1524002",""];
-                    HnameTable[3]=["Alpen","二世古Alpen","ホテルニセコアルペン","en","1527003",""];
-                    HnameTable[4]=["安努普","二世古R安努","ニセコノーザンリゾート　アンヌプリ","en","1525003",""];
-                    HnameTable[5]=["世古塔","二世古塔","ワンニセコリゾートタワーズ","en","1525005",""];
-                    HnameTable[6]=["谷臻品","キロロ","キロロ トリビュートポートフォリオホテル","en","1586002",""];
-                    HnameTable[7]=["威斯汀","Westinルスツ","ウエスティンルスツリゾート","en","1567002",""];
-                    HnameTable[8]=["及会议","ルスツ RC","ルスツリゾートホテル＆コンベンション","en","1567001",""];
-                    HnameTable[9]=["日航","JR日航","JR タワーホテル日航","en","1529113",""];
-                    HnameTable[10]=["格拉斯丽","格拉斯丽","ホテルグレイスリー札幌","en","1529024",""];
-                    HnameTable[11]=["世纪皇家","世纪皇家","センチュリーロイヤルホテル札幌","en","1529023",""];
-                    HnameTable[12]=["京王","京王プラザ","京王プラザホテル札幌","en","1529005",""];
-                    HnameTable[13]=["北口","Mystay北口","ホテルマイステイズ札幌駅北口（旧ホテルフィーノ札幌）","en","1529121",""];
-                    HnameTable[14]=["格兰","札幌格兰","札幌グランドホテル","en","1529001",""];
-                    HnameTable[15]=["唐草","札幌唐草","からくさホテル札幌","en","9999999",""];
-                    HnameTable[16]=["東急商","東急REI","札幌東急REI　ホテル","en","1529039",""];
-                    HnameTable[17]=["克罗斯","克罗斯","クロスホテル札幌","en","1529120",""];
-                    HnameTable[18]=["罗伊顿","罗伊顿札幌","ロイトン札幌","en","1529093",""];
-                    HnameTable[19]=["三井","三井花园","三井ガーデンホテル札幌","en","1529137",""];
-                    HnameTable[20]=["滝本","第一滝本","登別第一滝本館","en","1558001",""];
-                    HnameTable[21]=["登別万","登別万世閣","登別万世閣","en","1558003",""];
-                    HnameTable[22]=["仙境","まほろば","ホテルまほろば","en","1558007",""];
-                    HnameTable[23]=["登别格","登別グランド","登別グランドホテル","en","1558002",""];
-                    HnameTable[24]=["石水亭","登別石水亭","登別石水亭","en","1558005",""];
-                    HnameTable[25]=["雅亭","登別雅亭","名湯の宿パークホテル雅亭","en","1558006",""];
-                    HnameTable[26]=["乃之风","TOYA乃の風","ザ・レイクビューTOYA乃の風リゾート","en","1570025",""];
-                    HnameTable[27]=["湖山水","洞爺湖山水","洞爺湖山水ホテル和風","en","1570019",""];
-                    HnameTable[28]=["湖畔亭","洞爺湖畔亭","洞爺湖畔亭","en","1570022",""];
-                    HnameTable[29]=["爷观光","洞爺観光","洞爺観光ホテル","en","1570002",""];
-                    HnameTable[30]=["湖温莎","洞爺温莎","ザ・ウンインザーホテル洞爺リゾート＆スパ","en","1570024",""];
-                    HnameTable[31]=["太阳宫","洞爺サン","洞爺サンパレス","en","1570010",""];
-                    HnameTable[32]=["章月","章月格兰","章月グランドホテル","en","1533001",""];
-                    HnameTable[33]=["拉碧斯","LAVIS函館","ＬＡ　ＶＩＳＴＡ函館ベイ","en","1611037",""];
-                    HnameTable[34]=["福朋","福朋函館","フォーポイントバイシェラトン函館","en","1611015",""];
-                    HnameTable[35]=["君乐","グランド小樽","グランドパーク小樽","en","1512019",""];
-                    HnameTable[36]=["多米","小樽多米","ドーミーインPREMIUM小樽","en","1512022",""];
-                    HnameTable[37]=["银鳞","銀鱗荘","銀鱗荘","en","1512010",""];
-                    HnameTable[38]=["峡观光","層雲峡観光","層雲峡観光ホテル","en","1111004",""];
-                    HnameTable[39]=["朝陽亭","層雲峡朝陽","層雲峡朝陽亭 ","en","1111005",""];
-                    HnameTable[40]=["大雪","層雲峡大雪","層雲峡ホテル大雪","en","1117006",""];
-                    HnameTable[41]=["御前水","阿寒御前水","ホテル御前水","en","1304005",""];
-                    HnameTable[42]=["ART","旭川艺术","アートホテル旭川","en","1107016",""];
-                    HnameTable[43]=["那图瓦","富良野森林","ホテルナトゥールヴァルト富良野","en","1117007",""];
-                    HnameTable[44]=["新富良","新富良野Ｐ","新富良野プリンスホテル","en","1117006",""];
-                    
-                    debug = 2.2;
-                }
-
-                ctripOrderInfo_extracting_block: {
-
-                    var ctripOrderThing=new Array();
-
-                    var regExp_ctripOrderRef=/订单号\s+(\d{10})/;
-                    ctripOrderThing[0]=pasteStr.match(regExp_ctripOrderRef);
-                    var ctripOrderRef=RegExp.$1;
-
-                    var regExp_ctripOrderType=/订单类型\s+(..)/;
-                    ctripOrderThing[1]=pasteStr.match(regExp_ctripOrderType);
-                    var ctripOrderType=RegExp.$1;
-
-                    var regExp_ctripOrderPrice=/订单金额\s+JPY(.+)\s/;
-                    ctripOrderThing[2]=pasteStr.match(regExp_ctripOrderPrice);
-                    var ctripOrderPrice=parseInt(RegExp.$1);
-
-                    var regExp_ctripOrderHotel=/酒店名称\s+(.+)\(/;
-                    ctripOrderThing[3]=pasteStr.match(regExp_ctripOrderHotel);
-                    var ctripOrderHotel=RegExp.$1;
-                    var hotelIndexName=ctripOrderHotel.substr(0, 3);
-                    var hotelNickName;
-
-                    var regExp_ctripOrderRoomtype=/入住信息\s+房型\s+([\u4E00-\u9FFF]+).+/;
-                    var regExp_ctripOrderEach_Case1=/入住信息\s+房型\s+.+(.人入住)/;
-                    var regExp_ctripOrderEach_Case2=/入住信息\s+房型\s+.*([双大中标][人床准][床房])/;
-                    ctripOrderThing[4]=pasteStr.match(regExp_ctripOrderRoomtype);
-                    var ctripOrderRoomtype=RegExp.$1;
-                    var ctripOrderEachRoom;
-                    if ( pasteStr.match(regExp_ctripOrderEach_Case1) ){
-                        ctripOrderEachRoom=RegExp.$1;
-                    } else if ( pasteStr.match(regExp_ctripOrderEach_Case2) ){
-                        ctripOrderEachRoom="二人入住";
-                    }
-                    //接下来需要计算总共人=每间人数*间数     
-
-                    var regExp_ctripOrderDate=/入离时间\s+(20\d\d\W\d\d\W\d\d).+(20\d\d\W\d\d\W\d\d).+\d+晚/;
-                    ctripOrderThing[5]=pasteStr.match(regExp_ctripOrderDate);
-                    var ctripOrderDate1=RegExp.$1;
-                    var ctripOrderDate2=RegExp.$2;
-                    var d1 = new Date(ctripOrderDate1);
-                    var d2 = new Date(ctripOrderDate2);
-                    var ctripOrderNights = parseInt((d2 - d1) / (1000 * 3600 * 24)); 
-                    var getDayOfWeek = ['日','月','火','水','木','金','土'];
-                    var Date1_dayName = getDayOfWeek[d1.getDay()];
-                    
-                    var regExp_ctripOrderRooms=/预订间数\s+(\d+)/;
-                    ctripOrderThing[6]=pasteStr.match(regExp_ctripOrderRooms);
-                    var ctripOrderRooms=RegExp.$1;
-
-                    var regExp_ctripOrderPeoples=/入住人数\s+(\d+)/;
-                    ctripOrderThing[7]=pasteStr.match(regExp_ctripOrderPeoples);
-                    var ctripOrderPeoples=RegExp.$1;
-                    //ctripOrderPeoples是订单通知人数。姓名个数 ≤ 订单通知人数 ≤ 实际入住人数 ≤ 预订可住人数
-
-                    var regExp_ctripOrderMeals=/房型\s+.+([\u4e00-\u9fa5]早|早\+晚餐)/;
-                    ctripOrderThing[8]=pasteStr.match(regExp_ctripOrderMeals);
-                    var ctripOrderMeals=RegExp.$1;
-
-                    var regExp_ctripOrderGuestname=/入住人\d+\s+([\w ]+\/[\w ]+)/g;
-                    ctripOrderThing[9]=pasteStr.match(regExp_ctripOrderGuestname);      // ctripOrderThing[9]已经是数组了!
-                    var GuestnameList=ctripOrderThing[9];
-                    //if(GuestnameList.length!=ctripOrderPeoples){/* 入住人名字列表没能成功获取完成 */}
-                    //转换成jtbGuestName以护照格式为准：去空格，改大写，姓与名中间的/改为半角空格
-
-                    var regExp_ctripOrderSpecialrequest=/特殊要求\s+(.+)\s+/;
-                    ctripOrderThing[10]=pasteStr.match(regExp_ctripOrderSpecialrequest);
-                    var ctripOrderSpecialrequest=RegExp.$1;
-                    //内容可能很多，只是展示出来，然后提供高階層等等标签供复制选用
-
-                    var regExp_ctripOrderComment=/备注\n{1,2}(..)/;
-                    ctripOrderThing[11]=pasteStr.match(regExp_ctripOrderComment);
-                    //if(RegExp.$1){/* 提醒用户备注栏里有内容 */}
-                
-                    debug = 3;
-                }
-                
-                Key_Info_treatment: {
-
-                    // 显示内容的前处理     
-                    var HHHHname = ctripOrderHotel;     // HHHHname是酒店的四字簡称
-                    HHHHname = HHHHname.replace("北海道","");
-                    HHHHname = HHHHname.replace("度假村","");
-                    HHHHname = HHHHname.replace("度假","");
-                    HHHHname = HHHHname.replace("大酒店","");
-                    HHHHname = HHHHname.replace("酒店","");
-                    HHHHname = HHHHname.replace("大饭店","");
-                    HHHHname = HHHHname.replace("饭店","");
-                    HHHHname = HHHHname.replace("TOMAMU","");
-                    HHHHname = HHHHname.replace("Tomamu","");
-                    
-                    var DATEshow = ctripOrderDate1;
-                    var JTBinputDate = DATEshow.replace(/-/g,"");
-                    DATEshow = DATEshow.replace("2018","18");
-                    DATEshow = DATEshow.replace("2019","19");
-                    var periodDays = ctripOrderNights + 1;
-
-                    debug = 3.2;
-                    //gName1 = GuestnameList[0].toUpperCase().replace('/','_');
-                    //gName1 = gName1.replace(/\W/g,"").replace('_',' ');
-                    gName1=GuestnameList[0].slice(5);　　　　　　// 去掉"入住人1_"
-                    gName1=gName1.toUpperCase().replace('/','_');
-                    gName1=gName1.replace(/\W/g,"").replace('_',' ');  
-
-                    debug = 3.3;
-                    var numEachRoom = "";
-                    if (ctripOrderEachRoom.match(/[单一]人/)) { numEachRoom = "1"; }
-                    else if (ctripOrderEachRoom.match(/[双两二]人/)) { numEachRoom = "2"; }
-                    else if (ctripOrderEachRoom.match(/三人/)) { numEachRoom = "3"; }
-                    else if (ctripOrderEachRoom.match(/四人/)) { numEachRoom = "4"; }
-                    else { numEachRoom = "X"; alert(" numEachRoom ERROR! "); }
-
-                    var totalPeopleAllow = numEachRoom * ctripOrderRooms;
-                    var childA_info = "";
-                    if ( ctripOrderRoomtype.match(/[四五]人/) && numEachRoom == "2" ){ childA_info = "考虑给每室加1小A"; }
-                    
-                    var SPshow = ctripOrderSpecialrequest;
-                    SPshow = SPshow.replace("High floor preferred"," *高階層希望 ");
-                    SPshow = SPshow.replace("Nonsmoking preferred"," *禁煙 ");
-                    SPshow = SPshow.replace("Quiet room preferred","");
-                    SPshow = SPshow.replace("Honeymoon amenity preferred","");
-                    SPshow = SPshow.replace("Prefer ","*Prefer ");
-                    SPshow = SPshow.replace(";"," ");
-                    SPshow = SPshow.replace("。"," ");
-                    SPshow = SPshow.replace("please","");      // please
-                    if ( ctripOrderRooms > 2 ){ SPshow = SPshow + " *同じ階層でお願いします!"; SPshow = SPshow.replace("null",""); }
-                    if ( childA_info != "" ){ SPshow = SPshow + " *子供同行なし:可能"; SPshow = SPshow.replace("null",""); }
-                    if ( SPshow == "" ) { SPshow = "null"; }
-                    
-                    for ( var i = 0 ; i < GuestnameList.length ; i++ ){
-                        GuestnameList[i] = GuestnameList[i].replace("入住人","*");
-                        gName[1+i] = GuestnameList[i].toUpperCase().replace(" ","");    // 删掉一个空格而不是全部，提高MS报告的可读性
-                        gNameShow = gNameShow + "　" + gName[1+i];
-                        gName[1+i] = i<9? gName[1+i].slice(4) : gName[1+i].slice(5);       // 姓氏的首字母前面有两个换行符。入住人1x要多删掉一个1
-                    }                        
-                    
-                    // 编辑MS报告
-
-                    debug = 4;
-                }
-
-                beside_content_display_block: { 
-
-                    document.getElementById("txt_ref").innerHTML = ctripOrderRef + '　　';
-                    document.getElementById("txt_type").innerHTML = ctripOrderType;
-                    document.getElementById("txt_price").innerHTML = ctripOrderPrice;
-                    document.getElementById("txt_hotel").innerHTML = HHHHname + '　　';
-                    document.getElementById("txt_roomtype").innerHTML = ctripOrderRoomtype;
-                    document.getElementById("txt_eachroom").innerHTML = ctripOrderEachRoom + '　　';
-                    document.getElementById("txt_meal").innerHTML = ctripOrderMeals;
-                    document.getElementById("txt_rooms").innerHTML = ctripOrderRooms;
-                    document.getElementById("txt_male_female").innerHTML = totalPeopleAllow + '　　' + childA_info;
-                    document.getElementById("txt_checkin").innerHTML = DATEshow + '　' + Date1_dayName + '　';
-                    document.getElementById("txt_days").innerHTML = periodDays;
-                    document.getElementById("txt_guest1").innerHTML = gName1 + ' ';
-                    document.getElementById("txt_request").innerHTML = SPshow;
-                    // label#提醒有备注').text('' + recipText)
-                    debug = 5;
-                    
-                    if ( ctripOrderType.match(/修改/) ){
-                        myWindow=window.open('', '', 'width=325, height=240, top=185, left=500, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');
-                        myWindow.document.write("<h3>　您辛苦啦！~</h3><h3>　这是一个修改单！一定要先查清楚此单之前所有的关联单号，是否已经在JTB上有过房间预订。</h3><h3>　关联单号可能不止一个！</h3>");
-                        myWindow.focus();
-                    }
-
-                    if ( ctripOrderType.match(/取消/) ){
-                        myWindow=window.open('', '', 'width=325, height=240, top=185, left=500, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');
-                        myWindow.document.write("<h3>　您辛苦啦！~</h3><h3>　这是一个取消单！一定要先看清楚此单的原始订单通知时间。</h3><h3>　JTB上的取消操作要做记录！</h3><h3>　最后记得把集計表涂红。</h3>");
-                        myWindow.focus();
-                        setTimeout(function(){ window.close(); }, 700);
-                    }
-
-                    if ( ctripOrderType.match(/无效/) ){
-                        myWindow=window.open('', '', 'width=325, height=240, top=185, left=500, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');
-                        myWindow.document.write("<h3>　您辛苦啦！~</h3><h3>　这是一个无效订单呀！</h3><h3>　为什么要打开接单小窗口呢？</h3><h3>　搜索一下关联订单和相关邮件吧。</h3>");
-                        myWindow.focus();
-                        setTimeout(function(){ window.close(); }, 700);
-                    }                    
-                }
-
-                modal_content_display_block: { 
-
-                    var MS_report = "";
-                    var ctripOrderNames = GuestnameList.length;     // 姓名个数 ≤ 订单通知人数 ≤ 实际入住人数 ≤ 预订可住人数
-                    ctripOrderNames = ctripOrderNames.toString();
-
-                    // 依次判断： 预订间数，每间入住人数，实际报告的姓名个数    debug ctrip order: 7557303377 7725211919
-                    switch( ctripOrderRooms ){
-                    case "1":
-                            switch( numEachRoom ){
-                            case "1":
-                                    switch( ctripOrderNames ){
-                                    case "1": MS_report = "客問い合わせ番" + ctripOrderRef + "　"; break;
-                                    } break;
-                            case "2":
-                                    switch( ctripOrderNames ){
-                                    case "1": MS_report = "客問い合わせ番" + ctripOrderRef + "　代表者：" + gName[1]; break;
-                                    case "2": MS_report = "客問い合わせ番" + ctripOrderRef + "　同行者：" + gName[2]; break;
-                                    } break;
-                            case "3":
-                                    switch( ctripOrderNames ){
-                                    case "1": MS_report = "客問い合わせ番" + ctripOrderRef + "　代表者：" + gName[1]; break;
-                                    case "2": MS_report = "客問い合わせ番" + ctripOrderRef + "　代表者：" + gName[1] + "　" + gName[2]; break;
-                                    case "3": MS_report = "客問い合わせ番" + ctripOrderRef + "　同行者：" + gName[2] + "　" + gName[3]; break;
-                                    } break;                
-                            case "4":
-                                    switch( ctripOrderNames ){
-                                    case "1": MS_report = "客問い合わせ番" + ctripOrderRef + "　代表者：" + gName[1]; break;
-                                    case "2": MS_report = "客問い合わせ番" + ctripOrderRef + "　代表者：" + gName[1] + "　" + gName[2]; break;
-                                    case "3": MS_report = "番" + ctripOrderRef + "　代表者：" + gName[1] + "　" + gName[2] + "　" + gName[3]; break;
-                                    case "4": MS_report = "番" + ctripOrderRef + "　同行者：" + gName[2] + "　" + gName[3] + "　" + gName[4]; break;
-                                    } break;
-                            } break;
-
-                    case "2":
-                            switch( numEachRoom ){                  //　*1 AA/AA　BB/BB　*2 CC/CC　DD/DD  
-                            case "1":
-                                    switch( ctripOrderNames ){
-                                    case "1": MS_report = "客問い合わせ番" + ctripOrderRef + "　代表者：" + gName[1]; break;
-                                    case "2": MS_report = "客問い合わせ番" + ctripOrderRef + "　名簿 *1 " + gName[1] + "　*2 " + gName[2]; break;
-                                    } break;
-                            case "2":
-                                    switch( ctripOrderNames ){
-                                    case "1": MS_report = "客問い合わせ番" + ctripOrderRef + "　代表者：" + gName[1]; break;
-                                    case "2": MS_report = "客問い合わせ番" + ctripOrderRef + "　代表者 *1 " + gName[1] + "　*2 " + gName[2]; break;
-                                    case "3": MS_report = "客問い合わせ番" + ctripOrderRef + "　代表者 *1 " + gName[1] + "　*2 " + gName[2] + "　" + gName[3]; break;
-                                    case "4": MS_report = "番" + ctripOrderRef + "　名簿 *1 " + gName[1] + "　" + gName[2] + "　*2 " + gName[3] + "　" + gName[4]; break;
-                                    } break;
-                            case "3":
-                                    switch( ctripOrderNames ){
-                                    case "1": MS_report = "客問い合わせ番" + ctripOrderRef + "　代表者：" + gName[1]; break;
-                                    case "2": MS_report = "客問い合わせ番" + ctripOrderRef + "　代表者 *1 " + gName[1] + "　*2 " + gName[2]; break;
-                                    case "3": MS_report = "客問い合わせ番" + ctripOrderRef + "　代表者 *1 " + gName[1] + "　*2 " + gName[2] + "　" + gName[3]; break;
-                                    case "4": MS_report = "番" + ctripOrderRef + "　代表者 *1 " + gName[1] + "　" + gName[2] + "　*2 " + gName[3] + "　" + gName[4]; break;
-                                    case "5": MS_report = "番" + ctripOrderRef + "　代表者 *1 " + gName[1] + "　" + gName[2] + "　*2 " + gName[3] + "　" + gName[4] + "　" + gName[5]; break;
-                                    case "6": MS_report = "番" + ctripOrderRef + "　名簿 *1 " + gName[1] + "　" + gName[2] + "　" + gName[3] + "　*2 " + gName[4] + "　" + gName[5] + "　" + gName[6]; break;
-                                    } break;                
-                            case "4":
-                                    switch( ctripOrderNames ){
-                                    case "1": MS_report = "客問い合わせ番" + ctripOrderRef + "　代表者：" + gName[1]; break;
-                                    case "2": MS_report = "客問い合わせ番" + ctripOrderRef + "　代表者 *1 " + gName[1] + "　*2 " + gName[2]; break;
-                                    case "3": MS_report = "客問い合わせ番" + ctripOrderRef + "　代表者 *1 " + gName[1] + "　*2 " + gName[2] + "　" + gName[3]; break;
-                                    case "4": MS_report = "番" + ctripOrderRef + "　代表者 *1 " + gName[1] + "　" + gName[2] + "　*2 " + gName[3] + "　" + gName[4]; break;
-                                    case "5": MS_report = "番" + ctripOrderRef + "　代表者 *1 " + gName[1] + "　" + gName[2] + "　*2 " + gName[3] + "　" + gName[4] + "　" + gName[5]; break;
-                                    case "6": MS_report = "番" + ctripOrderRef + "　代表者 *1 " + gName[1] + "　" + gName[2] + "　" + gName[3] + "　*2 " + gName[4] + "　" + gName[5] + "　" + gName[6]; break;
-                                    case "7": MS_report = "番" + ctripOrderRef + "　代表者 *1 " + gName[1] + "　" + gName[2] + "　" + gName[3] + "　*2 " + gName[4] + "　" + gName[5] + "　" + gName[6] + "　" + gName[7]; break;
-                                    case "8": MS_report = "番" + ctripOrderRef + "　名簿 *1 " + gName[1] + "　" + gName[2] + "　" + gName[3] + "　" + gName[4] + "　*2 " + gName[5] + "　" + gName[6]+ "　" + gName[7] + "　" + gName[8]; break;
-                                    } break;                
-                            } break;
-
-                    case "3":
-                            switch( numEachRoom ){                  //　*1 AA/AA　BB/BB　*2 CC/CC　DD/DD　*3 EE/EE　FF/FF  
-                            case "1":
-                                    switch( ctripOrderNames ){
-                                    case "1": MS_report = "客問い合わせ番" + ctripOrderRef + "　代表者：" + gName[1]; break;
-                                    case "2": MS_report = "客問い合わせ番" + ctripOrderRef + "　代表者：" + gName[1] + gName[2]; break;
-                                    case "3": MS_report = "客問い合わせ番" + ctripOrderRef + "　名簿 *1 " + gName[1] + "　*2 " + gName[2] + "　*3 " + gName[3]; break;
-                                    } break;
-                            case "2":
-                                    switch( ctripOrderNames ){
-                                    case "1": MS_report = "客問い合わせ番" + ctripOrderRef + "　代表者：" + gName[1]; break;
-                                    case "2": MS_report = "客問い合わせ番" + ctripOrderRef + "　代表者 *1 " + gName[1] + "　*2 " + gName[2]; break;
-                                    case "3": MS_report = "客問い合わせ番" + ctripOrderRef + "　代表者 *1 " + gName[1] + "　*2 " + gName[2] + "　*3 " + gName[3]; break;
-                                    case "4": MS_report = "番" + ctripOrderRef + "　代表者 *1 " + gName[1] + "　*2 " + gName[2] + "　*3 " + gName[3] + "　" + gName[4]; break;
-                                    case "5": MS_report = "番" + ctripOrderRef + "　代表者 *1 " + gName[1] + "　*2 " + gName[2] + "　" + gName[3] + "　*3 " + gName[4] + "　" + gName[5]; break;
-                                    case "6": MS_report = "番" + ctripOrderRef + "　名簿 *1 " + gName[1] + "　" + gName[2] + "　*2 " + gName[3] + "　" + gName[4] + "　*3 " + gName[5] + "　" + gName[6]; break;
-                                    } break;
-                            case "3":
-                                    switch( ctripOrderNames ){
-                                    case "1": MS_report = "客問い合わせ番" + ctripOrderRef + "　代表者：" + gName[1]; break;
-                                    case "2": MS_report = "客問い合わせ番" + ctripOrderRef + "　代表者 *1 " + gName[1] + "　*2 " + gName[2]; break;
-                                    case "3": MS_report = "客問い合わせ番" + ctripOrderRef + "　代表者 *1 " + gName[1] + "　*2 " + gName[2] + "　*3 " + gName[3]; break;
-                                    case "4": MS_report = "番" + ctripOrderRef + "　代表者 *1 " + gName[1] + "　*2 " + gName[2] + "　*3 " + gName[3] + "　" + gName[4]; break;
-                                    case "5": MS_report = "番" + ctripOrderRef + "　代表者 *1 " + gName[1] + "　*2 " + gName[2] + "　" + gName[3] + "　*3 " + gName[4] + "　" + gName[5]; break;
-                                    case "6": MS_report = "番" + ctripOrderRef + "　代表者 *1 " + gName[1] + "　" + gName[2] + "　*2 " + gName[3] + "　" + gName[4] + "　*3 " + gName[5] + "　" + gName[6]; break;
-                                    case "7": MS_report = "番" + ctripOrderRef + "　代表者 *1 " + gName[1] + "　" + gName[2] + "　*2 " + gName[3] + "　" + gName[4] + "　*3 " + gName[5] + "　" + gName[6] + "　" + gName[7]; break;
-                                    case "8": MS_report = "番" + ctripOrderRef + "　代表者 *1 " + gName[1] + "　" + gName[2] + "　*2 " + gName[3] + "　" + gName[4] + "　" + gName[5] + "　*3 " + gName[6] + "　" + gName[7] + "　" + gName[8]; break;
-                                    case "9": MS_report = "番" + ctripOrderRef + "　名簿 *1 " + gName[1] + "　" + gName[2] + "　" + gName[3] + "　*2 " + gName[4] + "　" + gName[5] + "　" + gName[6] + "　*3 " + gName[7] + "　" + gName[8] + "　" + gName[9]; break;
-                                    } break;                
-                            case "4":
-                                    switch( ctripOrderNames ){
-                                    case "3": MS_report = "客問い合わせ番" + ctripOrderRef + "　代表者 *1 " + gName[1] + "　*2 " + gName[2] + "　*3 " + gName[3]; break;
-                                    case "4": MS_report = "番" + ctripOrderRef + "　代表者 *1 " + gName[1] + "　*2 " + gName[2] + "　*3 " + gName[3] + "　" + gName[4]; break;
-                                    case "5": MS_report = "番" + ctripOrderRef + "　代表者 *1 " + gName[1] + "　*2 " + gName[2] + "　" + gName[3] + "　*3 " + gName[4] + "　" + gName[5]; break;
-                                    case "6": MS_report = "番" + ctripOrderRef + "　代表者 *1 " + gName[1] + "　" + gName[2] + "　*2 " + gName[3] + "　" + gName[4] + "　*3 " + gName[5] + "　" + gName[6]; break;
-                                    case "7": MS_report = "番" + ctripOrderRef + "　代表者 *1 " + gName[1] + "　" + gName[2] + "　*2 " + gName[3] + "　" + gName[4] + "　*3 " + gName[5] + "　" + gName[6] + "　" + gName[7]; break;
-                                    case "8": MS_report = "番" + ctripOrderRef + "　代表者 *1 " + gName[1] + "　" + gName[2] + "　*2 " + gName[3] + "　" + gName[4] + "　" + gName[5] + "　*3 " + gName[6] + "　" + gName[7] + "　" + gName[8]; break;
-                                    case "9": MS_report = "番" + ctripOrderRef + "　代表者 *1 " + gName[1] + "　" + gName[2] + "　" + gName[3] + "　*2 " + gName[4] + "　" + gName[5] + "　" + gName[6] + "　*3 " + gName[7] + "　" + gName[8] + "　" + gName[9]; break;
-                                    case "10": MS_report = "*1 " + gName[1] + "　" + gName[2] + "　" + gName[3] + "　*2 " + gName[4] + "　" + gName[5] + "　" + gName[6] + "　*3 " + gName[7] + "　" + gName[8] + "　" + gName[9] + "　" + gName[10]; break;
-                                    case "11": MS_report = "*1 " + gName[1] + "　" + gName[2] + "　" + gName[3] + "　*2 " + gName[4] + "　" + gName[5] + "　" + gName[6] + "　" + gName[7] + "　*3 " + gName[8] + "　" + gName[9] + "　" + gName[10] + "　" + gName[11]; break;
-                                    case "12": MS_report = "*1 " + gName[1] + "　" + gName[2] + "　" + gName[3] + "　" + gName[4] + "　*2 " + gName[5] + "　" + gName[6] + "　" + gName[7] + "　" + gName[8] + "　*3 " + gName[9] + "　" + gName[10] + "　" + gName[11] + "　" + gName[12]; break;
-                                    } break;                
-                            } break;
-
-                    case "4":
-                            switch( numEachRoom ){                  //　*1 AA/AA　BB/BB　*2 CC/CC　DD/DD　*3 EE/EE　FF/FF　*4 GG/GG　HH/HH  
-                            case "2":
-                                    switch( ctripOrderNames ){
-                                    case "4": MS_report = "番" + ctripOrderRef + "　代表者 *1 " + gName[1] + "　*2 " + gName[2] + "　*3 " + gName[3] + "　*4 " + gName[4]; break;
-                                    case "5": MS_report = "番" + ctripOrderRef + "　代表者 *1 " + gName[1] + "　*2 " + gName[2] + "　*3 " + gName[3] + "　*4 " + gName[4] + "　" + gName[5]; break;
-                                    case "6": MS_report = "番" + ctripOrderRef + "　代表者 *1 " + gName[1] + "　*2 " + gName[2] + "　*3 " + gName[3] + "　" + gName[4] + "　*4 " + gName[5] + "　" + gName[6]; break;
-                                    case "7": MS_report = "番" + ctripOrderRef + "　代表者 *1 " + gName[1] + "　*2 " + gName[2] + "　" + gName[3] + "　*3 " + gName[4] + "　" + gName[5] + "　*4 " + gName[6] + "　" + gName[7]; break;
-                                    case "8": MS_report = "番" + ctripOrderRef + "　名簿 *1 " + gName[1] + "　" + gName[2] + "　*2 " + gName[3] + "　" + gName[4] + "　*3 " + gName[5] + "　" + gName[6] + "　*4 " + gName[7] + "　" + gName[8]; break;
-                                    } break;
-                            case "3":
-                                    switch( ctripOrderNames ){
-                                    case "4": MS_report = "番" + ctripOrderRef + "　代表者 *1 " + gName[1] + "　*2 " + gName[2] + "　*3 " + gName[3] + "　*4 " + gName[4]; break;
-                                    case "5": MS_report = "番" + ctripOrderRef + "　代表者 *1 " + gName[1] + "　*2 " + gName[2] + "　*3 " + gName[3] + "　*4 " + gName[4] + "　" + gName[5]; break;
-                                    case "6": MS_report = "番" + ctripOrderRef + "　代表者 *1 " + gName[1] + "　*2 " + gName[2] + "　*3 " + gName[3] + "　" + gName[4] + "　*4 " + gName[5] + "　" + gName[6]; break;
-                                    case "7": MS_report = "番" + ctripOrderRef + "　代表者 *1 " + gName[1] + "　*2 " + gName[2] + "　" + gName[3] + "　*3 " + gName[4] + "　" + gName[5] + "　*4 " + gName[6] + "　" + gName[7]; break;
-                                    case "8": MS_report = "番" + ctripOrderRef + "　代表者 *1 " + gName[1] + "　" + gName[2] + "　*2 " + gName[3] + "　" + gName[4] + "　*3 " + gName[5] + "　" + gName[6] + "　*4 " + gName[7] + "　" + gName[8]; break;
-                                    case "9": MS_report = "*1 " + gName[1] + "　" + gName[2] + "　*2 " + gName[3] + "　" + gName[4] + "　*3 " + gName[5] + "　" + gName[6] + "　*4 " + gName[7] + "　" + gName[8] + "　" + gName[9]; break;
-                                    case "10": MS_report = "*1 " + gName[1] + "　" + gName[2] + "　*2 " + gName[3] + "　" + gName[4] + "　*3 " + gName[5] + "　" + gName[6] + "　" + gName[7] + "　*4 " + gName[8] + "　" + gName[9] + "　" + gName[10]; break;
-                                    case "11": MS_report = "*1 " + gName[1] + "　" + gName[2] + "　*2 " + gName[3] + "　" + gName[4] + "　" + gName[5] + "　*3 " + gName[6] + "　" + gName[7] + "　" + gName[8] + "　*4 " + gName[9] + "　" + gName[10] + "　" + gName[11]; break;
-                                    case "12": MS_report = "*1 " + gName[1] + "　" + gName[2] + "　" + gName[3] + "　*2 " + gName[4] + "　" + gName[5] + "　" + gName[6] + "　*3 " + gName[7] + "　" + gName[8] + "　" + gName[9] + "　*4 " + gName[10] + "　" + gName[11] + "　" + gName[12]; break;
-                                    } break;                
-                            case "4":
-                                    switch( ctripOrderNames ){
-                                    case "4": MS_report = "代表者 *1 " + gName[1] + "　*2 " + gName[2] + "　*3 " + gName[3] + "　*4 " + gName[4]; break;
-                                    case "16": MS_report = "代表者 *1 " + gName[1] + "　*2 " + gName[5] + "　*3 " + gName[9] + "　*4 " + gName[13] + "　*後日FAXで名簿を送ります."; break;
-                                    } break;  
-                            } break;
-                            
-                    case "5":
-                            switch( numEachRoom ){                  //　*1 AA/AA　BB/BB　*2 CC/CC　DD/DD　*3 EE/EE　FF/FF　*4 GG/GG　HH/HH　*5 JJ/JJ　KK/KK  
-                            case "2":
-                                    switch( ctripOrderNames ){
-                                    case "5": MS_report = "代表者 *1 " + gName[1] + "　*2 " + gName[2] + "　*3 " + gName[3] + "　*4 " + gName[4] + "　*5 " + gName[5]; break;
-                                    case "6": MS_report = "代表者 *1 " + gName[1] + "　*2 " + gName[2] + "　*3 " + gName[3] + "　*4 " + gName[4] + "　*5 " + gName[5] + "　" + gName[6]; break;
-                                    case "7": MS_report = "代表者 *1 " + gName[1] + "　*2 " + gName[2] + "　*3 " + gName[3] + "　*4 " + gName[4] + "　" + gName[5] + "　*5 " + gName[6] + "　" + gName[7]; break;
-                                    case "8": MS_report = "代表者 *1 " + gName[1] + "　*2 " + gName[2] + "　*3 " + gName[3] + "　" + gName[4] + "　*4 " + gName[5] + "　" + gName[6] + "　*5 " + gName[7] + "　" + gName[8]; break;
-                                    case "9": MS_report = "代表者 *1 " + gName[1] + "　*2 " + gName[2] + "　" + gName[3] + "　*3 " + gName[4] + "　" + gName[5] + "　*4 " + gName[6] + "　" + gName[7] + "　*5 " + gName[8] + "　" + gName[9]; break;
-                                    case "10": MS_report = "*1 " + gName[1] + "　" + gName[2] + "　*2 " + gName[3] + "　" + gName[4] + "　*3 " + gName[5] + "　" + gName[6] + "　*4 " + gName[7] + "　" + gName[8] + "　*5 " + gName[9] + "　" + gName[10]; break;
-                                    } break;
-                            case "3":
-                                    switch( ctripOrderNames ){
-                                    case "5": MS_report = "代表者 *1 " + gName[1] + "　*2 " + gName[2] + "　*3 " + gName[3] + "　*4 " + gName[4] + "　*5 " + gName[5]; break;
-                                    case "15": MS_report = "代表者 *1 " + gName[1] + "　*2 " + gName[4] + "　*3 " + gName[7] + "　*4 " + gName[10] + "　*5 " + gName[13] + "　*後日FAXで名簿を送ります."; break;
-                                    } break; 
-                            case "4":
-                                    switch( ctripOrderNames ){
-                                    case "5": MS_report = "代表者 *1 " + gName[1] + "　*2 " + gName[2] + "　*3 " + gName[3] + "　*4 " + gName[4] + "　*5 " + gName[5]; break;
-                                    case "20": MS_report = "代表者 *1 " + gName[1] + "　*2 " + gName[5] + "　*3 " + gName[9] + "　*4 " + gName[13] + "　*5 " + gName[17] + "　*後日FAXで名簿を送ります."; break;
-                                    } break;                                     
-                            } break;
-
-                    default: {
-                        MS_report = '番' + ctripOrderRef + '　' + gNameShow; 
-                        myWindow=window.open('', '', 'width=325, height=240, top=185, left=500, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');
-                        myWindow.document.write("<h3>　您辛苦啦！~</h3><h3>　这个订单预订房间数太多了！也可能是通知的姓名不规范，无法自动处理。</h3><h3>　请您自己手动编辑MS报告！</h3>");
-                        myWindow.focus();
-                        } break;      
-                    }
-                    
-                    // case 嵌套，用default会变很奇怪的效果。。结果证明只是内层的break漏掉了而已。
-                                        
-                    if ( SPshow != "null" ){ MS_report = MS_report + '　' + SPshow; }
-                    MS_report = MS_report.replace("undefined","あります。");
-
-                    $('#btn_All_of_Names').on('click', function () {
-
-                        var modal = $('.my-modal')
-
-                        modal.find('.modal-body label#txt_modal_1').text(ctripOrderRooms)    
-                        modal.find('.modal-body label#txt_modal_2').text(ctripOrderEachRoom)    
-                        modal.find('.modal-body label#txt_modal_3').text(totalPeopleAllow)    
-                        modal.find('.modal-body label#txt_modal_4').text(ctripOrderPeoples)
-                        modal.find('.modal-body label#txt_modal_content').text('　' + MS_report)
-
-                        //modal.find('.modal-body label#提醒有备注').text('' + recipText)
-
-                        $('.my-modal').fadeIn();
-                        $body.addClass('no-scroll');
-
-                        setTimeout(function(){
-
-                            debug = 6.9
-                            // 按下所有人按钮，向 clipboard 写入 MS报告
-                            navigator.clipboard.writeText( MS_report )    
-                            .then(() => {
-                                //log('Text copied.');
-                            })
-                            .catch(() => {
-                                //log('Failed to write clipboard');
-                            });
-
-                        }, 120);
-                        
-                    }); 
-                    debug = 7;
-                }
-
-                report_summary_editing_block: {
-
-                    var repo4 = 1 + d1.getMonth();
-                    var repo5 = d1.getDate();
-                    var repo6 = 1 + d2.getMonth();
-                    var repo7 = d2.getDate();
-
-                    for ( var Hcheck=0; Hcheck<90; Hcheck++ ){
-                        var thisHotelInfo = HnameTable[Hcheck];
-                        if ( HHHHname.match(thisHotelInfo[0]) ){ 
-                            HnameSummary = thisHotelInfo[1]; 
-                            HnameJTBcode = thisHotelInfo[4];
-                            break; 
-                        } 
-                    }
-                    if ( HnameSummary == "" ){ window.close(); }
-                    
-                    var now = new Date();
-                    var now_month = 1 + now.getMonth();
-                    var now_date = now.getDate();
-                    if ( now_date < 10 ){ now_date = "0" + now_date; }
-                    var dateStamp = now_month + "-" + now_date;
-                    var now_hh = now.getHours();
-                    var now_mm = now.getMinutes();
-                    var timeStamp = now_mm < 10 ? (now_hh + ":0" + now_mm) : (now_hh + ":" + now_mm);
-
-                    //report_summary = ctripOrderRef +'\t'+ HnameSummary +'\t'+ gName1 +'\t'+ repo4 +'\t'+ repo5 +'\t'+ repo6 +'\t'+ repo7 
-                    //+'\t'+ ctripOrderNights +'\t'+ numEachRoom +'\t'+ ctripOrderRooms +'\t'+ ctripOrderPrice +'\t'+ dateStamp +'\t'+ timeStamp;
-                    
-                    report_summary = ctripOrderRef +'\t'+ dateStamp +'\t'+ timeStamp +'\t'+ HnameSummary +'\t'+ gName1 +'\t'+'\t'+ 
-                    repo4 +'\t'+ repo5 +'\t'+ repo6 +'\t'+ repo7 +'\t'+ ctripOrderNights +'\t'+ numEachRoom +'\t'+ ctripOrderRooms +'\t'+ ctripOrderPrice; 
-                    
-                    debug = 6;
-                }    
-
-                // "JTB済画面提取"按钮
-                $('#btn_make_bookingID').on('click', function () {
-                    debug = 7.1;
-                    var RoomConfirm = new Array();    // 用于存放所有房间确认号，从第一晚开始
-                    RoomConfirm[0] = "";
-                    var RoomConfirmShow = "";         // 把所有房间确认号显示成一行
-
-                    navigator.clipboard.readText()
-                    .then(text => {
-
-                        debug = 7.2;
-                        pasteStrJTB = text;        // 此处开始引入 JTB Booked 済画面的处理
-                        //log('Text pasted.');
-                        debug = 7.3;
-
-                        // 对JTB画面的正则提取部分
-                        JTBbookedInfo_extracting_block: {
-
-                            var JTBbookedThing = new Array();
-
-                            var regExp_JTBKannriRef = /\(管理\)NO\s+(\w+)/;
-                            JTBbookedThing[0] = pasteStrJTB.match(regExp_JTBKannriRef);
-                            var JTBKannriRef = RegExp.$1;
-
-                            var regExp_JTBKanaName = /\(カナ\)\s+(\w[ \w]+\w)/;
-                            JTBbookedThing[1] = pasteStrJTB.match(regExp_JTBKanaName);
-                            var JTBKanaName = RegExp.$1;
-
-                            var regExp_JTBSougaku = /概算総額\s+￥([,\d]+)/;
-                            JTBbookedThing[2] = pasteStrJTB.match(regExp_JTBSougaku);
-                            var JTBSougaku = RegExp.$1;
-                            JTBSougaku = JTBSougaku.replace(",","");
-
-                            var regExp_JTBNitteiInfo = /(20\d\d\/\d\d\/\d\d.+済.+H-01)/g;
-                            JTBbookedThing[3] = pasteStrJTB.match(regExp_JTBNitteiInfo);      
-                            var JTBNitteiInfo = JTBbookedThing[3];      // 日程数组，每个元素是一行日程
-
-                            if ( JTBNitteiInfo != null ){
-                                var regExp_RoomConfirm = /(\w{5}H-01)/;     // 不用正则也行
-                                for ( var j = 0 ; j < JTBNitteiInfo.length ; j++ ){
-                                    RoomConfirm[1+j] = JTBNitteiInfo[j].slice(-9);
-                                    RoomConfirmShow = RoomConfirmShow + "，" + RoomConfirm[1+j];                
-                                }                        
-                                RoomConfirmShow = RoomConfirmShow.slice(1); 
-                            }
-
-                            JTBTotalPrice = JTBSougaku;
-                            JTBTotalPrice = JTBTotalPrice.replace(/,/g,"");
-                            
-                            orderProfit = 1 - ( parseFloat(JTBTotalPrice) * 0.9 / parseFloat(ctripOrderPrice) );
-                            var orderProfitShow = orderProfit.toFixed(3) * 100;
-                            orderProfitShow = orderProfitShow.toFixed(1);
-
-                            //report_summary = report_summary +'\t'+ RoomConfirmShow +'\t'+ JTBTotalPrice;    // 不可以这样写！考虑到用户可能多次点击提取按钮！
-                            /* 旧版格式:
-                            report_summary = ctripOrderRef +'\t'+ HnameSummary +'\t'+ gName1 +'\t'+ repo4 +'\t'+ repo5 +'\t'+ repo6 +'\t'+ repo7 
-                            +'\t'+ ctripOrderNights +'\t'+ numEachRoom +'\t'+ ctripOrderRooms +'\t'+ ctripOrderPrice +'\t'+ dateStamp +'\t'+ timeStamp
-                            +'\t'+ RoomConfirmShow +'\t'+ JTBTotalPrice; */
-
-                            report_summary = ctripOrderRef +'\t'+ dateStamp +'\t'+ timeStamp +'\t'+ HnameSummary +'\t'+ gName1 +'\t'+ JTBTotalPrice +'\t'+ 
-                            repo4 +'\t'+ repo5 +'\t'+ repo6 +'\t'+ repo7 +'\t'+ ctripOrderNights +'\t'+ numEachRoom +'\t'+ ctripOrderRooms +'\t'+ ctripOrderPrice
-                            +'\t'+ RoomConfirmShow +'\t'+ JTBTotalPrice; 
-                    
-                        }
-                        
-                        debug = 7.4;
-                        setTimeout(function(){
-
-                            navigator.clipboard.writeText(RoomConfirmShow)    // JTBKannriRef
-                            .then(() => {
-                                //log('Text copied.');
-                            })
-                            .catch(() => {
-                                //log('Failed to write clipboard');
-                            });
-
-                            if ( JTBNitteiInfo != null ){
-                                document.getElementById("txt_show_OK").innerHTML = "　　　　 OK!";
-                            }
-                            else {
-                                document.getElementById("txt_show_OK").innerHTML = "　　 未手配?";
-                            }
-                            
-                            document.getElementById("txt_show_profit").innerHTML = "　利益大約 " + orderProfitShow + " %";
-                            setTimeout(function(){
-                                document.getElementById("txt_show_OK").innerHTML = "";
-                                document.getElementById("txt_show_profit").innerHTML = "";
-                            }, 8500);
-
-                        }, 160);
-
-                    })
-                    .catch(() => {
-                        log(' JTB_Info Failed ! debug = ' + debug);
-                    });
-                    debug = 8;
-                    //alert(JTBTotalPrice);   bad!!
-                }); 
-
-                // "JTB完成去填集計"按钮
-                $('#btn_JTB_confirmed').on('click', function () {
-                    
-                    navigator.clipboard.writeText(report_summary)   // debug: report_summary
-                    .then(() => {
-                        //log('Text copied.');
-                    })
-                    .catch(() => {
-                        //log('Failed to write clipboard');
-                    });
-
-                    //在此加入向云端sheet存数据的处理：JTB running water records
-
-                    $('#btn_JTB_confirmed').delay(150).queue(function(){
-                        window.close();
-                    });
-
-                });
-
-                // 订单信息标签的点击响应
-                $('#txt_checkin').on('click', function () {
-                    
-                    debug = 8.01
-                    navigator.clipboard.writeText(JTBinputDate)    
-                    .then(() => {
-                        //log('Text copied.');
-                    })
-                    .catch(() => {
-                        alert("debug = " + debug);
-                    });
-
-                });
-
-                $('#txt_hotel').on('click', function () {
-                    
-                    debug = 8.02
-                    navigator.clipboard.writeText(HnameJTBcode)    
-                    .then(() => {
-                        //log('Text copied.');
-                    })
-                    .catch(() => {
-                        alert("debug = " + debug);
-                    });
-
-                });
-
-                $('#txt_guest1').on('click', function () {
-                    
-                    debug = 8.03
-                    navigator.clipboard.writeText(gName1)    
-                    .then(() => {
-                        //log('Text copied.');
-                    })
-                    .catch(() => {
-                        alert("debug = " + debug);
-                    });
-
-                });
-
-                $('#txt_ref').on('click', function () {
-                    
-                    debug = 8.04
-                    navigator.clipboard.writeText(ctripOrderRef)    
-                    .then(() => {
-                        //log('Text copied.');
-                    })
-                    .catch(() => {
-                        alert("debug = " + debug);
-                    });
-
-                });
-
-                // modal 的 Close 按钮            
-                $('#btn_modal_confirmed').on('click', function () {
-                    $('.my-modal').fadeOut();
-                    $body.removeClass('no-scroll');
-                });
-
-                /* 首发内容写入。此处设置若干延迟，防止readText和writeText同时相应造成异常 */
-                setTimeout(function(){
-
-                    debug = 8.2;
-                    //alert(" setTimeout HERE! " + gName1 );    // 此处如果让alert有效，writeText就不起作用了!
-                    //log('PPPPPPpied.');
-                    navigator.clipboard.writeText(JTBinputDate)    
-                    .then(() => {
-                        //log('Text copied.');
-                    })
-                    .catch(() => {
-                        //log('Failed to write clipboard');
-                    });
-
-                }, 550);
-
-            })
-            .catch(() => {
-                log(' MAIN Failed ! v1116 debug = ' + debug);
-            });
-
-        }, 500);
-
-
-        //$('#btn_some_process').on('click', function () { }); 
-        //$('#btn_some_process').delay(100).queue(function(){ });
-
-        /* Watch for pastes *
-        navigator.clipboard.addEventListener('clipboardchange', e => {
-            navigator.clipboard.getText().then( text => {
-            log('Updated clipboard contents: '+text)
-            })
-        }); */
-
-        /* Since Chrome only allows clipboard access when a tab is the current active, here's a trick: *
-        function log(value) {
-            clearTimeout(log.timer);
-            if (toast.hidden) toast.textContent = value;
-            else toast.textContent += '\n' + value;
-            toast.className = String(value).match(/error/i) ? 'error' : '';
-            toast.hidden = false;
-            log.timer = setTimeout( () => { toast.hidden = true; }, 3000);
-        } */
+        //console.log(response.result);
+        showme(response.result);
+
+      }, function(reason) {
+        console.error('error: ' + reason.result.error.message);
+      });
+    }
+
+    function initClient() {
+      var API_KEY = 'AIzaSyARYxwdJGZifzTMzVbugm2y3e_usJyeSI0';  
+      var CLIENT_ID = '245476283463-52jkpneqbe8dkd9dk3p4juptd8c3s1ph.apps.googleusercontent.com'; 
+      var SCOPE = 'https://www.googleapis.com/auth/spreadsheets.readonly';
+
+      gapi.client.init({
+        'apiKey': API_KEY,
+        'clientId': CLIENT_ID,
+        'scope': SCOPE,
+        'discoveryDocs': ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
+      }).then(function() {
+        gapi.auth2.getAuthInstance().isSignedIn.listen(updateSignInStatus);
+        updateSignInStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+      });
+    }
+
+    function handleClientLoad() {
+      gapi.load('client:auth2', initClient);
+    }
+
+    function updateSignInStatus(isSignedIn) {
+      if (isSignedIn) {
+        makeApiCall();
+      }
+    }
+    //makeApiCall();
+
+    function handleSignInClick(event) {
+      gapi.auth2.getAuthInstance().signIn();
+    }
+
+    function handleSignOutClick(event) {
+      gapi.auth2.getAuthInstance().signOut();
+    }
+
+    //
+    function showme(result){
+      document.getElementById("id_1").value = result.values[1][1];
+      document.getElementById("txt_11").innerHTML = result.values[1][1];
+      document.getElementById("txt_22").innerHTML = result.values[2][2];
+      document.getElementById("txt_33").innerHTML = result.values[3][3];
+
+    }
+    function populateSheet(result){
+        for( var row=0; row<10; row++ ){
+            for( var col=0; col<3; col++ ){
+                //document.getElementById("id_1").value = result.values[row][col];  //row+":"+col
+            }
+
+        }
+
+    }
 
     </script>
-</body>
+
+    <script async defer src="https://apis.google.com/js/api.js"
+      onload="this.onload=function(){};handleClientLoad()"
+      onreadystatechange="if (this.readyState === 'complete') this.onload()">
+    </script>
+    
+    <button id="signin-button" onclick="handleSignInClick()">Sign in</button>
+    <button id="signout-button" onclick="handleSignOutClick()">Sign out</button>
+
+
+
+
+  </body>
 </html>
