@@ -1,6 +1,6 @@
 <html>
   <head>
-      <h3> 0518 </h3>
+      <h3> 0553 </h3>
   </head>
 
   <body>
@@ -39,20 +39,21 @@
       var params = {
         spreadsheetId: '1oMxmdfvyTdLbt6qE4A6oefZbTkfsgwQmK-noAHtsqUw',  
         range: 'Sheet1',  
-        //valueRenderOption: 'FORMATTED_VALUE',  
-        //dateTimeRenderOption: 'FORMATTED_STRING',  
-        valueInputOption: 'RAW',
+        valueRenderOption: 'FORMATTED_VALUE',  
+        dateTimeRenderOption: 'FORMATTED_STRING',  
+        //valueInputOption: 'RAW',
       };
 
       var valueRangeBody = {
         "Values": running_water_record
       };
 
-      var request = gapi.client.sheets.spreadsheets.values.update(params, valueRangeBody);
+      var request = gapi.client.sheets.spreadsheets.values.get(params);
+      //var request = gapi.client.sheets.spreadsheets.values.update(params, valueRangeBody);
       request.then(function(response) {
         
         //console.log(response.result);
-        //showme(response.result);
+        showme(response.result);
 
       }, function(reason) {
         console.error('error: ' + reason.result.error.message);
