@@ -1,6 +1,6 @@
 <html>
   <head>
-      <h3> 0622 </h3>
+      <h3> 0633 </h3>
   </head>
 
   <body>
@@ -32,9 +32,13 @@
 
 
     function makeApiCall() {
-      var running_water_record = new Array(10);
-      running_water_record[0] = new Array(10);
-      running_water_record[0][0] = "555555555";
+      var running_water_record = new Array(6);
+      for ( var row = 0; row < 6; row++ ){
+        running_water_record[row] = new Array(6);
+        for ( var col = 0; col < 6; col++ ){
+          running_water_record[row][col] = "555555555";
+        }
+      }
       
       var params = {
         spreadsheetId: '1oMxmdfvyTdLbt6qE4A6oefZbTkfsgwQmK-noAHtsqUw',  
