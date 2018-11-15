@@ -1,6 +1,6 @@
 <html>
   <head>
-      <h3> 0644 </h3>
+      <h3> 0649 </h3>
   </head>
 
   <body>
@@ -56,7 +56,7 @@
       var request = gapi.client.sheets.spreadsheets.values.update(params, valueRangeBody);
       request.then(function(response) {
         
-        //console.log(response.result);
+        console.log(response.result);
         //showme(response.result);
 
       }, function(reason) {
