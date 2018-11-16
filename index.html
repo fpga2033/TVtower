@@ -1,6 +1,6 @@
 <html>
   <head>
-      <h3> 0746+ </h3>
+      <h3> 0834+ </h3>
   </head>
 
   <body>
@@ -24,12 +24,12 @@
 
 
     var ctripOrderRef = "7087130796";
+    var Price = "54960";
     var report_summary = ctripOrderRef +'\t'+ "11-16" +'\t'+ "4:55" +'\t'+ "星野塔娃" +'\t'+ "LI WENRUI" +'\t'+'\t'+ 
                     "10" +'\t'+ "29" +'\t'+ "11" +'\t'+ "1" +'\t'+ "3" +'\t'+ "2" +'\t'+ "1" +'\t'+ "54960"; 
                     
 
     //makeApiCall();
-
 
     function makeApiCall() {
       var running_water_record = new Array(6);
@@ -39,7 +39,7 @@
           running_water_record[row][col] = "000000";
         }
       }
-      running_water_record[5][5] = report_summary;
+      running_water_record[0] = ( report_summary, ctripOrderRef, "星野塔娃", Price );
       
       var params = {
         spreadsheetId: '1oMxmdfvyTdLbt6qE4A6oefZbTkfsgwQmK-noAHtsqUw',  
@@ -47,23 +47,21 @@
         //valueRenderOption: 'FORMATTED_VALUE',  
         //dateTimeRenderOption: 'FORMATTED_STRING',  
         valueInputOption: 'RAW',
+        insertDataOption: 'INSERT_ROWS',
       };
 
       var valueRangeBody = {
         "range": "A1",
         "majorDimension": "ROWS",
         "values": running_water_record
-
-        
       };
 
       //var request = gapi.client.sheets.spreadsheets.values.get(params);
-      var request = gapi.client.sheets.spreadsheets.values.update(params, valueRangeBody);
+      //var request = gapi.client.sheets.spreadsheets.values.update(params, valueRangeBody);
+      var request = gapi.client.sheets.spreadsheets.values.append(params, valueRangeBody);
       request.then(function(response) {
-        
-        console.log(response.result);
+        //console.log(response.result);
         //showme(response.result);
-
       }, function(reason) {
         console.error('error: ' + reason.result.error.message);
       });
@@ -113,7 +111,7 @@
     }
 
     setTimeout(function(){
-    window.close();
+    //window.close();
     }, 1600);
     </script>
 
@@ -125,7 +123,6 @@
     <button id="signin-button" onclick="handleSignInClick()">Sign in</button>
     <button id="signout-button" onclick="handleSignOutClick()">Sign out</button>
 
-
-
+    
   </body>
 </html>
