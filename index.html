@@ -1,12 +1,12 @@
 <html>
   <head>
-      <h3> 2141+ </h3>
+      <h3> 2217+ </h3>
   </head>
 
   <body>
 
       <p id="id_1">1. JS側</p>
-      <label class="control-label" id=txt_11 style="font-weight:bold;font-size:18px;">★</label>
+      <label class="control-label" id=txt_11 style="font-weight:bold;font-size:18px;" onclick="handleSignInClick()">★</label>
       <label class="control-label" id=txt_22 style="font-weight:bold;font-size:18px;"></label>
       <label class="control-label" id=txt_33 style="font-weight:bold;font-size:18px;"></label>
     <!--
@@ -133,8 +133,8 @@
       onreadystatechange="if (this.readyState === 'complete') this.onload()">
     </script>
     
-    <button id="signin-button" onclick="handleSignInClick()">Sign in</button>
-    <button id="signout-button" onclick="handleSignOutClick()">Sign out</button>
+    <button id="signin-button" onclick="handleSignInClick()" visibility="hidden">Sign in</button>
+    <button id="signout-button" onclick="handleSignOutClick()" visibility="hidden">Sign out</button>
 
 
   </body>
