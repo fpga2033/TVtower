@@ -85,7 +85,7 @@
             <a style="font-size:15px">REF# </a><span><label class="control-label" id=txt_ref style="font-size:16px;font-family:verdana;color:rgb(23, 94, 248)"></label></span>
             <button id="btn_JTB_confirmed" class="btn btn-primary" style="font-size:14px;font-family:Meiryo;float:right"><strong>ＪＴＢ完成</strong><br><em>(去填集計草稿)</em></button><br/>
             <label class="control-label" id=APIsignIn style="font-size:16px" onclick="handleSignInClick()">★</label>
-            <a style="font-size:16px">s20.1 </a><label class="control-label" id=txt_type style="font-size:15px"></label><br/>
+            <a style="font-size:16px">s20.2 </a><label class="control-label" id=txt_type style="font-size:15px"></label><br/>
             
             <img hight="15%" width="100%" class="img-rounded" src="https://raw.githubusercontent.com/Best-Hotel-Japan/Sapporo_TV_Hotel-Dev/gh-pages/background.jpg" alt="" /><br/>
             <!--https://raw.githubusercontent.com/fpga2033/TVtower/0609769e290f5f11ccf79624a39f594c03a2a4eb/mildseven-hill-winter.jpg-->
@@ -669,7 +669,14 @@
                     report_summary = ctripOrderRef +'\t'+ dateStamp +'\t'+ timeStamp +'\t'+ HnameSummary +'\t'+ gName1 +'\t'+'\t'+ 
                     repo4 +'\t'+ repo5 +'\t'+ repo6 +'\t'+ repo7 +'\t'+ ctripOrderNights +'\t'+ numEachRoom +'\t'+ ctripOrderRooms +'\t'+ ctripOrderPrice; 
                     
-                    debug = 6;
+                    // 编辑 google sheet 云端记录（不带JTB信息）
+                    running_water_record[0][0] = report_summary;
+                    running_water_record[0][1] = ctripOrderRef;
+                    running_water_record[0][2] = dateStamp;
+                    running_water_record[0][3] = timeStamp;
+                    running_water_record[0][4] = HnameSummary;
+                    running_water_record[0][5] = gName1;
+                    running_water_record[0][6] = ctripOrderPrice;
 
                 }    
 
@@ -736,14 +743,8 @@
                             repo4 +'\t'+ repo5 +'\t'+ repo6 +'\t'+ repo7 +'\t'+ ctripOrderNights +'\t'+ numEachRoom +'\t'+ ctripOrderRooms +'\t'+ ctripOrderPrice
                             +'\t'+ RoomConfirmShow +'\t'+ JTBTotalPrice; 
                     
-                            // 编辑 google sheet 云端记录
+                            // 编辑 google sheet 云端记录（加JTB信息）
                             running_water_record[0][0] = report_summary;
-                            running_water_record[0][1] = ctripOrderRef;
-                            running_water_record[0][2] = dateStamp;
-                            running_water_record[0][3] = timeStamp;
-                            running_water_record[0][4] = HnameSummary;
-                            running_water_record[0][5] = gName1;
-                            running_water_record[0][6] = ctripOrderPrice;
                             running_water_record[0][7] = JTBTotalPrice;
 
 
@@ -773,14 +774,13 @@
                                 document.getElementById("txt_show_profit").innerHTML = "";
                             }, 8500);
 
-                        }, 160);
+                        }, 180);
 
                     })
                     .catch(() => {
                         log(' JTB_Info Failed ! debug = ' + debug);
                     });
-                    debug = 8;
-                    //alert(JTBTotalPrice);   bad!!
+
                 }); 
 
                 // "JTB完成去填集計"按钮
@@ -797,7 +797,7 @@
                     //在此加入向云端sheet存数据的处理：JTB running water records
                     makeApiCall();
 
-                    $('#btn_JTB_confirmed').delay(300).queue(function(){
+                    $('#btn_JTB_confirmed').delay(350).queue(function(){
                         window.close();
                     });
 
