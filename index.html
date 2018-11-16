@@ -1,6 +1,6 @@
 <html>
   <head>
-      <h3> 0834+ </h3>
+      <h3> 2141+ </h3>
   </head>
 
   <body>
@@ -36,10 +36,13 @@
       for ( var row = 0; row < 6; row++ ){
         running_water_record[row] = new Array(6);
         for ( var col = 0; col < 6; col++ ){
-          running_water_record[row][col] = "000000";
+          running_water_record[row][col] = "777";
         }
       }
-      running_water_record[0] = ( report_summary, ctripOrderRef, "星野塔娃", Price );
+      running_water_record[0][0] = report_summary;
+      running_water_record[0][1] = ctripOrderRef;
+      running_water_record[0][2] = "星野塔娃";
+      running_water_record[0][3] = Price;
       
       var params = {
         spreadsheetId: '1oMxmdfvyTdLbt6qE4A6oefZbTkfsgwQmK-noAHtsqUw',  
@@ -123,6 +126,6 @@
     <button id="signin-button" onclick="handleSignInClick()">Sign in</button>
     <button id="signout-button" onclick="handleSignOutClick()">Sign out</button>
 
-    
+
   </body>
 </html>
