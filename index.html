@@ -6,7 +6,7 @@
   <body>
 
       <p id="id_1">1. JS側</p>
-      <label class="control-label" id=txt_11 style="font-weight:bold;font-size:18px;"></label>
+      <label class="control-label" id=txt_11 style="font-weight:bold;font-size:18px;">★</label>
       <label class="control-label" id=txt_22 style="font-weight:bold;font-size:18px;"></label>
       <label class="control-label" id=txt_33 style="font-weight:bold;font-size:18px;"></label>
     <!--
@@ -30,6 +30,16 @@
                     
 
     //makeApiCall();
+    $('#txt_11').on('click', function () {
+                    
+      if ( document.getElementById('signin-button').style.visibility=="hidden" ){
+        document.getElementById('myButton').style.visibility="visible";
+      } 
+      else if ( document.getElementById('signin-button').style.visibility=="visible" ){
+        document.getElementById('myButton').style.visibility="hidden";
+      }
+
+    });
 
     function makeApiCall() {
       var running_water_record = new Array(6);
