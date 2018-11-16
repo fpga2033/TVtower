@@ -1,25 +1,13 @@
 <html>
   <head>
-      <h3> 2217+ </h3>
   </head>
 
   <body>
 
-      <p id="id_1">1. JS側</p>
       <label class="control-label" id=txt_11 style="font-weight:bold;font-size:18px;" onclick="handleSignInClick()">★</label>
-      <label class="control-label" id=txt_22 style="font-weight:bold;font-size:18px;"></label>
-      <label class="control-label" id=txt_33 style="font-weight:bold;font-size:18px;"></label>
-    <!--
-    BEFORE RUNNING:
-    ---------------
-    1. If not already done, enable the Google Sheets API
-       and check the quota for your project at
-       https://console.developers.google.com/apis/api/sheets
-    2. Get access keys for your application. See
-       https://developers.google.com/api-client-library/javascript/start/start-js#get-access-keys-for-your-application
-    3. For additional information on authentication, see
-       https://developers.google.com/sheets/api/quickstart/js#step_2_set_up_the_sample
-    -->
+      <label class="control-label" id=txt_12 style="font-weight:bold;font-size:18px;" onclick="makeApiCall()">[makeApiCall]</label>
+      
+      
     <script>
 
 
@@ -27,19 +15,8 @@
     var Price = "54960";
     var report_summary = ctripOrderRef +'\t'+ "11-16" +'\t'+ "4:55" +'\t'+ "星野塔娃" +'\t'+ "LI WENRUI" +'\t'+'\t'+ 
                     "10" +'\t'+ "29" +'\t'+ "11" +'\t'+ "1" +'\t'+ "3" +'\t'+ "2" +'\t'+ "1" +'\t'+ "54960"; 
-                    
 
-    //makeApiCall();
-    $('#txt_11').on('click', function () {
-                    
-      if ( document.getElementById('signin-button').style.visibility=="hidden" ){
-        document.getElementById('myButton').style.visibility="visible";
-      } 
-      else if ( document.getElementById('signin-button').style.visibility=="visible" ){
-        document.getElementById('myButton').style.visibility="hidden";
-      }
 
-    });
 
     function makeApiCall() {
       var running_water_record = new Array(6);
@@ -100,11 +77,11 @@
       gapi.load('client:auth2', initClient);
     }
 
-    function updateSignInStatus(isSignedIn) {
+    /*function updateSignInStatus(isSignedIn) {
       if (isSignedIn) {
         makeApiCall();
       }
-    }
+    }*/
     
     function handleSignInClick(event) {
       gapi.auth2.getAuthInstance().signIn();
@@ -113,14 +90,9 @@
     function handleSignOutClick(event) {
       gapi.auth2.getAuthInstance().signOut();
     }
-
     
     function showme(result){
-      document.getElementById("id_1").value = result.values[1][1];
-      document.getElementById("txt_11").innerHTML = result.values[1][1];
-      document.getElementById("txt_22").innerHTML = result.values[2][2];
-      document.getElementById("txt_33").innerHTML = result.values[3][3];
-
+      //document.getElementById("lbl_1").innerHTML = result.values[0][0];
     }
 
     setTimeout(function(){
