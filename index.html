@@ -85,7 +85,7 @@
             <a style="font-size:15px">REF# </a><span><label class="control-label" id=txt_ref style="font-size:16px;font-family:verdana;color:rgb(23, 94, 248)"></label></span>
             <button id="btn_JTB_confirmed" class="btn btn-primary" style="font-size:14px;font-family:Meiryo;float:right"><strong>ＪＴＢ完成</strong><br><em>(去填集計草稿)</em></button><br/>
             <label class="control-label" id=APIsignIn style="font-size:16px" onclick="handleSignInClick()">★</label>
-            <a style="font-size:16px">s21　</a><label class="control-label" id=txt_type style="font-size:15px"></label><br/>
+            <a style="font-size:16px">s24.4　</a><label class="control-label" id=txt_type style="font-size:15px"></label><br/>
             
             <img hight="15%" width="100%" class="img-rounded" src="https://raw.githubusercontent.com/Best-Hotel-Japan/Sapporo_TV_Hotel-Dev/gh-pages/background.jpg" alt="" /><br/>
             <!--https://raw.githubusercontent.com/fpga2033/TVtower/0609769e290f5f11ccf79624a39f594c03a2a4eb/mildseven-hill-winter.jpg-->
@@ -166,7 +166,7 @@
         running_water_record[0] = new Array(20);
         for ( var col = 0; col < 20; col++ ){ running_water_record[0][col] = "###"; }
 
-        /* 此处必须设置 若干延迟，防止小窗口读不到clipboard */
+        $(document).ready(function(){
         setTimeout(function(){
 
             debug = 0.81;               // 问题就出在这里，剪贴板里是undefined
@@ -184,8 +184,6 @@
                 var HnameJTBcode = "";
                 var JTBTotalPrice = "";
                 var orderProfit = 0;
-                debug = 1;
-
                 
                 Hotel_information: {        // HnameTable酒店资料数组初始化
 
@@ -210,7 +208,7 @@
                     HnameTable[10]=["格拉斯丽","格拉斯丽","ホテルグレイスリー札幌","en","1529024",""];
                     HnameTable[11]=["世纪皇家","世纪皇家","センチュリーロイヤルホテル札幌","en","1529023",""];
                     HnameTable[12]=["京王","京王プラザ","京王プラザホテル札幌","en","1529005",""];
-                    HnameTable[13]=["北口","Mystay北口","ホテルマイステイズ札幌駅北口（旧ホテルフィーノ札幌）","en","1529121",""];
+                    HnameTable[13]=["北口","Mystay北口","ホテルマイステイズ札幌駅北口","en","1529121",""];
                     HnameTable[14]=["格兰","札幌格兰","札幌グランドホテル","en","1529001",""];
                     HnameTable[15]=["唐草","札幌唐草","からくさホテル札幌","en","9999999",""];
                     HnameTable[16]=["東急商","東急REI","札幌東急REI　ホテル","en","1529039",""];
@@ -253,6 +251,10 @@
                     var regExp_ctripOrderRef=/订单号\s+(\d{10})/;
                     ctripOrderThing[0]=pasteStr.match(regExp_ctripOrderRef);
                     var ctripOrderRef=RegExp.$1;
+
+                    var regExp_ctripOrderReserv=/订单号\s+\d{10}.+保留房/;
+                    var reserv_Order = false;
+                    if ( pasteStr.match(regExp_ctripOrderReserv) ){ reserv_Order = true; }
 
                     var regExp_ctripOrderType=/订单类型\s+(..)/;
                     ctripOrderThing[1]=pasteStr.match(regExp_ctripOrderType);
@@ -422,7 +424,8 @@
                         myWindow.document.write("<h3>　您辛苦啦！~</h3><h3>　这是一个无效订单呀！</h3><h3>　为什么要打开接单小窗口呢？</h3><h3>　搜索一下关联订单和相关邮件吧。</h3>");
                         myWindow.focus();
                         setTimeout(function(){ window.close(); }, 700);
-                    }                    
+                    }   
+              
                 }
 
                 modal_content_display_block: { 
@@ -593,9 +596,7 @@
 
                     default: {
                         MS_report = '番' + ctripOrderRef + '　' + gNameShow; 
-                        myWindow=window.open('', '', 'width=325, height=240, top=185, left=500, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');
-                        myWindow.document.write("<h3>　您辛苦啦！~</h3><h3>　这个订单预订房间数太多了！也可能是通知的姓名不规范，无法自动处理。</h3><h3>　请您自己手动编辑MS报告！</h3>");
-                        myWindow.focus();
+                        MS_report_finish = 0;
                         } break;      
                     }
                     
@@ -603,6 +604,7 @@
                                         
                     if ( SPshow != "null" ){ MS_report = MS_report + '　' + SPshow; }
                     MS_report = MS_report.replace("undefined","あります。");
+                    MS_report = MS_report.replace("子供同行なし:可能","子供同行しないかも,料金はそのままでOKです.");
 
                     $('#btn_All_of_Names').on('click', function () {
 
@@ -621,17 +623,21 @@
 
                         setTimeout(function(){
 
-                            debug = 6.9
                             // 按下所有人按钮，向 clipboard 写入 MS报告
                             navigator.clipboard.writeText( MS_report )    
                             .then(() => {
                                 //log('Text copied.');
+                                if ( MS_report_finish == 0 ){
+                                    myWindow=window.open('', '', 'width=325, height=240, top=185, left=500, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');
+                                    myWindow.document.write("<h3>　您辛苦啦！~</h3><h3>　这个订单预订房间数太多了！也有可能是通知的姓名不规范，无法自动处理。</h3><h3>　请您自己手动编辑MS报告！</h3>");
+                                    myWindow.focus();
+                                }
                             })
                             .catch(() => {
                                 //log('Failed to write clipboard');
                             });
 
-                        }, 120);
+                        }, 150);
                         
                     }); 
                     debug = 7;
@@ -666,7 +672,7 @@
                     //report_summary = ctripOrderRef +'\t'+ HnameSummary +'\t'+ gName1 +'\t'+ repo4 +'\t'+ repo5 +'\t'+ repo6 +'\t'+ repo7 
                     //+'\t'+ ctripOrderNights +'\t'+ numEachRoom +'\t'+ ctripOrderRooms +'\t'+ ctripOrderPrice +'\t'+ dateStamp +'\t'+ timeStamp;
                     
-                    report_summary = ctripOrderRef +'\t'+ dateStamp +'\t'+ timeStamp +'\t'+ HnameSummary +'\t'+ gName1 +'\t'+'\t'+ 
+                    report_summary = ctripOrderRef +'\t'+ dateStamp +'\t'+ timeStamp +'\t'+ HnameSummary +'\t'+ gName1 +'\t'+'\t'+ ctripOrderRoomtype +'\t'+ 
                     repo4 +'\t'+ repo5 +'\t'+ repo6 +'\t'+ repo7 +'\t'+ ctripOrderNights +'\t'+ numEachRoom +'\t'+ ctripOrderRooms +'\t'+ ctripOrderPrice; 
                     
                     // 编辑 google sheet 云端记录（不带JTB信息）
@@ -713,7 +719,7 @@
                             var JTBSougaku = RegExp.$1;
                             JTBSougaku = JTBSougaku.replace(",","");
 
-                            var regExp_JTBNitteiInfo = /(20\d\d\/\d\d\/\d\d.+済.+H-01)/g;
+                            var regExp_JTBNitteiInfo = /(20\d\d\/\d\d\/\d\d.+約済.+H-01)/g;
                             JTBbookedThing[3] = pasteStrJTB.match(regExp_JTBNitteiInfo);      
                             var JTBNitteiInfo = JTBbookedThing[3];      // 日程数组，每个元素是一行日程
 
@@ -739,9 +745,9 @@
                             +'\t'+ ctripOrderNights +'\t'+ numEachRoom +'\t'+ ctripOrderRooms +'\t'+ ctripOrderPrice +'\t'+ dateStamp +'\t'+ timeStamp
                             +'\t'+ RoomConfirmShow +'\t'+ JTBTotalPrice; */
 
-                            report_summary = ctripOrderRef +'\t'+ dateStamp +'\t'+ timeStamp +'\t'+ HnameSummary +'\t'+ gName1 +'\t'+ JTBTotalPrice +'\t'+ 
+                            report_summary = ctripOrderRef +'\t'+ dateStamp +'\t'+ timeStamp +'\t'+ HnameSummary +'\t'+ gName1 +'\t'+ JTBTotalPrice +'\t'+ ctripOrderRoomtype +'\t'+ 
                             repo4 +'\t'+ repo5 +'\t'+ repo6 +'\t'+ repo7 +'\t'+ ctripOrderNights +'\t'+ numEachRoom +'\t'+ ctripOrderRooms +'\t'+ ctripOrderPrice
-                            +'\t'+ RoomConfirmShow +'\t'+ JTBTotalPrice; 
+                            +'\t'+ JTBKannriRef +'\t'+ RoomConfirmShow +'\t'+ JTBTotalPrice; 
                     
                             // 编辑 google sheet 云端记录（加JTB信息）
                             running_water_record[0][0] = report_summary;
@@ -798,7 +804,7 @@
                     //在此加入向云端sheet存数据的处理：JTB running water records
                     makeApiCall();
 
-                    $('#btn_JTB_confirmed').delay(350).queue(function(){
+                    $('#btn_JTB_confirmed').delay(360).queue(function(){
                         window.close();
                     });
 
@@ -810,7 +816,16 @@
                     debug = 8.01
                     navigator.clipboard.writeText(JTBinputDate)    
                     .then(() => {
-                        //log('Text copied.');
+
+                        if ( reserv_Order == true ){
+                            myWindow=window.open('', '', 'width=325, height=240, top=185, left=500, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');
+                            myWindow.document.write("<h3>　您辛苦啦！~</h3><h3>　这是一个 <span style=\"background-color:#32cd32;\"><font color=\"#fffff0\">&#8201保留房&#8201</font></span> 订单！</h3><h3>　若JTB有房，请先改回: <font color=\"#CC0033\">余量=１</font></h3><h3>　若真的要用押房，就顺便清查一下相关日期还剩几间保留房吧 &#9825</h3>");
+                            myWindow.focus();    
+                            myWindow.onclick = function(){
+                                myWindow.close();
+                            }                    
+                        }   
+
                     })
                     .catch(() => {
                         alert("debug = " + debug);
@@ -846,8 +861,9 @@
 
                 $('#txt_ref').on('click', function () {
                     
-                    debug = 8.04
-                    navigator.clipboard.writeText(ctripOrderRef)    
+                    var ref_report = ctripOrderRef +'\t'+ dateStamp +'\t'+ gName1;
+                    
+                    navigator.clipboard.writeText(ref_report)    
                     .then(() => {
                         //log('Text copied.');
                     })
@@ -881,10 +897,15 @@
 
             })
             .catch(() => {
-                log(' MAIN Failed ! v1116 debug = ' + debug);
+                log(' MAIN Failed ! v1117 debug = ' + debug);
             });
 
-        }, 500);
+        }, 120);
+        });
+
+        /* 此处必须设置 若干延迟，防止小窗口读不到clipboard 
+        setTimeout(function(){
+        }, 350);*/
 
         googleSheetAPI: {
 
