@@ -85,7 +85,7 @@
             <a style="font-size:15px">REF# </a><span><label class="control-label" id=txt_ref style="font-size:16px;font-family:verdana;color:rgb(23, 94, 248)"></label></span>
             <button id="btn_JTB_confirmed" class="btn btn-primary" style="font-size:14px;font-family:Meiryo;float:right"><strong>ＪＴＢ完成</strong><br><em>(去填集計草稿)</em></button><br/>
             <label class="control-label" id=APIsignIn style="font-size:16px" onclick="handleSignInClick()">★</label>
-            <a style="font-size:16px">s25.2　</a><label class="control-label" id=txt_type style="font-size:15px"></label><br/>
+            <a style="font-size:16px">s25.3　</a><label class="control-label" id=txt_type style="font-size:15px"></label><br/>
             
             <img hight="15%" width="100%" class="img-rounded" src="https://raw.githubusercontent.com/Best-Hotel-Japan/Sapporo_TV_Hotel-Dev/gh-pages/background.jpg" alt="" /><br/>
             <!--https://raw.githubusercontent.com/fpga2033/TVtower/0609769e290f5f11ccf79624a39f594c03a2a4eb/mildseven-hill-winter.jpg-->
@@ -176,8 +176,10 @@
                 var pasteStr = text;
                 if (pasteStr.match(/dltOrderDetails/)) { 
                     var oldEBK_URL = pasteStr.replace("dltOrderDetails","OrderDetails"); 
-                    var oldEBKwindow = window.open (oldEBK_URL, 'oldEBKwindow',
-                    'height=670, width=1033, screenX=0, screenY=0, status=no');
+                    var oldEBKwindow = window.open (oldEBK_URL, 'oldEBKwindow');
+                    //'height=670, width=1033, screenX=0, screenY=0, status=no');
+                    
+                    window.close();
                 }
 
                 var pasteStrJTB = "";
