@@ -176,8 +176,8 @@
                 var pasteStr = text;
                 if (pasteStr.match(/vipdlt/)) { 
                     var oldEBK_URL = pasteStr.replace("dltOrderDetails","OrderDetails"); 
-                    oldEBKwindow = window.open (oldEBK_URL, 'newwindow',
-                    'height=670, width=700, top=0, left=0, status=no');
+                    var oldEBKwindow = window.open (oldEBK_URL, 'oldEBKwindow',
+                    'height=670, width=700, screenX=0, screenY=0, status=no');
                 }
 
                 var pasteStrJTB = "";
