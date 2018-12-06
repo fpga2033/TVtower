@@ -85,7 +85,7 @@
             <a style="font-size:15px">REF# </a><span><label class="control-label" id=txt_ref style="font-size:16px;font-family:verdana;color:rgb(23, 94, 248)"></label></span>
             <button id="btn_JTB_confirmed" class="btn btn-primary" style="font-size:14px;font-family:Meiryo;float:right"><strong>ＪＴＢ完成</strong><br><em>(去填集計草稿)</em></button><br/>
             <label class="control-label" id=APIsignIn style="font-size:16px" onclick="handleSignInClick()">★</label>
-            <a style="font-size:16px">s24.4　</a><label class="control-label" id=txt_type style="font-size:15px"></label><br/>
+            <a style="font-size:16px">s24.5　</a><label class="control-label" id=txt_type style="font-size:15px"></label><br/>
             
             <img hight="15%" width="100%" class="img-rounded" src="https://raw.githubusercontent.com/Best-Hotel-Japan/Sapporo_TV_Hotel-Dev/gh-pages/background.jpg" alt="" /><br/>
             <!--https://raw.githubusercontent.com/fpga2033/TVtower/0609769e290f5f11ccf79624a39f594c03a2a4eb/mildseven-hill-winter.jpg-->
@@ -174,6 +174,12 @@
             .then(text => {
                 
                 var pasteStr = text;
+                if (pasteStr.match(/vipdlt/)) { 
+                    var oldEBK_URL = pasteStr.replace("dltOrderDetails","OrderDetails"); 
+                    window.open (oldEBK_URL, 'newwindow',
+                    'height=670, width=330, top=0, left=1039, menubar=no, location=no, status=no');
+                }
+
                 var pasteStrJTB = "";
 
                 var gName = new Array();    // 用于存放所有客人姓名，从入住人1开始
@@ -195,13 +201,13 @@
                         }
                     }
                     debug = 2.1;
-                    HnameTable[0]=["塔娃","星野塔娃","星野リゾート　トマム・ザ・タワー","en","1578006",""];
-                    HnameTable[1]=["Riso","星野Risonare","星野リゾート　リゾナーレトマム","en","1578020",""];
+                    HnameTable[0]=["塔娃","星野塔娃","星野リゾートトマム・ザ・タワー","en","1578006",""];
+                    HnameTable[1]=["Riso","星野Risonare","星野リゾートリゾナーレトマム","en","1578020",""];
                     HnameTable[2]=["希尔顿","Hilton二世古","ヒルトンニセコビレッジ","en","1524002",""];
                     HnameTable[3]=["Alpen","二世古Alpen","ホテルニセコアルペン","en","1527003",""];
-                    HnameTable[4]=["安努普","二世古R安努","ニセコノーザンリゾート　アンヌプリ","en","1525003",""];
+                    HnameTable[4]=["安努普","二世古R安努","ニセコノーザンリゾートアンヌプリ","en","1525003",""];
                     HnameTable[5]=["世古塔","二世古塔","ワンニセコリゾートタワーズ","en","1525005",""];
-                    HnameTable[6]=["谷臻品","キロロ","キロロ トリビュートポートフォリオホテル","en","1586002",""];
+                    HnameTable[6]=["谷臻品","キロロ","キロロトリビュートポートフォリオホテル","en","1586002",""];
                     HnameTable[7]=["威斯汀","Westinルスツ","ウエスティンルスツリゾート","en","1567002",""];
                     HnameTable[8]=["及会议","ルスツ RC","ルスツリゾートホテル＆コンベンション","en","1567001",""];
                     HnameTable[9]=["日航","JR日航","JR タワーホテル日航","en","1529113",""];
@@ -211,7 +217,7 @@
                     HnameTable[13]=["北口","Mystay北口","ホテルマイステイズ札幌駅北口","en","1529121",""];
                     HnameTable[14]=["格兰","札幌格兰","札幌グランドホテル","en","1529001",""];
                     HnameTable[15]=["唐草","札幌唐草","からくさホテル札幌","en","9999999",""];
-                    HnameTable[16]=["東急商","東急REI","札幌東急REI　ホテル","en","1529039",""];
+                    HnameTable[16]=["東急商","東急REI","札幌東急REIホテル","en","1529039",""];
                     HnameTable[17]=["克罗斯","克罗斯","クロスホテル札幌","en","1529120",""];
                     HnameTable[18]=["罗伊顿","罗伊顿札幌","ロイトン札幌","en","1529093",""];
                     HnameTable[19]=["三井","三井花园","三井ガーデンホテル札幌","en","1529137",""];
@@ -228,7 +234,7 @@
                     HnameTable[30]=["湖温莎","洞爺温莎","ザ・ウンインザーホテル洞爺リゾート＆スパ","en","1570024",""];
                     HnameTable[31]=["太阳宫","洞爺サン","洞爺サンパレス","en","1570010",""];
                     HnameTable[32]=["章月","章月格兰","章月グランドホテル","en","1533001",""];
-                    HnameTable[33]=["拉碧斯","LAVIS函館","ＬＡ　ＶＩＳＴＡ函館ベイ","en","1611037",""];
+                    HnameTable[33]=["拉碧斯","LAVIS函館","ＬＡＶＩＳＴＡ函館ベイ","en","1611037",""];
                     HnameTable[34]=["福朋","福朋函館","フォーポイントバイシェラトン函館","en","1611015",""];
                     HnameTable[35]=["君乐","グランド小樽","グランドパーク小樽","en","1512019",""];
                     HnameTable[36]=["多米","小樽多米","ドーミーインPREMIUM小樽","en","1512022",""];
@@ -241,7 +247,6 @@
                     HnameTable[43]=["那图瓦","富良野森林","ホテルナトゥールヴァルト富良野","en","1117007",""];
                     HnameTable[44]=["新富良","新富良野Ｐ","新富良野プリンスホテル","en","1117006",""];
                     
-                    debug = 2.2;
                 }
 
                 ctripOrderInfo_extracting_block: {
