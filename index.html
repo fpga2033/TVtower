@@ -85,7 +85,7 @@
             <a style="font-size:15px">REF# </a><span><label class="control-label" id=txt_ref style="font-size:16px;font-family:verdana;color:rgb(23, 94, 248)"></label></span>
             <button id="btn_JTB_confirmed" class="btn btn-primary" style="font-size:14px;font-family:Meiryo;float:right"><strong>ＪＴＢ完成</strong><br><em>(去填集計草稿)</em></button><br/>
             <label class="control-label" id=APIsignIn style="font-size:16px" onclick="handleSignInClick()">★</label>
-            <a style="font-size:16px">s26.6　</a><label class="control-label" id=txt_type style="font-size:15px"></label><br/>
+            <a style="font-size:16px">s26.7　</a><label class="control-label" id=txt_type style="font-size:15px"></label><br/>
             
             <img hight="15%" width="100%" class="img-rounded" src="https://raw.githubusercontent.com/Best-Hotel-Japan/Sapporo_TV_Hotel-Dev/gh-pages/background.jpg" alt="" /><br/>
             <!--https://raw.githubusercontent.com/fpga2033/TVtower/0609769e290f5f11ccf79624a39f594c03a2a4eb/mildseven-hill-winter.jpg-->
@@ -161,7 +161,6 @@
         var $body = $('body');
         var gName1;                 // JTB氏名報告
         var report_summary;         // 集計草稿
-        var quickSearchMain;
         
         var running_water_record = new Array(1);
         running_water_record[0] = new Array(20);
@@ -260,10 +259,11 @@
 
                         //新版的订单页面
 
-                        var regExp_ctripOrderRef=/订单号\s+(\d{10}).*([\u4E00-\u9FFF]{2})[N\s][o\s]/;
+                        var regExp_ctripOrderRef=/订单号\s+(\d{10}).*([\u4E00-\u9FFF]{2})[N\s][o\s]\s*.+\s+.+\s+总底价\s+JPY\s+(\d+)\s/;
                         ctripOrderThing[0]=pasteStr.match(regExp_ctripOrderRef);
-                        var ctripOrderRef=RegExp.$1;
-                        var ctripOrderType=RegExp.$2;
+                        var ctripOrderRef=RegExp.$1;        //携程单号
+                        var ctripOrderType=RegExp.$2;       //订单类型
+                        var ctripOrderPrice=RegExp.$3;      //总金额
 
                         var regExp_ctripOrderReserv=/订单号\s+\d{10}.*保留房/;
                         var reserv_Order = false;
@@ -271,48 +271,48 @@
 
                         //var regExp_ctripOrderType=/订单号\s+\d{10}.*([\u4E00-\u9FFF]{2})[N\s][o\s]/;    //订单类型\s+(..)
                         //ctripOrderThing[1]=pasteStr.match(regExp_ctripOrderType);
-                        //var ctripOrderType=RegExp.$1;
 
-                        var regExp_ctripOrderPrice=/总底价\s+JPY\s+(\d+)\s/;    //订单金额\s+JPY(.+)\s
-                        ctripOrderThing[2]=pasteStr.match(regExp_ctripOrderPrice);
-                        var ctripOrderPrice=parseInt(RegExp.$1);
-
+                        //var regExp_ctripOrderPrice=/总底价\s+JPY\s+(\d+)\s/;    //订单金额\s+JPY(.+)\s
+                        //ctripOrderThing[2]=pasteStr.match(regExp_ctripOrderPrice);
+                        
                         var regExp_ctripOrderHotel=/订单中心\>订单详情\s+(.+)\(/;    //酒店名称\s+(.+)\(
                         ctripOrderThing[3]=pasteStr.match(regExp_ctripOrderHotel);
                         var ctripOrderHotel=RegExp.$1;
                         //var hotelIndexName=ctripOrderHotel.substr(0, 3);
                         
-                        var regExp_ctripOrderRoomtype=/房型\/间数\/床型\s+([\u4E00-\u9FFF]+).+/;
-                        var regExp_ctripOrderEach_Case1=/(.人入住)/;
-                        var regExp_ctripOrderEach_Case2=/([双大中标][人床准][床房])/;
+                        var regExp_ctripOrderRoomtype=
+    /房型\/间数\/床型\s+([\u4E00-\u9FFF]+).+([\u4e00-\u9fa5]早|早\+晚餐).+\s+(\d+)\s+间\s+房型ID.+\s+入离日期\s+(20\d\d\W\d\d\W\d\d).+(20\d\d\W\d\d\W\d\d).+(\d+)\s*晚/;
                         ctripOrderThing[4]=pasteStr.match(regExp_ctripOrderRoomtype);
-                        quickSearchMain=ctripOrderThing[4].slice(8);　
-                        var ctripOrderRoomtype=RegExp.$1;
+                        var ctripOrderRoomtype=RegExp.$1;   //房型
+                        var ctripOrderMeals=RegExp.$2;      //餐食
+                        var ctripOrderRooms=RegExp.$3;      //间数
+                        var ctripOrderDate1=RegExp.$4;      //入住日期
+                        var ctripOrderDate2=RegExp.$5;      //离店日期
+                        var ctripOrderNights=RegExp.$6;     //晚数
 
+                        var d1 = new Date(ctripOrderDate1);
+                        var d2 = new Date(ctripOrderDate2);
+                        //var ctripOrderNights = parseInt((d2 - d1) / (1000 * 3600 * 24)); 
+                        var getDayOfWeek = ['日','月','火','水','木','金','土'];
+                        var Date1_dayName = getDayOfWeek[d1.getDay()];                        
+
+                        var regExp_ctripOrderEach_Case1=/房型\/间数\/床型\s+.+(.人入住)/;
+                        var regExp_ctripOrderEach_Case2=/房型\/间数\/床型\s+.+([双大中标][人床准][床房])/;
                         var ctripOrderEachRoom;
-                        if ( quickSearchMain.match(regExp_ctripOrderEach_Case1) ){     //
+                        if ( pasteStr.match(regExp_ctripOrderEach_Case1) ){     
                             ctripOrderEachRoom=RegExp.$1;
-                        } else if ( quickSearchMain.match(regExp_ctripOrderEach_Case2) ){      //
+                        } else if ( pasteStr.match(regExp_ctripOrderEach_Case2) ){      
                             ctripOrderEachRoom="二人入住";
                         } else {
                             ctripOrderEachRoom="？人入住";
                         }
-                        //接下来需要计算总共人=每间人数*间数     
-
-                        var regExp_ctripOrderDate=/入离日期\s+(20\d\d\W\d\d\W\d\d).+(20\d\d\W\d\d\W\d\d).+\d+\s*晚/;
-                        ctripOrderThing[5]=pasteStr.match(regExp_ctripOrderDate);
-                        var ctripOrderDate1=RegExp.$1;
-                        var ctripOrderDate2=RegExp.$2;
-                        var d1 = new Date(ctripOrderDate1);
-                        var d2 = new Date(ctripOrderDate2);
-                        var ctripOrderNights = parseInt((d2 - d1) / (1000 * 3600 * 24)); 
-                        var getDayOfWeek = ['日','月','火','水','木','金','土'];
-                        var Date1_dayName = getDayOfWeek[d1.getDay()];
                         
-                        var regExp_ctripOrderRooms=/\s+(\d+)\s+间\s+房型ID/;        //预订间数\s+(\d+)
-                        ctripOrderThing[6]=quickSearchMain.match(regExp_ctripOrderRooms);      //
-                        var ctripOrderRooms=RegExp.$1;
+                        //var regExp_ctripOrderDate=/入离日期\s+(20\d\d\W\d\d\W\d\d).+(20\d\d\W\d\d\W\d\d).+(\d+)\s*晚/;
+                        //ctripOrderThing[5]=pasteStr.match(regExp_ctripOrderDate);
 
+                        //var regExp_ctripOrderRooms=/\s+(\d+)\s+间\s+房型ID/;        //预订间数\s+(\d+)
+                        //ctripOrderThing[6]=.match(regExp_ctripOrderRooms);      
+                        
                         var regExp_ctripOrderPeoples=/入住人\s+([\/\,\w ]+)\s+(\d+)\s+人/;       //入住人数\s+(\d+)
                         ctripOrderThing[7]=pasteStr.match(regExp_ctripOrderPeoples);
                         var GuestnameLine=RegExp.$1;
@@ -321,6 +321,7 @@
 
                         GuestnameLine=GuestnameLine.replace("VIP ","");
                         var GuestnameList=GuestnameLine.split(",");
+                        //转换成jtbGuestName以护照格式为准：去空格，改大写，姓与名中间的/改为半角空格
                         gName1=GuestnameList[0];
                         gName1=gName1.toUpperCase().replace('/','_');
                         gName1=gName1.replace(/\W/g,"").replace('_',' ');        
@@ -331,15 +332,11 @@
                             gNameShow = gNameShow + "　*" + gName[1+i];
                         }                        
 
-                        var regExp_ctripOrderMeals=/([\u4e00-\u9fa5]早|早\+晚餐)/;
-                        ctripOrderThing[8]=quickSearchMain.match(regExp_ctripOrderMeals);      //
-                        var ctripOrderMeals=RegExp.$1;
+                        //var regExp_ctripOrderMeals=/([\u4e00-\u9fa5]早|早\+晚餐)/;
+                        //ctripOrderThing[8]=.match(regExp_ctripOrderMeals);      
 
                         //var regExp_ctripOrderGuestname=/入住人\d+\s+([\w ]+\/[\w ]+)/g;
                         //ctripOrderThing[9]=pasteStr.match(regExp_ctripOrderGuestname);      // ctripOrderThing[9]已经是数组了!
-                        //var GuestnameList=ctripOrderThing[9];
-                        //if(GuestnameList.length!=ctripOrderPeoples){/* 入住人名字列表没能成功获取完成 */}
-                        //转换成jtbGuestName以护照格式为准：去空格，改大写，姓与名中间的/改为半角空格
 
                         var regExp_ctripOrderSpecialrequest=/特殊要求 +(.*)\s/;
                         ctripOrderThing[10]=pasteStr.match(regExp_ctripOrderSpecialrequest);
