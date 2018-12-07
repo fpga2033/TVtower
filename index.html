@@ -85,7 +85,7 @@
             <a style="font-size:15px">REF# </a><span><label class="control-label" id=txt_ref style="font-size:16px;font-family:verdana;color:rgb(23, 94, 248)"></label></span>
             <button id="btn_JTB_confirmed" class="btn btn-primary" style="font-size:14px;font-family:Meiryo;float:right"><strong>ＪＴＢ完成</strong><br><em>(去填集計草稿)</em></button><br/>
             <label class="control-label" id=APIsignIn style="font-size:16px" onclick="handleSignInClick()">★</label>
-            <a style="font-size:16px">s26.2　</a><label class="control-label" id=txt_type style="font-size:15px"></label><br/>
+            <a style="font-size:16px">s26.3　</a><label class="control-label" id=txt_type style="font-size:15px"></label><br/>
             
             <img hight="15%" width="100%" class="img-rounded" src="https://raw.githubusercontent.com/Best-Hotel-Japan/Sapporo_TV_Hotel-Dev/gh-pages/background.jpg" alt="" /><br/>
             <!--https://raw.githubusercontent.com/fpga2033/TVtower/0609769e290f5f11ccf79624a39f594c03a2a4eb/mildseven-hill-winter.jpg-->
@@ -286,9 +286,9 @@
                         ctripOrderThing[4]=pasteStr.match(regExp_ctripOrderRoomtype);
                         var ctripOrderRoomtype=RegExp.$1;
                         var ctripOrderEachRoom;
-                        if ( ctripOrderThing[4].match(regExp_ctripOrderEach_Case1) ){
+                        if ( pasteStr.match(regExp_ctripOrderEach_Case1) ){     //
                             ctripOrderEachRoom=RegExp.$1;
-                        } else if ( ctripOrderThing[4].match(regExp_ctripOrderEach_Case2) ){
+                        } else if ( pasteStr.match(regExp_ctripOrderEach_Case2) ){      //
                             ctripOrderEachRoom="二人入住";
                         } else {
                             ctripOrderEachRoom="？人入住";
@@ -306,7 +306,7 @@
                         var Date1_dayName = getDayOfWeek[d1.getDay()];
                         
                         var regExp_ctripOrderRooms=/\s+(\d+)\s+间\s+房型ID/;        //预订间数\s+(\d+)
-                        ctripOrderThing[6]=ctripOrderThing[4].match(regExp_ctripOrderRooms);
+                        ctripOrderThing[6]=pasteStr.match(regExp_ctripOrderRooms);      //
                         var ctripOrderRooms=RegExp.$1;
 
                         var regExp_ctripOrderPeoples=/入住人\s+([\/\,\w ]+)\s+(\d+)\s+人/;       //入住人数\s+(\d+)
@@ -328,7 +328,7 @@
                         }                        
 
                         var regExp_ctripOrderMeals=/([\u4e00-\u9fa5]早|早\+晚餐)/;
-                        ctripOrderThing[8]=ctripOrderThing[4].match(regExp_ctripOrderMeals);
+                        ctripOrderThing[8]=pasteStr.match(regExp_ctripOrderMeals);      //
                         var ctripOrderMeals=RegExp.$1;
 
                         //var regExp_ctripOrderGuestname=/入住人\d+\s+([\w ]+\/[\w ]+)/g;
