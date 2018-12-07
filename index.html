@@ -85,7 +85,7 @@
             <a style="font-size:15px">REF# </a><span><label class="control-label" id=txt_ref style="font-size:16px;font-family:verdana;color:rgb(23, 94, 248)"></label></span>
             <button id="btn_JTB_confirmed" class="btn btn-primary" style="font-size:14px;font-family:Meiryo;float:right"><strong>ＪＴＢ完成</strong><br><em>(去填集計草稿)</em></button><br/>
             <label class="control-label" id=APIsignIn style="font-size:16px" onclick="handleSignInClick()">★</label>
-            <a style="font-size:16px">s26.5　</a><label class="control-label" id=txt_type style="font-size:15px"></label><br/>
+            <a style="font-size:16px">s26.6　</a><label class="control-label" id=txt_type style="font-size:15px"></label><br/>
             
             <img hight="15%" width="100%" class="img-rounded" src="https://raw.githubusercontent.com/Best-Hotel-Japan/Sapporo_TV_Hotel-Dev/gh-pages/background.jpg" alt="" /><br/>
             <!--https://raw.githubusercontent.com/fpga2033/TVtower/0609769e290f5f11ccf79624a39f594c03a2a4eb/mildseven-hill-winter.jpg-->
@@ -161,6 +161,7 @@
         var $body = $('body');
         var gName1;                 // JTB氏名報告
         var report_summary;         // 集計草稿
+        var quickSearchMain;
         
         var running_water_record = new Array(1);
         running_water_record[0] = new Array(20);
@@ -254,8 +255,7 @@
                 ctripOrderInfo_extracting_block: {
 
                     var ctripOrderThing=new Array();
-                    var quickSearchMain;
-
+                    
                     if (pasteStr.match(/城市\/酒店/)) {
 
                         //新版的订单页面
@@ -285,8 +285,10 @@
                         var regExp_ctripOrderRoomtype=/房型\/间数\/床型\s+([\u4E00-\u9FFF]+).+/;
                         var regExp_ctripOrderEach_Case1=/(.人入住)/;
                         var regExp_ctripOrderEach_Case2=/([双大中标][人床准][床房])/;
-                        quickSearchMain=pasteStr.match(regExp_ctripOrderRoomtype);
+                        ctripOrderThing[4]=pasteStr.match(regExp_ctripOrderRoomtype);
+                        quickSearchMain=ctripOrderThing[4].slice(8);　
                         var ctripOrderRoomtype=RegExp.$1;
+
                         var ctripOrderEachRoom;
                         if ( quickSearchMain.match(regExp_ctripOrderEach_Case1) ){     //
                             ctripOrderEachRoom=RegExp.$1;
