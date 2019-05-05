@@ -761,7 +761,8 @@
                             break; 
                         } 
                     }
-                    if ( HnameSummary == "" ){ window.close(); }
+                    //if ( HnameSummary == "" ){ window.close(); }
+                    if ( HnameSummary == "" ){ HnameSummary = "未知"; }
                     
                     var now = new Date();
                     var now_month = 1 + now.getMonth();
