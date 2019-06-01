@@ -85,7 +85,7 @@
             <a style="font-size:15px">REF# </a><span><label class="control-label" id=txt_ref style="font-size:16px;font-family:verdana;color:rgb(23, 94, 248)"></label></span>
             <button id="btn_JTB_confirmed" class="btn btn-primary" style="font-size:14px;font-family:Meiryo;float:right"><strong>ＪＴＢ完成</strong><br><em>(去填集計草稿)</em></button><br/>
             <label class="control-label" id=APIsignIn style="font-size:16px" onclick="handleSignInClick()">★</label>
-            <a style="font-size:16px">s27　</a><label class="control-label" id=txt_type style="font-size:15px"></label><br/>
+            <a style="font-size:16px">s28　</a><label class="control-label" id=txt_type style="font-size:15px"></label><br/>
             
             <img id=faceImg hight="15%" width="100%" class="img-rounded" src="https://raw.githubusercontent.com/Best-Hotel-Japan/Sapporo_TV_Hotel-Dev/gh-pages/background.jpg" alt="" /><br/>
             <!--file:///C:/Apps/background.jpg-->
@@ -139,7 +139,7 @@
                     <b style="font-family:Microsoft YaHei;font-size:16px;color:rgb(221, 121, 90)">　订单通知了"入住人数"是　</b>
                     <label class="control-label" id=txt_modal_4 style="font-family:Meiryo;font-weight:bold;font-size:22px;color:rgb(221, 121, 90)"></label>
                     <b style="font-family:Microsoft YaHei;font-size:16px;color:rgb(221, 121, 90)"> 耶!</b><br/>
-                    <b style="font-family:Microsoft YaHei;font-size:16px;color:rgb(221, 121, 90)">　为您编辑「MS報告」如下：</b>
+                    <b style="font-family:Microsoft YaHei;font-size:16px;color:rgb(221, 121, 90)">　编辑「MS報告」如下：</b>
 
                     <br/><br/><br/>
                     <label class="control-label" id=txt_modal_content style="font-family:Microsoft YaHei;font-size:16px"></label><br/><br/>
@@ -260,13 +260,14 @@
 
                         //新版的订单页面
 
-                        var regExp_ctripOrderRef=/订单号\s+(\d{10}).*([\u4E00-\u9FFF]{2})[N\s][o\s].*\s*.+\s+.+\s+总底价\s+JPY\s+(\d+)\s/;
+                        var regExp_ctripOrderRef=/订单号\s*(\d{10}).*(.[\u4E00-\u9FFF])[N\s][o\s].*\s*订单.*\s*付款.*\s*分销.*\s*总底价\s*JPY\s*(\d+)\s/;
+                        // old regExp 20190601: 订单号\s+(\d{10}).*([\u4E00-\u9FFF]{2})[N\s][o\s].*\s*.+\s+.+\s+总底价\s+JPY\s+(\d+)\s
                         ctripOrderThing[0]=pasteStr.match(regExp_ctripOrderRef);
                         var ctripOrderRef=RegExp.$1;        //携程单号
                         var ctripOrderType=RegExp.$2;       //订单类型
                         var ctripOrderPrice=RegExp.$3;      //总金额
 
-                        var regExp_ctripOrderReserv=/订单号\s+\d{10}.*保留房/;
+                        var regExp_ctripOrderReserv=/订单号\s*\d{10}.*保留房/;
                         var reserv_Order = false;
                         if ( pasteStr.match(regExp_ctripOrderReserv) ){ reserv_Order = true; }
 
