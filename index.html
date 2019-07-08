@@ -85,7 +85,7 @@
             <a style="font-size:15px">REF# </a><span><label class="control-label" id=txt_ref style="font-size:16px;font-family:verdana;color:rgb(23, 94, 248)"></label></span>
             <button id="btn_JTB_confirmed" class="btn btn-primary" style="font-size:14px;font-family:Meiryo;float:right"><strong>ＪＴＢ完成</strong><br><em>(去填集計草稿)</em></button><br/>
             <label class="control-label" id=APIsignIn style="font-size:16px" onclick="handleSignInClick()">★</label>
-            <a style="font-size:16px">s28　</a><label class="control-label" id=txt_type style="font-size:15px"></label><br/>
+            <a style="font-size:16px">s30　</a><label class="control-label" id=txt_type style="font-size:15px"></label><br/>
             
             <img id=faceImg hight="15%" width="100%" class="img-rounded" src="https://raw.githubusercontent.com/Best-Hotel-Japan/Sapporo_TV_Hotel-Dev/gh-pages/background.jpg" alt="" /><br/>
             <!--file:///C:/Apps/background.jpg-->
@@ -236,7 +236,7 @@
                     HnameTable[29]=["爷观光","洞爺観光","洞爺観光ホテル","en","1570002",""];
                     HnameTable[30]=["湖温莎","洞爺温莎","ザ・ウンインザーホテル洞爺リゾート＆スパ","en","1570024",""];
                     HnameTable[31]=["太阳宫","洞爺サン","洞爺サンパレス","en","1570010",""];
-                    HnameTable[32]=["章月","章月格兰","章月グランドホテル","en","1533001",""];
+                    HnameTable[32]=["章月格兰","章月格兰","章月グランドホテル","en","1533001",""];
                     HnameTable[33]=["拉碧斯","LAVIS函館","ＬＡＶＩＳＴＡ函館ベイ","en","1611037",""];
                     HnameTable[34]=["福朋","福朋函館","フォーポイントバイシェラトン函館","en","1611015",""];
                     HnameTable[35]=["君乐","グランド小樽","グランドパーク小樽","en","1512019",""];
@@ -249,6 +249,7 @@
                     HnameTable[42]=["ART","旭川艺术","アートホテル旭川","en","1107016",""];
                     HnameTable[43]=["那图瓦","富良野森林","ホテルナトゥールヴァルト富良野","en","1117007",""];
                     HnameTable[44]=["新富良","新富良野Ｐ","新富良野プリンスホテル","en","1117006",""];
+                    HnameTable[45]=["奥入瀬","奥入瀬渓流","星野リゾート奥入瀬渓流ホテル","en","2120007",""];
                     
                 }
 
@@ -258,9 +259,9 @@
                     
                     if (pasteStr.match(/城市\/酒店/)) {
 
-                        //新版的订单页面
+                        //新版的订单页面 from 2019.6.01
 
-                        var regExp_ctripOrderRef=/订单号\s*(\d{10}).*(.[\u4E00-\u9FFF])[N\s][o\s].*\s*订单.*\s*付款.*\s*分销.*\s*总底价\s*JPY\s*(\d+)\s/;
+                        var regExp_ctripOrderRef=/订单号\s*(\d{11}).*(.[\u4E00-\u9FFF])[N\s][o\s].*\s*订单.*\s*付款.*\s*分销.*\s*总底价\s*JPY\s*(\d+)\s/;
                         // old regExp 20190601: 订单号\s+(\d{10}).*([\u4E00-\u9FFF]{2})[N\s][o\s].*\s*.+\s+.+\s+总底价\s+JPY\s+(\d+)\s
                         ctripOrderThing[0]=pasteStr.match(regExp_ctripOrderRef);
                         var ctripOrderRef=RegExp.$1;        //携程单号
@@ -761,7 +762,7 @@
                         } 
                     }
                     //if ( HnameSummary == "" ){ window.close(); }
-                    if ( HnameSummary == "" ){ HnameSummary = "未知"; }
+                    if ( HnameSummary == "" ){ HnameSummary = "未知酒店"; }     //大阪订单
                     
                     var now = new Date();
                     var now_month = 1 + now.getMonth();
